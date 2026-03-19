@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(magick --version)",
+      "Bash(python -c \"from PIL import Image; print\\(''Pillow available''\\)\")",
+      "Bash(python3 -c \"from PIL import Image; print\\(''Pillow available''\\)\")",
+      "Bash(pip install:*)",
+      "Bash(python -c \":*)",
+      "Bash(ls -la \"/c/Users/auror/Documents/GitHub/quai-ouest/assets/images/\"*.jpg)",
+      "mcp__Claude_Preview__preview_start"
+    ]
+  }
+}
