@@ -1,0 +1,162 @@
+{
+  "_meta": {
+    "lastUpdated": "2026-03-19",
+    "version": "1.0",
+    "note": "Carte susceptible d'évoluer selon les arrivages et la saison. Les prix marqués null sont à confirmer avec le restaurateur.",
+    "contact": "quai.ouest29250@gmail.com"
+  },
+  "midi": {
+    "label": "Le Midi",
+    "ambiance": "Lumineux et décontracté — 60 couverts",
+    "menus": [
+      {
+        "id": "anti-gaspi",
+        "name": "Menu Anti-Gaspi",
+        "tagline": "Entrée + Plat ou Plat + Dessert",
+        "price": 14,
+        "priceFrom": true,
+        "availability": "Du mercredi au vendredi midi",
+        "highlight": true,
+        "badge": "Coup de cœur",
+        "description": "Notre formule engagée pour lutter contre le gaspillage alimentaire. Produits frais, portions généreuses, prix doux."
+      }
+    ],
+    "categories": [
+      {
+        "id": "entrees",
+        "name": "Entrées",
+        "items": [
+          {
+            "id": "saint-jacques-panko",
+            "name": "Noix de Saint-Jacques Panko",
+            "description": "Au miel et clémentine",
+            "price": 16,
+            "tags": ["seafood", "signature"],
+            "allergens": ["gluten", "mollusques"],
+            "photo": "ig-04-plat-saint-jacques.jpg",
+            "available": true
+          },
+          {
+            "id": "foie-gras-maison",
+            "name": "Pressé de Foie Gras Maison",
+            "description": "Glace artisanale à l'oignon",
+            "price": 18,
+            "tags": ["signature"],
+            "allergens": [],
+            "photo": null,
+            "available": true
+          }
+        ]
+      },
+      {
+        "id": "plats-mer",
+        "name": "Plats — Mer",
+        "items": [
+          {
+            "id": "lieu-jaune",
+            "name": "Filet de Lieu jaune cuit sur peau",
+            "description": "Coulis de crustacés, légumes de saison",
+            "price": null,
+            "tags": ["seafood", "local"],
+            "allergens": ["crustacés", "poissons"],
+            "photo": null,
+            "available": true
+          }
+        ]
+      },
+      {
+        "id": "plats-terre",
+        "name": "Plats — Terre",
+        "items": [
+          {
+            "id": "cote-de-boeuf",
+            "name": "Côte de Bœuf",
+            "description": "Frites maison et sauces — pour 2 personnes (à partir de 1,5 kg)",
+            "price": null,
+            "priceFrom": true,
+            "tags": ["signature", "pour-2"],
+            "allergens": [],
+            "photo": "ig-04-2026-01-23-cote-de-boeuf.jpg",
+            "available": true,
+            "badge": "Le retour !"
+          },
+          {
+            "id": "canard-morilles",
+            "name": "Médaillon de canard, farce fine aux morilles",
+            "description": "Pomme Anna",
+            "price": null,
+            "tags": [],
+            "allergens": [],
+            "photo": null,
+            "available": true
+          }
+        ]
+      },
+      {
+        "id": "desserts",
+        "name": "Desserts",
+        "items": [
+          {
+            "id": "fruits-rouges-pistache",
+            "name": "Tentation aux fruits rouges",
+            "description": "Sur biscuit à la pistache",
+            "price": null,
+            "tags": ["vegetarian"],
+            "allergens": ["gluten", "fruits à coque", "oeufs", "lait"],
+            "photo": null,
+            "available": true
+          },
+          {
+            "id": "choux-chocolat",
+            "name": "Choux crème diplomate au chocolat",
+            "description": "Tuile sarrazin, Glace Vanille",
+            "price": null,
+            "tags": ["vegetarian"],
+            "allergens": ["gluten", "oeufs", "lait"],
+            "photo": null,
+            "available": true
+          }
+        ]
+      },
+      {
+        "id": "pizzas",
+        "name": "Pizzas",
+        "note": "Disponibles le midi uniquement",
+        "items": []
+      }
+    ]
+  },
+  "soir": {
+    "label": "Le Soir",
+    "ambiance": "Intime et cosy — 15 à 20 couverts, réservation recommandée",
+    "menus": [],
+    "categories": [
+      {
+        "id": "entrees",
+        "name": "Entrées",
+        "items": []
+      },
+      {
+        "id": "plats",
+        "name": "Plats",
+        "items": []
+      },
+      {
+        "id": "desserts",
+        "name": "Desserts",
+        "items": []
+      }
+    ]
+  },
+  "evenements": [
+    {
+      "id": "saint-valentin-2026",
+      "name": "Menu Saint-Valentin",
+      "date": "2026-02-14",
+      "price": 60,
+      "description": "Entrée · Plat · Dessert · Mignardises",
+      "photo": "ig-03-2026-01-30-menu-saint-valentin.jpg",
+      "active": false
+    }
+  ]
+}

@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quai Ouest — Restaurant Bistronomique face à la mer | Saint-Pol-de-Léon</title>
+  <meta name="description" content="Restaurant bistronomique sur la Plage St Anne à Saint-Pol-de-Léon. Cuisine de saison, produits frais et locaux, vue panoramique sur la Baie de Morlaix. Réservation : 02 98 29 08 09.">
+  <meta name="keywords" content="restaurant, Saint-Pol-de-Léon, bistronomique, fruits de mer, Baie de Morlaix, Bretagne, Finistère">
+  <meta name="author" content="Quai Ouest">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Quai Ouest — Bistronomie face à la mer">
+  <meta property="og:description" content="Restaurant bistronomique sur la Plage St Anne à Saint-Pol-de-Léon. Vue panoramique sur la Baie de Morlaix.">
+  <meta property="og:type" content="restaurant">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:url" content="https://quaiouest-saintpol.fr">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=1200&q=80">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚓</text></svg>">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Quai Ouest",
+    "description": "Restaurant bistronomique face à la mer, cuisine de saison avec produits frais et locaux",
+    "url": "https://quaiouest-saintpol.fr",
+    "telephone": "+33298290809",
+    "email": "quai.ouest29250@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "1 Promenade de Penarth",
+      "addressLocality": "Saint-Pol-de-Léon",
+      "postalCode": "29250",
+      "addressRegion": "Finistère",
+      "addressCountry": "FR"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 48.6847,
+      "longitude": -3.9870
+    },
+    "servesCuisine": ["Bistronomique", "Fruits de mer", "Bretonne"],
+    "priceRange": "€€",
+    "openingHoursSpecification": [
+      {"@type": "OpeningHoursSpecification","dayOfWeek": "Tuesday","opens": "12:00","closes": "14:00"},
+      {"@type": "OpeningHoursSpecification","dayOfWeek": "Wednesday","opens": "12:00","closes": "14:00"},
+      {"@type": "OpeningHoursSpecification","dayOfWeek": "Thursday","opens": "12:00","closes": "14:00"},
+      {"@type": "OpeningHoursSpecification","dayOfWeek": "Friday","opens": "12:00","closes": "14:00"},
+      {"@type": "OpeningHoursSpecification","dayOfWeek": "Friday","opens": "19:00","closes": "21:30"},
+      {"@type": "OpeningHoursSpecification","dayOfWeek": "Saturday","opens": "12:00","closes": "14:00"},
+      {"@type": "OpeningHoursSpecification","dayOfWeek": "Saturday","opens": "19:00","closes": "21:30"},
+      {"@type": "OpeningHoursSpecification","dayOfWeek": "Sunday","opens": "12:00","closes": "14:00"}
+    ],
+    "acceptsReservations": "True"
+  }
+  </script>
+
+  <style>
+    /* ========== RESET & BASE ========== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bleu-baie: #2C5F7C;
+      --blanc-ecume: #F7F5F0;
+      --granit: #4A4A4A;
+      --ardoise: #2D2D2D;
+      --cognac: #C4723A;
+      --cognac-hover: #D4853A;
+      --or-chaud: #D4A853;
+      --sable: #E8DED1;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'DM Sans', -apple-system, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--granit);
+      background: var(--blanc-ecume);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { max-width: 100%; height: auto; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ========== ANIMATIONS ========== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.15s; }
+    .reveal-delay-2 { transition-delay: 0.3s; }
+    .reveal-delay-3 { transition-delay: 0.45s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* ========== HEADER ========== */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.4s, box-shadow 0.4s, padding 0.4s;
+    }
+    header.scrolled {
+      background: rgba(247, 245, 240, 0.97);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+      padding: 0.6rem 2rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.5px;
+      transition: color 0.4s;
+    }
+    header.scrolled .logo { color: var(--bleu-baie); }
+
+    nav { display: flex; gap: 2rem; align-items: center; }
+    nav a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.9);
+      transition: color 0.3s;
+      position: relative;
+    }
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 1.5px;
+      background: var(--cognac);
+      transition: width 0.3s;
+    }
+    nav a:hover::after { width: 100%; }
+    header.scrolled nav a { color: var(--granit); }
+
+    .btn-reserve-nav {
+      background: var(--cognac);
+      color: #fff !important;
+      padding: 0.5rem 1.2rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .btn-reserve-nav:hover { background: var(--or-chaud); transform: translateY(-1px); }
+    .btn-reserve-nav::after { display: none; }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      z-index: 110;
+    }
+    .hamburger span {
+      width: 24px; height: 2px;
+      background: #fff;
+      transition: all 0.3s;
+    }
+    header.scrolled .hamburger span { background: var(--granit); }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    /* Mobile nav */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 0; right: -100%;
+      width: 80%; max-width: 360px; height: 100vh;
+      background: var(--blanc-ecume);
+      z-index: 105;
+      flex-direction: column;
+      padding: 5rem 2rem 2rem;
+      gap: 1.5rem;
+      transition: right 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+      box-shadow: -10px 0 40px rgba(0,0,0,0.15);
+    }
+    .mobile-nav.open { right: 0; }
+    .mobile-nav a {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--granit);
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .mobile-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(4px);
+      z-index: 102;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .mobile-overlay.open { opacity: 1; }
+
+    @media (max-width: 768px) {
+      nav { display: none; }
+      .hamburger { display: flex; }
+      .mobile-nav, .mobile-overlay { display: flex; }
+    }
+
+    /* ========== HERO ========== */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=1600&q=80');
+      background-size: cover;
+      background-position: center;
+      background-color: var(--bleu-baie);
+      transform: scale(1.05);
+      transition: transform 0.3s;
+      will-change: transform;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(44,95,124,0.3) 0%, rgba(0,0,0,0.5) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+      padding: 0 1.5rem;
+    }
+    .hero-content h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+    .hero-content .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      font-weight: 400;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+      letter-spacing: 1px;
+    }
+    .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--cognac);
+      color: #fff;
+      padding: 0.85rem 2rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      transition: background 0.3s, transform 0.3s;
+      border: none; cursor: pointer;
+    }
+    .btn-primary:hover { background: var(--or-chaud); transform: translateY(-2px); }
+    .btn-secondary {
+      color: #fff;
+      padding: 0.85rem 2rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      border: 1.5px solid rgba(255,255,255,0.6);
+      border-radius: 4px;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.15); border-color: #fff; }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      animation: bounce 2s infinite;
+    }
+    .scroll-indicator svg { width: 28px; height: 28px; stroke: rgba(255,255,255,0.7); fill: none; stroke-width: 2; }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+      40% { transform: translateX(-50%) translateY(-8px); }
+      60% { transform: translateX(-50%) translateY(-4px); }
+    }
+
+    /* ========== SECTIONS COMMUNS ========== */
+    section { padding: 5rem 1.5rem; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 700;
+      color: var(--bleu-baie);
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+    .section-subtitle {
+      text-align: center;
+      color: var(--granit);
+      opacity: 0.7;
+      font-size: 1rem;
+      margin-bottom: 3rem;
+    }
+    .wave-divider {
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: var(--or-chaud);
+      margin: 1rem auto 0;
+      border-radius: 2px;
+    }
+
+    /* ========== RESTAURANT ========== */
+    #restaurant { background: var(--blanc-ecume); }
+
+    .resto-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .resto-grid.reverse { direction: rtl; }
+    .resto-grid.reverse > * { direction: ltr; }
+
+    .resto-img {
+      border-radius: 8px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, var(--bleu-baie), var(--sable));
+    }
+    .resto-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+    .resto-img:hover img { transform: scale(1.04); }
+
+    .resto-text h3 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--bleu-baie);
+      margin-bottom: 0.75rem;
+    }
+    .resto-text p {
+      color: var(--granit);
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .resto-grid, .resto-grid.reverse {
+        grid-template-columns: 1fr;
+        direction: ltr;
+        gap: 1.5rem;
+      }
+    }
+
+    /* ========== CARTE / MENUS ========== */
+    #carte {
+      background: var(--ardoise);
+      color: #fff;
+    }
+    #carte .section-title { color: #fff; }
+    #carte .section-subtitle { color: rgba(255,255,255,0.6); }
+    #carte .wave-divider { background: var(--or-chaud); }
+
+    .carte-toggle {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 3rem;
+    }
+    .carte-toggle button {
+      padding: 0.75rem 2rem;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      border: 2px solid rgba(255,255,255,0.2);
+      background: transparent;
+      color: rgba(255,255,255,0.6);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .carte-toggle button:first-child { border-radius: 4px 0 0 4px; }
+    .carte-toggle button:last-child { border-radius: 0 4px 4px 0; }
+    .carte-toggle button.active {
+      background: var(--cognac);
+      border-color: var(--cognac);
+      color: #fff;
+    }
+
+    .carte-panel { display: none; }
+    .carte-panel.active { display: block; animation: fadeIn 0.4s ease; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .menu-category {
+      margin-bottom: 2.5rem;
+    }
+    .menu-category h3 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: var(--or-chaud);
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .menu-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.6rem 0;
+      gap: 1rem;
+    }
+    .menu-item-name {
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.9);
+    }
+    .menu-item-desc {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
+      font-style: italic;
+    }
+    .menu-item-price {
+      font-weight: 600;
+      color: var(--or-chaud);
+      white-space: nowrap;
+      font-size: 0.95rem;
+    }
+
+    .menu-highlight {
+      background: rgba(196, 114, 58, 0.15);
+      border: 1px solid rgba(196, 114, 58, 0.3);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 2.5rem;
+      text-align: center;
+    }
+    .menu-highlight h4 {
+      font-family: var(--font-display);
+      color: var(--or-chaud);
+      font-size: 1.2rem;
+      margin-bottom: 0.3rem;
+    }
+    .menu-highlight p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .carte-note {
+      text-align: center;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+      margin-top: 2rem;
+      font-style: italic;
+    }
+
+    /* ========== GALERIE ========== */
+    #galerie { background: var(--sable); }
+
+    .galerie-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    .galerie-item {
+      border-radius: 8px;
+      overflow: hidden;
+      aspect-ratio: 1;
+      background: linear-gradient(135deg, var(--bleu-baie), var(--sable));
+      cursor: pointer;
+    }
+    .galerie-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+    .galerie-item:hover img { transform: scale(1.06); }
+    .galerie-item:nth-child(1) { grid-row: span 2; aspect-ratio: auto; }
+
+    .galerie-insta {
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .galerie-insta a {
+      color: var(--bleu-baie);
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+    .galerie-insta a:hover { color: var(--cognac); }
+
+    @media (max-width: 768px) {
+      .galerie-grid { grid-template-columns: repeat(2, 1fr); }
+      .galerie-item:nth-child(1) { grid-row: span 1; aspect-ratio: 1; }
+    }
+
+    /* ========== HORAIRES ========== */
+    #horaires { background: var(--blanc-ecume); }
+
+    .horaires-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .horaires-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+    .horaires-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      color: var(--bleu-baie);
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .horaire-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      font-size: 0.9rem;
+    }
+    .horaire-row:last-child { border-bottom: none; }
+    .horaire-jour { font-weight: 500; }
+    .horaire-heure { color: var(--bleu-baie); font-weight: 600; }
+    .horaire-ferme { color: #B85042; font-weight: 500; font-size: 0.85rem; }
+
+    .infos-pratiques {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+    .info-badge {
+      background: #fff;
+      padding: 0.6rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--granit);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    @media (max-width: 768px) {
+      .horaires-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    }
+
+    /* ========== CONTACT ========== */
+    #contact {
+      background: linear-gradient(135deg, var(--bleu-baie), #1E4A5F);
+      color: #fff;
+    }
+    #contact .section-title { color: #fff; }
+    #contact .section-subtitle { color: rgba(255,255,255,0.7); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .contact-info { display: flex; flex-direction: column; gap: 1.5rem; justify-content: center; }
+
+    .contact-item {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    .contact-icon {
+      width: 48px; height: 48px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-icon svg { width: 22px; height: 22px; stroke: var(--or-chaud); fill: none; stroke-width: 2; }
+    .contact-item-text h4 { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.1rem; }
+    .contact-item-text p { font-size: 0.9rem; opacity: 0.8; }
+    .contact-item-text a { color: #fff; opacity: 0.8; transition: opacity 0.3s; }
+    .contact-item-text a:hover { opacity: 1; }
+
+    .contact-social {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+    .social-link {
+      width: 44px; height: 44px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .social-link:hover { background: var(--cognac); transform: translateY(-2px); }
+    .social-link svg { width: 20px; height: 20px; fill: #fff; }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .contact-form input,
+    .contact-form textarea,
+    .contact-form select {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+      padding: 0.8rem 1rem;
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      transition: border-color 0.3s;
+    }
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder { color: rgba(255,255,255,0.4); }
+    .contact-form input:focus,
+    .contact-form textarea:focus,
+    .contact-form select:focus {
+      outline: none;
+      border-color: var(--or-chaud);
+    }
+    .contact-form textarea { min-height: 100px; resize: vertical; }
+    .contact-form select option { color: var(--granit); background: #fff; }
+    .form-row { display: flex; gap: 1rem; }
+    .form-row > * { flex: 1; }
+
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .form-row { flex-direction: column; }
+    }
+
+    /* ========== LOCALISATION ========== */
+    #localisation { background: var(--blanc-ecume); padding-bottom: 3rem; }
+
+    .map-container {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      margin-bottom: 1.5rem;
+    }
+    .map-container iframe {
+      width: 100%;
+      height: 400px;
+      border: none;
+      display: block;
+    }
+
+    .acces-grid {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .acces-item {
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    .acces-item strong { display: block; color: var(--bleu-baie); margin-bottom: 0.25rem; }
+
+    /* ========== FOOTER ========== */
+    footer {
+      background: var(--ardoise);
+      color: rgba(255,255,255,0.7);
+      padding: 3rem 1.5rem 1.5rem;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .footer-col h4 {
+      font-family: var(--font-display);
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .footer-col p, .footer-col a {
+      font-size: 0.85rem;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.6);
+    }
+    .footer-col a { transition: color 0.3s; display: block; }
+    .footer-col a:hover { color: var(--or-chaud); }
+
+    .footer-bottom {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      text-align: center;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    @media (max-width: 768px) {
+      .footer-inner { grid-template-columns: 1fr; text-align: center; }
+    }
+
+    /* ========== FLOATING CTA MOBILE ========== */
+    .floating-cta {
+      display: none;
+      position: fixed;
+      bottom: 1rem;
+      left: 1rem; right: 1rem;
+      z-index: 90;
+      background: var(--cognac);
+      color: #fff;
+      text-align: center;
+      padding: 0.9rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 20px rgba(196,114,58,0.4);
+      transition: background 0.3s;
+    }
+    .floating-cta:hover { background: var(--or-chaud); }
+    .floating-cta svg { display: inline-block; vertical-align: middle; margin-right: 0.5rem; width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2; }
+
+    @media (max-width: 768px) {
+      .floating-cta { display: block; }
+      section { padding: 3.5rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== HEADER ==================== -->
+  <header id="header">
+    <a href="#" class="logo">Quai Ouest</a>
+    <nav>
+      <a href="#restaurant">Le Restaurant</a>
+      <a href="#carte">La Carte</a>
+      <a href="#galerie">Galerie</a>
+      <a href="#horaires">Horaires</a>
+      <a href="#contact">Contact</a>
+      <a href="tel:0298290809" class="btn-reserve-nav">Réserver</a>
+    </nav>
+    <div class="hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+  </header>
+
+  <div class="mobile-overlay" onclick="toggleMobileNav()"></div>
+  <div class="mobile-nav">
+    <a href="#restaurant" onclick="toggleMobileNav()">Le Restaurant</a>
+    <a href="#carte" onclick="toggleMobileNav()">La Carte</a>
+    <a href="#galerie" onclick="toggleMobileNav()">Galerie</a>
+    <a href="#horaires" onclick="toggleMobileNav()">Horaires</a>
+    <a href="#contact" onclick="toggleMobileNav()">Contact</a>
+    <a href="tel:0298290809" class="btn-primary" style="text-align:center;margin-top:1rem;" onclick="toggleMobileNav()">Réserver</a>
+  </div>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero" id="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Bistronomie<br>face à la mer</h1>
+      <p class="hero-sub">Saint-Pol-de-Léon · Baie de Morlaix</p>
+      <div class="hero-buttons">
+        <a href="tel:0298290809" class="btn-primary">Réserver une table</a>
+        <a href="#carte" class="btn-secondary">Découvrir la carte</a>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    </div>
+  </section>
+
+  <!-- ==================== LE RESTAURANT ==================== -->
+  <section id="restaurant">
+    <div class="section-inner">
+      <div class="reveal">
+        <h2 class="section-title">Le Restaurant</h2>
+        <p class="section-subtitle">Une maison de granit, les pieds dans le sable</p>
+        <div class="wave-divider"></div>
+      </div>
+
+      <div style="margin-top: 3rem;"></div>
+
+      <div class="resto-grid reveal">
+        <div class="resto-img">
+          <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80"
+               alt="Façade du restaurant Quai Ouest"
+               loading="lazy"
+               onerror="this.style.display='none'">
+        </div>
+        <div class="resto-text">
+          <h3>La Maison</h3>
+          <p>Bâtiment de caractère en pierre de granit sur la Plage St Anne, face à la Baie de Morlaix. Une véranda vitrée panoramique qui accueille 60 convives baignés de lumière côtière.</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 3rem;"></div>
+
+      <div class="resto-grid reverse reveal">
+        <div class="resto-img">
+          <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80"
+               alt="Terrasse et vue mer du Quai Ouest"
+               loading="lazy"
+               onerror="this.style.display='none'">
+        </div>
+        <div class="resto-text">
+          <h3>L'Ambiance</h3>
+          <p>Le midi, déjeuner décontracté face à l'océan. Le soir, une atmosphère intimiste pour 15 à 20 couverts privilégiés. Cuisine de saison, produits frais, locaux, faits maison.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== LA CARTE ==================== -->
+  <section id="carte">
+    <div class="section-inner">
+      <div class="reveal">
+        <h2 class="section-title">La Carte</h2>
+        <p class="section-subtitle">Une cuisine de saison, entre terre et mer</p>
+        <div class="wave-divider"></div>
+      </div>
+
+      <div class="carte-toggle reveal" style="margin-top: 2rem;">
+        <button class="active" onclick="switchCarte('midi')">☀️ Midi</button>
+        <button onclick="switchCarte('soir')">🌙 Soir</button>
+      </div>
+
+      <!-- MIDI -->
+      <div class="carte-panel active" id="panel-midi">
+        <div class="menu-highlight reveal">
+          <h4>Menu Anti-Gaspi — à partir de 14€</h4>
+          <p>Entrée + Plat ou Plat + Dessert · Du mardi au vendredi midi</p>
+        </div>
+
+        <div class="menu-category reveal">
+          <h3>Entrées</h3>
+          <div class="menu-item">
+            <div>
+              <div class="menu-item-name">Noix de Saint-Jacques Panko</div>
+              <div class="menu-item-desc">Miel et clémentine</div>
+            </div>
+            <div class="menu-item-price">16€</div>
+          </div>
+          <div class="menu-item">
+            <div>
+              <div class="menu-item-name">Pressé de Foie Gras Maison</div>
+              <div class="menu-item-desc">Glace artisanale à l'oignon</div>
+            </div>
+            <div class="menu-item-price">18€</div>
+          </div>
+          <div class="menu-item">
+            <div>
+              <div class="menu-item-name">Velouté de Saison</div>
+              <div class="menu-item-desc">Légumes du marché</div>
+            </div>
+            <div class="menu-item-price">9€</div>
+          </div>
+        </div>
+
+        <div class="menu-category reveal">
+          <h3>Plats</h3>
+          <div class="menu-item">
+            <div>
+              <div class="menu-item-name">Côte de Bœuf (à partir de 1,5kg)</div>
+              <div class="menu-item-desc">Frites maison et sauces · Pour 2 personnes</div>
+            </div>
+            <div class="menu-item-price">Sur demande</div>
+          </div>
+          <div class="menu-item">
+            <div>
+              <div class="menu-item-name">Filet de Lieu Jaune cuit sur peau</div>
+              <div class="menu-item-desc">Coulis crustacés, légumes de saison</div>
+            </div>
+            <div class="menu-item-price">22€</div>
+          </div>
+          <div class="menu-item">
+            <div>
+              <div class="menu-item-name">Médaillon de Canard</div>
+              <div class="menu-item-desc">Farce fine aux morilles, Pomme Anna</div>
+            </div>
+            <div class="menu-item-price">24€</div>
+          </div>
+        </div>
+
+        <div class="menu-category reveal">
+          <h3>Desserts</h3>
+          <div class="menu-item">
+            <div>
+              <div class="menu-item-name">Tentation aux Fruits Rouges</div>
+              <div class="menu-item-desc">Biscuit à la pistache</div>
+            </div>
+            <div class="menu-item-price">9€</div>
+          </div>
+          <div class="menu-item">
+            <div>
+              <div class="menu-item-name">Choux Crème Diplomate Chocolat</div>
+              <div class="menu-item-desc">Tuile sarrazin, glace vanille</div>
+            </div>
+            <div class="menu-item-price">10€</div>
+          </div>
+        </div>
+
+        <div class="menu-category reveal">
+          <h3>Pizzas · Midi uniquement</h3>
+          <div class="menu-item">
+            <div>
+              <div class="menu-item-name">Margherita</div>
+              <div class="menu-item-desc">Tomate, mozzarella, basilic</div>
+            </div>
+            <div class="menu-item-price">11€</div>
+          </div>
+          <div class="menu-item">
+            <div>
+              <div class="menu-item-name">Saumon Fumé</div>
+              <div class="menu-item-desc">Crème fraîche, aneth</div>
+            </div>
+            <div class="menu-item-price">14€</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SOIR -->
+      <div class="carte-panel" id="panel-soir">
+        <div class="menu-highlight reveal" style="border-color: rgba(212,168,83,0.3); background: rgba(212,168,83,0.1);">
+          <h4>Vendredi & Samedi soir uniquement</h4>
+          <p>Carte réduite, esprit dégustation · Sur réservation</p>
+        </div>
+
+        <div class="menu-category reveal">
+          <h3>Entrées</h3>
+          <div class="menu-item">
+            <div>
+              <div class="menu-item-name">Noix de Saint-Jacques Panko</div>
+              <div class="menu-item-desc">Miel et clémentine</div>
+            </div>
+            <div class="menu-item-price">18€</div>
+          </div>
+          <div class="menu-item">
+            <div>
+              <div class="menu-item-name">Pressé de Foie Gras Maison</div>
+              <div class="menu-item-desc">Glace artisanale à l'oignon</div>
+            </div>
+            <div class="menu-item-price">20€</div>
+          </div>
+        </div>
+
+        <div class="menu-category reveal">
+          <h3>Plats</h3>
+          <div class="menu-item">
+            <div>
+              <div class="menu-item-name">Côte de Bœuf (à partir de 1,5kg)</div>
+              <div class="menu-item-desc">Frites maison et sauces · Pour 2 personnes</div>
+            </div>
+            <div class="menu-item-price">Sur demande</div>
+          </div>
+          <div class="menu-item">
+            <div>
+              <div class="menu-item-name">Filet de Lieu Jaune cuit sur peau</div>
+              <div class="menu-item-desc">Coulis crustacés, légumes de saison</div>
+            </div>
+            <div class="menu-item-price">26€</div>
+          </div>
+        </div>
+
+        <div class="menu-category reveal">
+          <h3>Desserts</h3>
+          <div class="menu-item">
+            <div>
+              <div class="menu-item-name">Assiette Gourmande du Chef</div>
+              <div class="menu-item-desc">Sélection de 3 desserts du moment</div>
+            </div>
+            <div class="menu-item-price">14€</div>
+          </div>
+          <div class="menu-item">
+            <div>
+              <div class="menu-item-name">Choux Crème Diplomate Chocolat</div>
+              <div class="menu-item-desc">Tuile sarrazin, glace vanille</div>
+            </div>
+            <div class="menu-item-price">10€</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="carte-note reveal">La carte évolue selon les arrivages et la saison.</p>
+    </div>
+  </section>
+
+  <!-- ==================== GALERIE ==================== -->
+  <section id="galerie">
+    <div class="section-inner">
+      <div class="reveal">
+        <h2 class="section-title">Galerie</h2>
+        <p class="section-subtitle">L'expérience Quai Ouest en images</p>
+        <div class="wave-divider"></div>
+      </div>
+
+      <div class="galerie-grid" style="margin-top: 2rem;">
+        <div class="galerie-item reveal">
+          <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&q=80"
+               alt="Plat de fruits de mer"
+               loading="lazy"
+               onerror="this.style.display='none'">
+        </div>
+        <div class="galerie-item reveal reveal-delay-1">
+          <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80"
+               alt="Plat gastronomique"
+               loading="lazy"
+               onerror="this.style.display='none'">
+        </div>
+        <div class="galerie-item reveal reveal-delay-2">
+          <img src="https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?w=600&q=80"
+               alt="Ambiance restaurant"
+               loading="lazy"
+               onerror="this.style.display='none'">
+        </div>
+        <div class="galerie-item reveal reveal-delay-1">
+          <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80"
+               alt="Assiette dressée"
+               loading="lazy"
+               onerror="this.style.display='none'">
+        </div>
+        <div class="galerie-item reveal reveal-delay-2">
+          <img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&q=80"
+               alt="Vue mer terrasse"
+               loading="lazy"
+               onerror="this.style.display='none'">
+        </div>
+      </div>
+
+      <div class="galerie-insta reveal" style="margin-top: 2rem;">
+        <a href="https://instagram.com/quaiouest.stpol" target="_blank" rel="noopener">
+          Suivez-nous sur Instagram @quaiouest.stpol →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== HORAIRES ==================== -->
+  <section id="horaires">
+    <div class="section-inner">
+      <div class="reveal">
+        <h2 class="section-title">Horaires</h2>
+        <p class="section-subtitle">Horaires d'hiver</p>
+        <div class="wave-divider"></div>
+      </div>
+
+      <div class="horaires-grid" style="margin-top: 2rem;">
+        <div class="horaires-card reveal">
+          <h3>Ouverture</h3>
+          <div class="horaire-row">
+            <span class="horaire-jour">Lundi</span>
+            <span class="horaire-ferme">Fermé</span>
+          </div>
+          <div class="horaire-row">
+            <span class="horaire-jour">Mardi</span>
+            <span class="horaire-heure">12h – 14h</span>
+          </div>
+          <div class="horaire-row">
+            <span class="horaire-jour">Mercredi</span>
+            <span class="horaire-heure">12h – 14h</span>
+          </div>
+          <div class="horaire-row">
+            <span class="horaire-jour">Jeudi</span>
+            <span class="horaire-heure">12h – 14h</span>
+          </div>
+          <div class="horaire-row">
+            <span class="horaire-jour">Vendredi</span>
+            <span class="horaire-heure">12h – 14h · 19h – 21h30</span>
+          </div>
+          <div class="horaire-row">
+            <span class="horaire-jour">Samedi</span>
+            <span class="horaire-heure">12h – 14h · 19h – 21h30</span>
+          </div>
+          <div class="horaire-row">
+            <span class="horaire-jour">Dimanche</span>
+            <span class="horaire-heure">12h – 14h</span>
+          </div>
+        </div>
+
+        <div class="horaires-card reveal reveal-delay-1">
+          <h3>Bon à savoir</h3>
+          <div style="display:flex; flex-direction:column; gap:0.8rem; font-size:0.9rem;">
+            <p>🍽️ <strong>60 couverts</strong> le midi</p>
+            <p>🕯️ <strong>15-20 couverts</strong> le soir, ambiance intimiste</p>
+            <p>📞 <strong>Réservation conseillée</strong> le soir</p>
+            <p>♿ Accès PMR</p>
+            <p>🅿️ Parking à proximité</p>
+            <p>🐕 Animaux acceptés</p>
+            <p>💳 CB acceptée</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTACT ==================== -->
+  <section id="contact">
+    <div class="section-inner">
+      <div class="reveal">
+        <h2 class="section-title">Réservez votre table</h2>
+        <p class="section-subtitle">Par téléphone ou via le formulaire ci-dessous</p>
+        <div class="wave-divider"></div>
+      </div>
+
+      <div class="contact-grid" style="margin-top: 2rem;">
+        <div class="contact-info reveal">
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div class="contact-item-text">
+              <h4>Téléphone</h4>
+              <p><a href="tel:0298290809">02 98 29 08 09</a></p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div class="contact-item-text">
+              <h4>Email</h4>
+              <p><a href="mailto:quai.ouest29250@gmail.com">quai.ouest29250@gmail.com</a></p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div class="contact-item-text">
+              <h4>Adresse</h4>
+              <p>1 Promenade de Penarth<br>29250 Saint-Pol-de-Léon</p>
+            </div>
+          </div>
+
+          <div class="contact-social">
+            <a href="https://instagram.com/quaiouest.stpol" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
+              <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="#fff" stroke-width="2"/><circle cx="12" cy="12" r="5" fill="none" stroke="#fff" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="#fff"/></svg>
+            </a>
+            <a href="https://facebook.com/QuaiOuest" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">
+              <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" fill="#fff"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <form class="contact-form reveal reveal-delay-1" onsubmit="event.preventDefault(); alert('Merci ! Nous reviendrons vers vous rapidement.');">
+          <div class="form-row">
+            <input type="text" placeholder="Nom" required>
+            <input type="tel" placeholder="Téléphone">
+          </div>
+          <input type="email" placeholder="Email" required>
+          <div class="form-row">
+            <input type="date" required>
+            <select required>
+              <option value="" disabled selected>Nb de personnes</option>
+              <option>1 personne</option>
+              <option>2 personnes</option>
+              <option>3 personnes</option>
+              <option>4 personnes</option>
+              <option>5 personnes</option>
+              <option>6+ personnes</option>
+            </select>
+          </div>
+          <select>
+            <option value="" disabled selected>Service</option>
+            <option>Midi</option>
+            <option>Soir (vendredi & samedi)</option>
+          </select>
+          <textarea placeholder="Message (optionnel)"></textarea>
+          <button type="submit" class="btn-primary" style="width:100%;">Envoyer ma demande</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== LOCALISATION ==================== -->
+  <section id="localisation">
+    <div class="section-inner">
+      <div class="reveal">
+        <h2 class="section-title">Comment venir</h2>
+        <p class="section-subtitle">1 Promenade de Penarth, 29250 Saint-Pol-de-Léon</p>
+        <div class="wave-divider"></div>
+      </div>
+
+      <div class="map-container reveal" style="margin-top: 2rem;">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2619.5!2d-3.987!3d48.6847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4816b8a8d5b4c0e7%3A0x0!2s1+Promenade+de+Penarth+29250+Saint-Pol-de-L%C3%A9on!5e0!3m2!1sfr!2sfr!4v1"
+          allowfullscreen
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Localisation du Quai Ouest">
+        </iframe>
+      </div>
+
+      <div class="acces-grid reveal">
+        <div class="acces-item">
+          <strong>Depuis Morlaix</strong>
+          20 min via D58
+        </div>
+        <div class="acces-item">
+          <strong>Depuis Brest</strong>
+          45 min via N12
+        </div>
+        <div class="acces-item">
+          <strong>Depuis Roscoff</strong>
+          10 min par la côte
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-col">
+        <h4>Quai Ouest</h4>
+        <p>Bistronomie face à la mer<br>Saint-Pol-de-Léon, Finistère</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <a href="#restaurant">Le Restaurant</a>
+        <a href="#carte">La Carte</a>
+        <a href="#galerie">Galerie</a>
+        <a href="#horaires">Horaires</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <p>📞 <a href="tel:0298290809">02 98 29 08 09</a></p>
+        <p>📧 <a href="mailto:quai.ouest29250@gmail.com">quai.ouest29250@gmail.com</a></p>
+        <p>📍 1 Promenade de Penarth<br>&nbsp;&nbsp;&nbsp;&nbsp; 29250 Saint-Pol-de-Léon</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2026 Quai Ouest — Tous droits réservés · <a href="#" style="color:rgba(255,255,255,0.5);">Mentions légales</a>
+    </div>
+  </footer>
+
+  <!-- ==================== FLOATING CTA MOBILE ==================== -->
+  <a href="tel:0298290809" class="floating-cta" id="floatingCta">
+    <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    Réserver · 02 98 29 08 09
+  </a>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    // === HEADER SCROLL ===
+    const header = document.getElementById('header');
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // === MOBILE NAV ===
+    function toggleMobileNav() {
+      document.querySelector('.hamburger').classList.toggle('active');
+      document.querySelector('.mobile-nav').classList.toggle('open');
+      document.querySelector('.mobile-overlay').classList.toggle('open');
+      document.body.style.overflow = document.querySelector('.mobile-nav').classList.contains('open') ? 'hidden' : '';
+    }
+
+    // === PARALLAX HERO ===
+    const heroBg = document.getElementById('heroBg');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY < window.innerHeight) {
+        const offset = window.scrollY * 0.4;
+        heroBg.style.transform = `scale(1.05) translateY(${offset}px)`;
+      }
+    }, { passive: true });
+
+    // === INTERSECTION OBSERVER (Reveal animations) ===
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(el => observer.observe(el));
+
+    // === CARTE TOGGLE ===
+    function switchCarte(panel) {
+      document.querySelectorAll('.carte-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.carte-toggle button').forEach(b => b.classList.remove('active'));
+      document.getElementById('panel-' + panel).classList.add('active');
+      event.target.classList.add('active');
+
+      // Re-observe newly visible reveal elements
+      document.querySelectorAll('#panel-' + panel + ' .reveal:not(.visible)').forEach(el => observer.observe(el));
+    }
+
+    // === FLOATING CTA visibility ===
+    const floatingCta = document.getElementById('floatingCta');
+    window.addEventListener('scroll', () => {
+      if (window.innerWidth <= 768) {
+        floatingCta.style.opacity = window.scrollY > 400 ? '1' : '0';
+        floatingCta.style.pointerEvents = window.scrollY > 400 ? 'auto' : 'none';
+      }
+    }, { passive: true });
+
+    // === IMAGE ERROR FALLBACK ===
+    document.querySelectorAll('img[onerror]').forEach(img => {
+      img.removeAttribute('onerror');
+      img.addEventListener('error', function() {
+        this.style.display = 'none';
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,110 @@
+{
+  "_meta": {
+    "lastUpdated": "2026-03-19",
+    "account": "@quaiouest.stpol",
+    "profileUrl": "https://www.instagram.com/quaiouest.stpol/",
+    "followers": 718,
+    "totalPosts": 123,
+    "filterDateFrom": "2025-09-01",
+    "bio": "Restaurant Bistronomique Quai Ouest à Saint-Pol-de-Léon — Produits frais, locaux et faits maison",
+    "highlights": ["Cocktails", "Viandes", "Pizzas"]
+  },
+  "posts": [
+    {
+      "id": "ig-01",
+      "shortcode": "DU8yeYoiJBr",
+      "url": "https://www.instagram.com/quaiouest.stpol/p/DU8yeYoiJBr/",
+      "type": "image",
+      "date": "2026-02-19",
+      "caption": "Du mercredi midi au vendredi midi — Façade Quai Ouest avec horaires",
+      "localFile": "ig-01-2026-02-19-facade-horaires.jpg",
+      "downloaded": false
+    },
+    {
+      "id": "ig-02",
+      "shortcode": "DUitXfwCH_Z",
+      "url": "https://www.instagram.com/quaiouest.stpol/p/DUitXfwCH_Z/",
+      "type": "image",
+      "date": "2026-02-09",
+      "caption": "Recrutement responsable de salle et serveur/serveuse — rejoignez l'équipe",
+      "localFile": "ig-02-2026-02-09-facade-recrutement.jpg",
+      "downloaded": false
+    },
+    {
+      "id": "ig-03",
+      "shortcode": "DUJQ_LBiJjv",
+      "url": "https://www.instagram.com/quaiouest.stpol/p/DUJQ_LBiJjv/",
+      "type": "image",
+      "date": "2026-01-30",
+      "caption": "Menu Saint-Valentin — 60€ — Entrée, Plat, Dessert, Mignardises",
+      "localFile": "ig-03-2026-01-30-menu-saint-valentin.jpg",
+      "downloaded": false
+    },
+    {
+      "id": "ig-04",
+      "shortcode": "DT3JVCziHl6",
+      "url": "https://www.instagram.com/quaiouest.stpol/p/DT3JVCziHl6/",
+      "type": "carousel",
+      "date": "2026-01-23",
+      "caption": "La côte de bœuf est de retour — à partir de 1,5 kg, frites maison et sauces",
+      "localFiles": [
+        "ig-04a-2026-01-23-cote-de-boeuf-planche.jpg",
+        "ig-04b-2026-01-23-cote-de-boeuf-detail.jpg"
+      ],
+      "downloaded": false
+    },
+    {
+      "id": "ig-05",
+      "shortcode": "DSFKvijiHU0",
+      "url": "https://www.instagram.com/quaiouest.stpol/reel/DSFKvijiHU0/",
+      "type": "reel",
+      "date": "2025-12-01",
+      "caption": "Une belle journée, ça vaut bien un repas au Quai Ouest — coucher de soleil sur la baie",
+      "localFile": "ig-05-2025-12-coucher-soleil-baie.mp4",
+      "posterFile": "ig-05-2025-12-coucher-soleil-baie-poster.jpg",
+      "downloaded": false
+    },
+    {
+      "id": "ig-06",
+      "shortcode": "DR2Zw7diBgy",
+      "url": "https://www.instagram.com/quaiouest.stpol/reel/DR2Zw7diBgy/",
+      "type": "reel",
+      "date": "2025-12-01",
+      "caption": "Habillé de ses lumières d'hiver — jeudis, vendredis et samedis soirs",
+      "localFile": "ig-06-2025-12-decoration-noel-lumieres.mp4",
+      "posterFile": "ig-06-2025-12-decoration-noel-lumieres-poster.jpg",
+      "downloaded": false
+    },
+    {
+      "id": "ig-07",
+      "shortcode": "DRZRu-ZiGT6",
+      "url": "https://www.instagram.com/quaiouest.stpol/reel/DRZRu-ZiGT6/",
+      "type": "reel",
+      "date": "2025-11-01",
+      "caption": "Toute nouvelle carte — venez découvrir nos nouvelles créations",
+      "localFile": "ig-07-2025-11-nouvelle-carte.mp4",
+      "posterFile": "ig-07-2025-11-nouvelle-carte-poster.jpg",
+      "downloaded": false
+    },
+    {
+      "id": "ig-08",
+      "shortcode": "DRKVgEliN5M",
+      "url": "https://www.instagram.com/quaiouest.stpol/p/DRKVgEliN5M/",
+      "type": "image",
+      "date": "2025-11-01",
+      "caption": "Vue depuis la Plage St Anne — Restaurant Quai Ouest face à la Baie de Morlaix",
+      "localFile": "ig-08-2025-11-vue-plage-st-anne.jpg",
+      "downloaded": false
+    },
+    {
+      "id": "ig-10",
+      "shortcode": "DN-VeuoCLr0",
+      "url": "https://www.instagram.com/quaiouest.stpol/p/DN-VeuoCLr0/",
+      "type": "image",
+      "date": "2025-09-01",
+      "caption": "Horaires d'automne — fermé les lundis et mardis — Plage St Anne",
+      "localFile": "ig-10-2025-09-horaires-automne.jpg",
+      "downloaded": false
+    }
+  ]
+}
