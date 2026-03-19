@@ -15,7 +15,7 @@
   <meta property="og:type" content="restaurant">
   <meta property="og:locale" content="fr_FR">
   <meta property="og:url" content="https://quaiouest-saintpol.fr">
-  <meta property="og:image" content="https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=1200&q=80">
+  <meta property="og:image" content="assets/images/image%20ajouter/5c4b487d-83b3-465a-831d-07a3d88d2caa.jpg">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -71,7 +71,7 @@
     :root {
       --bleu-baie: #2C5F7C;
       --blanc-ecume: #F7F5F0;
-      --granit: #4A4A4A;
+      --granit: #000000;
       --ardoise: #2D2D2D;
       --cognac: #C4723A;
       --cognac-hover: #D4853A;
@@ -135,11 +135,11 @@
       font-family: var(--font-display);
       font-size: 1.5rem;
       font-weight: 700;
-      color: #fff;
+      color: #000;
       letter-spacing: 0.5px;
       transition: color 0.4s;
     }
-    header.scrolled .logo { color: var(--bleu-baie); }
+    header.scrolled .logo { color: #000; }
 
     nav { display: flex; gap: 2rem; align-items: center; }
     nav a {
@@ -249,7 +249,8 @@
     .hero-bg {
       position: absolute;
       inset: 0;
-      background-image: url('https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=1600&q=80');
+      background-image: url('assets/images/image%20ajouter/5c4b487d-83b3-465a-831d-07a3d88d2caa.jpg');
+      /* fallback */ background-color: var(--bleu-baie);
       background-size: cover;
       background-position: center;
       background-color: var(--bleu-baie);
@@ -779,6 +780,20 @@
       .floating-cta { display: block; }
       section { padding: 3.5rem 1.25rem; }
     }
+
+    /* ========== TEXTE NOIR GLOBAL ========== */
+    /* Tous les titres et textes passent en noir,
+       sauf dans les sections à fond sombre (#carte, #contact, footer) */
+    .section-title { color: #000; }
+    .section-subtitle { color: #000; opacity: 0.65; }
+    .resto-text h3 { color: #000; }
+    .resto-text p { color: #000; }
+    .horaires-card h3 { color: #000; }
+    .horaire-heure { color: #000; }
+    .galerie-insta a { color: #000; }
+    .acces-item strong { color: #000; }
+    nav a { color: rgba(255,255,255,0.92); }
+    header.scrolled nav a { color: #000; }
   </style>
 </head>
 <body>
@@ -839,7 +854,7 @@
 
       <div class="resto-grid reveal">
         <div class="resto-img">
-          <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80"
+          <img src="assets/images/image%20ajouter/a4d750f3-dfc5-441e-b314-3a5018d80d14.jpg"
                alt="Façade du restaurant Quai Ouest"
                loading="lazy"
                onerror="this.style.display='none'">
@@ -854,7 +869,7 @@
 
       <div class="resto-grid reverse reveal">
         <div class="resto-img">
-          <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80"
+          <img src="assets/images/image%20ajouter/444fdedf-aed3-4e7c-8d6e-981ce3457f14.jpg"
                alt="Terrasse et vue mer du Quai Ouest"
                loading="lazy"
                onerror="this.style.display='none'">
@@ -1052,32 +1067,32 @@
 
       <div class="galerie-grid" style="margin-top: 2rem;">
         <div class="galerie-item reveal">
-          <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&q=80"
-               alt="Plat de fruits de mer"
+          <img src="assets/images/image%20ajouter/bc322337-10ca-4f4f-9686-191dc87b62b7.jpg"
+               alt="Terrasse couverte du Quai Ouest avec vue sur la baie"
                loading="lazy"
                onerror="this.style.display='none'">
         </div>
         <div class="galerie-item reveal reveal-delay-1">
-          <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80"
-               alt="Plat gastronomique"
+          <img src="assets/images/image%20ajouter/71c22d2c-014b-4da0-9017-0082d0269a0a.jpg"
+               alt="Cocktail signature du Quai Ouest face à la mer"
                loading="lazy"
                onerror="this.style.display='none'">
         </div>
         <div class="galerie-item reveal reveal-delay-2">
-          <img src="https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?w=600&q=80"
-               alt="Ambiance restaurant"
+          <img src="assets/images/image%20ajouter/3be93a54-cf36-4412-a69f-24ac2937f248.jpg"
+               alt="Bar du Quai Ouest, éclairage chaleureux"
                loading="lazy"
                onerror="this.style.display='none'">
         </div>
         <div class="galerie-item reveal reveal-delay-1">
-          <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80"
-               alt="Assiette dressée"
+          <img src="assets/images/image%20ajouter/5ff4b295-d08f-4344-b4a6-7e75807b8d82.jpg"
+               alt="Intérieur du Quai Ouest en soirée"
                loading="lazy"
                onerror="this.style.display='none'">
         </div>
         <div class="galerie-item reveal reveal-delay-2">
-          <img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&q=80"
-               alt="Vue mer terrasse"
+          <img src="assets/images/image%20ajouter/b94ffbf7-ec5f-4dd4-a387-1a33f82661de.jpg"
+               alt="Terrasse du Quai Ouest dressée pour un événement, vue mer turquoise"
                loading="lazy"
                onerror="this.style.display='none'">
         </div>
