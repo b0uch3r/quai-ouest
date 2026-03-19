@@ -234,22 +234,26 @@
       border-bottom: 1px solid rgba(0,0,0,0.06);
     }
     .mobile-overlay {
-      display: none;
       position: fixed;
       inset: 0;
       background: rgba(0,0,0,0.4);
       backdrop-filter: blur(4px);
       z-index: 102;
       opacity: 0;
-      transition: opacity 0.4s;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.4s, visibility 0.4s;
     }
-    .mobile-overlay.open { opacity: 1; }
+    .mobile-overlay.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
 
     @media (max-width: 768px) {
       nav { display: none; }
       .hamburger { display: flex; }
       .mobile-nav { display: flex; }
-      .mobile-overlay { display: none; }
     }
 
     /* ========== HERO ========== */
@@ -421,7 +425,7 @@
       color: #fff;
     }
     #carte .section-title { color: #fff; }
-    #carte .section-subtitle { color: rgba(255,255,255,0.6); }
+    #carte .section-subtitle { color: rgba(255,255,255,0.8); }
     #carte .wave-divider { background: var(--or-chaud); }
 
     .carte-toggle {
@@ -439,7 +443,7 @@
       text-transform: uppercase;
       border: 2px solid rgba(255,255,255,0.2);
       background: transparent;
-      color: rgba(255,255,255,0.6);
+      color: rgba(255,255,255,0.8);
       cursor: pointer;
       transition: all 0.3s;
     }
