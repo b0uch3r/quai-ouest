@@ -98,34 +98,44 @@ export function useReservations(initialFilters?: Partial<ReservationFilters>) {
     setFilters((prev) => ({ ...prev, ...partial }))
   }
 
-  const updateStatus = useCallback(async (id: string, status: ReservationStatus) => {
+  const updateStatus = useCallback(async (id: string, newStatus: ReservationStatus) => {
     const supabase = createClient()
     const updates: Record<string, unknown> = {
-      status,
+      status: newStatus,
       updated_at: new Date().toISOString(),
     }
-    if (status === 'cancelled') {
+    if (newStatus === 'cancelled') {
       updates.cancelled_at = new Date().toISOString()
     }
-    const { error } = await supabase
-      .from('reservations')
-      .update(updates)
-      .eq('id', id)
-    if (error) throw error
+
+    // Optimistic update: save previous state for rollback
+    const previousData = data
     setData((prev) => ({
       ...prev,
       data: prev.data.map((r) =>
         r.id === id
           ? {
               ...r,
-              status,
+              status: newStatus,
               updated_at: updates.updated_at as string,
-              ...(status === 'cancelled' ? { cancelled_at: updates.cancelled_at as string } : {}),
+              ...(newStatus === 'cancelled' ? { cancelled_at: updates.cancelled_at as string } : {}),
             }
           : r
       ),
     }))
-  }, [])
+
+    const { error: updateError } = await supabase
+      .from('reservations')
+      .update(updates)
+      .eq('id', id)
+
+    if (updateError) {
+      // Rollback on failure
+      setData(previousData)
+      setError(`Erreur de mise à jour : ${updateError.message}`)
+      throw updateError
+    }
+  }, [data])
 
   return { ...data, filters, updateFilters, loading, error, refetch: fetchReservations, updateStatus }
 }

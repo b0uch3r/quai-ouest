@@ -1,13 +1,91 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import Link from 'next/link'
 import { ArrowUpDown, Eye, Check, X, Loader2, Utensils } from 'lucide-react'
 import { StatusBadge } from '@/components/ui/StatusBadge'
 import { Pagination } from '@/components/ui/Pagination'
 import { formatDate, formatCurrency, getInitials, cn } from '@/lib/utils'
 import type { Reservation, ReservationFilters, ReservationStatus } from '@/types'
-import { SERVICE_LABELS } from '@/types'
+import { SERVICE_LABELS, STATUS_LABELS } from '@/types'
+
+const BTN_BASE = 'inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors'
+
+function StatusActions({
+  reservation,
+  updatingId,
+  onStatusChange,
+}: {
+  reservation: Reservation
+  updatingId: string | null
+  onStatusChange: (id: string, status: ReservationStatus) => void
+}) {
+  const { id, status } = reservation
+  const isUpdating = updatingId === id
+  const clientName = reservation.client?.full_name || 'cette réservation'
+
+  if (isUpdating) {
+    return <Loader2 className="w-4 h-4 animate-spin text-granit" aria-label="Mise à jour en cours" />
+  }
+
+  return (
+    <div className="flex items-center gap-1 flex-wrap">
+      {(status === 'pending' || status === 'cancelled') && (
+        <button
+          onClick={(e) => { e.preventDefault(); onStatusChange(id, 'confirmed') }}
+          className={cn(BTN_BASE, 'bg-blue-100 text-blue-700 hover:bg-blue-200 dark:bg-blue-900/40 dark:text-blue-300 dark:hover:bg-blue-800/60')}
+          aria-label={`Confirmer ${clientName}`}
+        >
+          <Check className="w-3 h-3" />
+          Confirmer
+        </button>
+      )}
+      {status === 'confirmed' && (
+        <button
+          onClick={(e) => { e.preventDefault(); onStatusChange(id, 'seated') }}
+          className={cn(BTN_BASE, 'bg-purple-100 text-purple-700 hover:bg-purple-200 dark:bg-purple-900/40 dark:text-purple-300 dark:hover:bg-purple-800/60')}
+          aria-label={`Passer en cours ${clientName}`}
+        >
+          <Utensils className="w-3 h-3" />
+          En cours
+        </button>
+      )}
+      {(status === 'pending' || status === 'confirmed' || status === 'seated') && (
+        <button
+          onClick={(e) => { e.preventDefault(); onStatusChange(id, 'cancelled') }}
+          className={cn(BTN_BASE, 'bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/40 dark:text-red-300 dark:hover:bg-red-800/60')}
+          aria-label={`Annuler ${clientName}`}
+        >
+          <X className="w-3 h-3" />
+          Annuler
+        </button>
+      )}
+    </div>
+  )
+}
+
+function SortHeader({
+  field,
+  activeSort,
+  children,
+  onSort,
+}: {
+  field: string
+  activeSort: string
+  children: React.ReactNode
+  onSort: (field: string) => void
+}) {
+  return (
+    <button
+      onClick={() => onSort(field)}
+      className="flex items-center gap-1 text-xs font-medium text-granit uppercase tracking-wider hover:text-ardoise dark:hover:text-blanc-ecume"
+      aria-label={`Trier par ${typeof children === 'string' ? children : field}`}
+    >
+      {children}
+      <ArrowUpDown className="w-3 h-3" />
+    </button>
+  )
+}
 
 interface ReservationTableProps {
   reservations: Reservation[]
@@ -27,7 +105,7 @@ export function ReservationTable({
   const totalPages = Math.ceil(total / filters.limit)
   const [updatingId, setUpdatingId] = useState<string | null>(null)
 
-  async function handleStatusChange(id: string, status: ReservationStatus) {
+  const handleStatusChange = useCallback(async (id: string, status: ReservationStatus) => {
     if (!onStatusChange || updatingId) return
     setUpdatingId(id)
     try {
@@ -35,74 +113,15 @@ export function ReservationTable({
     } finally {
       setUpdatingId(null)
     }
-  }
+  }, [onStatusChange, updatingId])
 
-  function StatusActions({ reservation }: { reservation: Reservation }) {
-    if (!onStatusChange) return null
-    const { id, status } = reservation
-    const isUpdating = updatingId === id
-
-    if (isUpdating) {
-      return <Loader2 className="w-4 h-4 animate-spin text-granit" />
-    }
-
-    const btnBase = 'inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors'
-
-    return (
-      <div className="flex items-center gap-1">
-        {(status === 'pending' || status === 'cancelled') && (
-          <button
-            onClick={(e) => { e.preventDefault(); handleStatusChange(id, 'confirmed') }}
-            className={cn(btnBase, 'bg-blue-100 text-blue-700 hover:bg-blue-200 dark:bg-blue-900/40 dark:text-blue-300 dark:hover:bg-blue-800/60')}
-            title="Confirmer"
-          >
-            <Check className="w-3 h-3" />
-            Confirmer
-          </button>
-        )}
-        {status === 'confirmed' && (
-          <button
-            onClick={(e) => { e.preventDefault(); handleStatusChange(id, 'seated') }}
-            className={cn(btnBase, 'bg-purple-100 text-purple-700 hover:bg-purple-200 dark:bg-purple-900/40 dark:text-purple-300 dark:hover:bg-purple-800/60')}
-            title="En cours"
-          >
-            <Utensils className="w-3 h-3" />
-            En cours
-          </button>
-        )}
-        {(status === 'pending' || status === 'confirmed' || status === 'seated') && (
-          <button
-            onClick={(e) => { e.preventDefault(); handleStatusChange(id, 'cancelled') }}
-            className={cn(btnBase, 'bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/40 dark:text-red-300 dark:hover:bg-red-800/60')}
-            title="Annuler"
-          >
-            <X className="w-3 h-3" />
-            Annuler
-          </button>
-        )}
-      </div>
-    )
-  }
-
-  function toggleSort(field: string) {
+  const toggleSort = useCallback((field: string) => {
     if (filters.sort === field) {
       onFiltersChange({ order: filters.order === 'asc' ? 'desc' : 'asc' })
     } else {
       onFiltersChange({ sort: field, order: 'desc' })
     }
-  }
-
-  function SortHeader({ field, children }: { field: string; children: React.ReactNode }) {
-    return (
-      <button
-        onClick={() => toggleSort(field)}
-        className="flex items-center gap-1 text-xs font-medium text-granit uppercase tracking-wider hover:text-ardoise dark:hover:text-blanc-ecume"
-      >
-        {children}
-        <ArrowUpDown className="w-3 h-3" />
-      </button>
-    )
-  }
+  }, [filters.sort, filters.order, onFiltersChange])
 
   if (reservations.length === 0) {
     return (
@@ -119,14 +138,14 @@ export function ReservationTable({
         <table className="w-full">
           <thead>
             <tr className="border-b border-sable dark:border-granit/30">
-              <th className="text-left p-4"><SortHeader field="reservation_date">Date</SortHeader></th>
-              <th className="text-left p-4"><span className="text-xs font-medium text-granit uppercase tracking-wider">Client</span></th>
-              <th className="text-left p-4"><span className="text-xs font-medium text-granit uppercase tracking-wider">Service</span></th>
-              <th className="text-left p-4"><SortHeader field="guests_count">Couverts</SortHeader></th>
-              <th className="text-left p-4"><span className="text-xs font-medium text-granit uppercase tracking-wider">Statut</span></th>
-              <th className="text-left p-4"><SortHeader field="amount_cents">Montant</SortHeader></th>
-              {onStatusChange && <th className="text-left p-4"><span className="text-xs font-medium text-granit uppercase tracking-wider">Actions</span></th>}
-              <th className="text-right p-4"></th>
+              <th className="text-left p-4" scope="col"><SortHeader field="reservation_date" activeSort={filters.sort} onSort={toggleSort}>Date</SortHeader></th>
+              <th className="text-left p-4" scope="col"><span className="text-xs font-medium text-granit uppercase tracking-wider">Client</span></th>
+              <th className="text-left p-4" scope="col"><span className="text-xs font-medium text-granit uppercase tracking-wider">Service</span></th>
+              <th className="text-left p-4" scope="col"><SortHeader field="guests_count" activeSort={filters.sort} onSort={toggleSort}>Couverts</SortHeader></th>
+              <th className="text-left p-4" scope="col"><span className="text-xs font-medium text-granit uppercase tracking-wider">Statut</span></th>
+              <th className="text-left p-4" scope="col"><SortHeader field="amount_cents" activeSort={filters.sort} onSort={toggleSort}>Montant</SortHeader></th>
+              {onStatusChange && <th className="text-left p-4" scope="col"><span className="text-xs font-medium text-granit uppercase tracking-wider">Actions</span></th>}
+              <th className="text-right p-4" scope="col"><span className="sr-only">Détails</span></th>
             </tr>
           </thead>
           <tbody>
@@ -155,13 +174,14 @@ export function ReservationTable({
                 <td className="p-4 text-sm">{formatCurrency(r.amount_cents)}</td>
                 {onStatusChange && (
                   <td className="p-4">
-                    <StatusActions reservation={r} />
+                    <StatusActions reservation={r} updatingId={updatingId} onStatusChange={handleStatusChange} />
                   </td>
                 )}
                 <td className="p-4 text-right">
                   <Link
                     href={`/dashboard/reservations/${r.id}`}
                     className="inline-flex items-center gap-1 text-sm text-cognac hover:underline"
+                    aria-label={`Voir détails ${r.client?.full_name || 'réservation'}`}
                   >
                     <Eye className="w-4 h-4" />
                     Voir
@@ -187,11 +207,14 @@ export function ReservationTable({
               <span>{r.guests_count} pers.</span>
               {r.amount_cents && <span className="ml-auto font-medium text-ardoise dark:text-blanc-ecume">{formatCurrency(r.amount_cents)}</span>}
             </div>
-            <div className="flex items-center gap-2">
-              <StatusActions reservation={r} />
+            <div className="flex items-center gap-2 flex-wrap">
+              {onStatusChange && (
+                <StatusActions reservation={r} updatingId={updatingId} onStatusChange={handleStatusChange} />
+              )}
               <Link
                 href={`/dashboard/reservations/${r.id}`}
                 className="ml-auto inline-flex items-center gap-1 text-xs text-cognac hover:underline"
+                aria-label={`Voir détails ${r.client?.full_name || 'réservation'}`}
               >
                 <Eye className="w-3 h-3" />
                 Voir

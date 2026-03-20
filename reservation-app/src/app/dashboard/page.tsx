@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect, useCallback } from 'react'
 import { CalendarDays, Users, TrendingUp, AlertCircle } from 'lucide-react'
 import { StatsCard } from '@/components/ui/StatsCard'
 import { ReservationFilters } from '@/components/reservations/ReservationFilters'
@@ -7,6 +8,7 @@ import { ReservationTable } from '@/components/reservations/ReservationTable'
 import { ExportPanel } from '@/components/reservations/ExportPanel'
 import { useReservations } from '@/hooks/useReservations'
 import { formatCurrency } from '@/lib/utils'
+import type { ReservationStats } from '@/types'
 
 export default function DashboardPage() {
   const {
@@ -19,11 +21,28 @@ export default function DashboardPage() {
     updateStatus,
   } = useReservations()
 
-  // Quick stats from loaded data
+  // Real stats from dedicated API endpoint
+  const [stats, setStats] = useState<ReservationStats | null>(null)
+
+  const fetchStats = useCallback(async () => {
+    try {
+      const res = await fetch('/api/reservations/stats')
+      if (res.ok) setStats(await res.json())
+    } catch {
+      // Stats are non-critical, fail silently
+    }
+  }, [])
+
+  useEffect(() => { fetchStats() }, [fetchStats])
+
+  // Refetch stats after a status change
+  const handleStatusChange = useCallback(async (id: string, status: Parameters<typeof updateStatus>[1]) => {
+    await updateStatus(id, status)
+    fetchStats()
+  }, [updateStatus, fetchStats])
+
   const todayStr = new Date().toISOString().split('T')[0]
   const todayCount = reservations.filter((r) => r.reservation_date === todayStr).length
-  const pendingCount = reservations.filter((r) => r.status === 'pending').length
-  const totalRevenue = reservations.reduce((sum, r) => sum + (r.amount_cents || 0), 0)
 
   return (
     <div className="space-y-6">
@@ -39,7 +58,7 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatsCard
           label="Réservations totales"
-          value={total}
+          value={stats?.total_reservations ?? total}
           icon={CalendarDays}
         />
         <StatsCard
@@ -49,12 +68,12 @@ export default function DashboardPage() {
         />
         <StatsCard
           label="En attente"
-          value={pendingCount}
+          value={stats?.by_status?.pending ?? 0}
           icon={AlertCircle}
         />
         <StatsCard
           label="Chiffre d'affaires"
-          value={formatCurrency(totalRevenue)}
+          value={formatCurrency(stats?.total_revenue_cents ?? 0)}
           icon={TrendingUp}
         />
       </div>
@@ -81,7 +100,7 @@ export default function DashboardPage() {
           total={total}
           filters={filters}
           onFiltersChange={updateFilters}
-          onStatusChange={updateStatus}
+          onStatusChange={handleStatusChange}
         />
       )}
 
