@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  body {
+    @apply font-body text-ardoise bg-blanc-ecume dark:bg-ardoise dark:text-blanc-ecume antialiased;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg
+           bg-cognac text-white font-medium text-sm
+           hover:bg-cognac/90 transition-colors
+           focus:outline-none focus:ring-2 focus:ring-cognac focus:ring-offset-2
+           dark:focus:ring-offset-ardoise
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg
+           border border-granit/30 text-ardoise font-medium text-sm
+           hover:bg-sable/50 transition-colors
+           dark:text-blanc-ecume dark:border-granit/50 dark:hover:bg-granit/20
+           focus:outline-none focus:ring-2 focus:ring-granit focus:ring-offset-2
+           dark:focus:ring-offset-ardoise
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .card {
+    @apply bg-white dark:bg-ardoise/80 rounded-xl border border-sable dark:border-granit/30
+           shadow-sm;
+  }
+  .input {
+    @apply w-full px-3 py-2 rounded-lg text-sm
+           border border-sable dark:border-granit/50
+           bg-white dark:bg-ardoise/60
+           text-ardoise dark:text-blanc-ecume
+           placeholder:text-granit/60
+           focus:outline-none focus:ring-2 focus:ring-cognac/50 focus:border-cognac
+           transition-colors;
+  }
+}

@@ -1578,7 +1578,9 @@
           </div>
         </div>
 
-        <form class="contact-form reveal reveal-delay-1" id="reservationForm" action="https://formspree.io/f/xovdpwla" method="POST">
+        <form class="contact-form reveal reveal-delay-1" id="reservationForm" data-api="https://quai-ouest-reservations.vercel.app/api/reservations/public" method="POST">
+          <!-- Honeypot anti-spam (invisible) -->
+          <input type="text" name="_gotcha" style="display:none !important" tabindex="-1" autocomplete="off">
           <div class="form-row">
             <div class="form-field">
               <label for="nom">Nom *</label>
@@ -1705,6 +1707,7 @@
     <div class="footer-bottom">
       © 2026 Quai Ouest — Tous droits réservés
       · <button onclick="document.getElementById('modalMentions').classList.add('open')" style="background:none;border:none;color:rgba(255,255,255,0.5);cursor:pointer;font-size:0.8rem;text-decoration:underline;padding:0;">Mentions légales</button>
+      · <a href="https://quai-ouest-reservations.vercel.app/login" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.35);font-size:0.75rem;text-decoration:none;" title="Espace staff">Staff</a>
     </div>
   </footer>
 
@@ -1870,7 +1873,7 @@
       });
     });
 
-    // === FORMSPREE AJAX SUBMIT ===
+    // === RESERVATION API SUBMIT ===
     const reservationForm = document.getElementById('reservationForm');
     if (reservationForm) {
       reservationForm.addEventListener('submit', async (e) => {
@@ -1879,19 +1882,23 @@
         btn.disabled = true;
         btn.textContent = 'Envoi en cours…';
         try {
-          const response = await fetch(reservationForm.action, {
+          const formData = new FormData(reservationForm);
+          const data = Object.fromEntries(formData.entries());
+          const apiUrl = reservationForm.dataset.api;
+          const response = await fetch(apiUrl, {
             method: 'POST',
-            body: new FormData(reservationForm),
-            headers: { 'Accept': 'application/json' }
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
           });
           if (response.ok) {
             reservationForm.reset();
             document.getElementById('formSuccess').classList.add('visible');
             btn.style.display = 'none';
           } else {
+            const err = await response.json().catch(() => ({}));
             btn.disabled = false;
             btn.textContent = 'Envoyer ma demande';
-            alert('Une erreur est survenue. Merci de nous appeler au 02 98 29 08 09.');
+            alert(err.error || 'Une erreur est survenue. Merci de nous appeler au 02 98 29 08 09.');
           }
         } catch {
           btn.disabled = false;
