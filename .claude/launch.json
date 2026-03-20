@@ -3,10 +3,11 @@
   "configurations": [
     {
       "name": "quai-ouest",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
-      "cwd": "C:/Users/auror/Documents/GitHub/quai-ouest/reservation-app",
-      "port": 3000
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["C:/Users/auror/Documents/GitHub/quai-ouest/reservation-app/node_modules/next/dist/bin/next", "dev"],
+      "cwd": "reservation-app",
+      "port": 3000,
+      "autoPort": true
     }
   ]
 }

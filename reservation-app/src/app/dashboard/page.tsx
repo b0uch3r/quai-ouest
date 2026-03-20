@@ -16,6 +16,7 @@ export default function DashboardPage() {
     updateFilters,
     loading,
     error,
+    updateStatus,
   } = useReservations()
 
   // Quick stats from loaded data
@@ -80,6 +81,7 @@ export default function DashboardPage() {
           total={total}
           filters={filters}
           onFiltersChange={updateFilters}
+          onStatusChange={updateStatus}
         />
       )}
 
