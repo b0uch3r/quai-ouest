@@ -4,4 +4,4 @@ Disallow: /config/
 Disallow: /scripts/
 Disallow: /content/
 
-Sitemap: https://quaiouest-saintpol.fr/sitemap.xml
+Sitemap: https://b0uch3r.github.io/quai-ouest/sitemap.xml
