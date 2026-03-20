@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { ArrowUpDown, Eye, Check, X, Loader2, Utensils } from 'lucide-react'
 import { StatusBadge } from '@/components/ui/StatusBadge'
 import { Pagination } from '@/components/ui/Pagination'
+import { ConfirmModal } from '@/components/ui/ConfirmModal'
 import { formatDate, formatCurrency, getInitials, cn } from '@/lib/utils'
 import type { Reservation, ReservationFilters, ReservationStatus } from '@/types'
 import { SERVICE_LABELS, STATUS_LABELS } from '@/types'
@@ -15,10 +16,12 @@ function StatusActions({
   reservation,
   updatingId,
   onStatusChange,
+  onRequestCancel,
 }: {
   reservation: Reservation
   updatingId: string | null
   onStatusChange: (id: string, status: ReservationStatus) => void
+  onRequestCancel: (reservation: Reservation) => void
 }) {
   const { id, status } = reservation
   const isUpdating = updatingId === id
@@ -52,7 +55,7 @@ function StatusActions({
       )}
       {(status === 'pending' || status === 'confirmed' || status === 'seated') && (
         <button
-          onClick={(e) => { e.preventDefault(); onStatusChange(id, 'cancelled') }}
+          onClick={(e) => { e.preventDefault(); onRequestCancel(reservation) }}
           className={cn(BTN_BASE, 'bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/40 dark:text-red-300 dark:hover:bg-red-800/60')}
           aria-label={`Annuler ${clientName}`}
         >
@@ -104,6 +107,7 @@ export function ReservationTable({
 }: ReservationTableProps) {
   const totalPages = Math.ceil(total / filters.limit)
   const [updatingId, setUpdatingId] = useState<string | null>(null)
+  const [cancelTarget, setCancelTarget] = useState<Reservation | null>(null)
 
   const handleStatusChange = useCallback(async (id: string, status: ReservationStatus) => {
     if (!onStatusChange || updatingId) return
@@ -114,6 +118,17 @@ export function ReservationTable({
       setUpdatingId(null)
     }
   }, [onStatusChange, updatingId])
+
+  const requestCancel = useCallback((reservation: Reservation) => {
+    setCancelTarget(reservation)
+  }, [])
+
+  const confirmCancel = useCallback(() => {
+    if (cancelTarget) {
+      handleStatusChange(cancelTarget.id, 'cancelled')
+      setCancelTarget(null)
+    }
+  }, [cancelTarget, handleStatusChange])
 
   const toggleSort = useCallback((field: string) => {
     if (filters.sort === field) {
@@ -174,7 +189,7 @@ export function ReservationTable({
                 <td className="p-4 text-sm">{formatCurrency(r.amount_cents)}</td>
                 {onStatusChange && (
                   <td className="p-4">
-                    <StatusActions reservation={r} updatingId={updatingId} onStatusChange={handleStatusChange} />
+                    <StatusActions reservation={r} updatingId={updatingId} onStatusChange={handleStatusChange} onRequestCancel={requestCancel} />
                   </td>
                 )}
                 <td className="p-4 text-right">
@@ -209,7 +224,7 @@ export function ReservationTable({
             </div>
             <div className="flex items-center gap-2 flex-wrap">
               {onStatusChange && (
-                <StatusActions reservation={r} updatingId={updatingId} onStatusChange={handleStatusChange} />
+                <StatusActions reservation={r} updatingId={updatingId} onStatusChange={handleStatusChange} onRequestCancel={requestCancel} />
               )}
               <Link
                 href={`/dashboard/reservations/${r.id}`}
@@ -228,6 +243,15 @@ export function ReservationTable({
         page={filters.page}
         totalPages={totalPages}
         onPageChange={(page) => onFiltersChange({ page })}
+      />
+
+      <ConfirmModal
+        open={!!cancelTarget}
+        title="Annuler cette réservation ?"
+        message={`Voulez-vous vraiment annuler la réservation de ${cancelTarget?.client?.full_name || 'ce client'} ?`}
+        confirmLabel="Oui, annuler"
+        onConfirm={confirmCancel}
+        onCancel={() => setCancelTarget(null)}
       />
     </div>
   )
