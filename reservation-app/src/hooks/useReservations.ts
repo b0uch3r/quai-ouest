@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { createClient } from '@/lib/supabase-browser'
-import type { Reservation, ReservationFilters, PaginatedResponse } from '@/types'
+import type { Reservation, ReservationFilters, PaginatedResponse, ReservationStatus } from '@/types'
 
 const DEFAULT_FILTERS: ReservationFilters = {
   page: 1,
@@ -98,5 +98,34 @@ export function useReservations(initialFilters?: Partial<ReservationFilters>) {
     setFilters((prev) => ({ ...prev, ...partial }))
   }
 
-  return { ...data, filters, updateFilters, loading, error, refetch: fetchReservations }
+  const updateStatus = useCallback(async (id: string, status: ReservationStatus) => {
+    const supabase = createClient()
+    const updates: Record<string, unknown> = {
+      status,
+      updated_at: new Date().toISOString(),
+    }
+    if (status === 'cancelled') {
+      updates.cancelled_at = new Date().toISOString()
+    }
+    const { error } = await supabase
+      .from('reservations')
+      .update(updates)
+      .eq('id', id)
+    if (error) throw error
+    setData((prev) => ({
+      ...prev,
+      data: prev.data.map((r) =>
+        r.id === id
+          ? {
+              ...r,
+              status,
+              updated_at: updates.updated_at as string,
+              ...(status === 'cancelled' ? { cancelled_at: updates.cancelled_at as string } : {}),
+            }
+          : r
+      ),
+    }))
+  }, [])
+
+  return { ...data, filters, updateFilters, loading, error, refetch: fetchReservations, updateStatus }
 }

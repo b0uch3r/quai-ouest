@@ -3,9 +3,11 @@
   "configurations": [
     {
       "name": "quai-ouest",
-      "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "8080", "--directory", "C:/Users/auror/Documents/GitHub/quai-ouest"],
-      "port": 8080
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["C:/Users/auror/Documents/GitHub/quai-ouest/reservation-app/node_modules/next/dist/bin/next", "dev"],
+      "cwd": "reservation-app",
+      "port": 3000,
+      "autoPort": true
     }
   ]
 }

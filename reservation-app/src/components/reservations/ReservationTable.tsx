@@ -1,11 +1,12 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
-import { ArrowUpDown, Eye } from 'lucide-react'
+import { ArrowUpDown, Eye, Check, X, Loader2, Utensils } from 'lucide-react'
 import { StatusBadge } from '@/components/ui/StatusBadge'
 import { Pagination } from '@/components/ui/Pagination'
 import { formatDate, formatCurrency, getInitials, cn } from '@/lib/utils'
-import type { Reservation, ReservationFilters } from '@/types'
+import type { Reservation, ReservationFilters, ReservationStatus } from '@/types'
 import { SERVICE_LABELS } from '@/types'
 
 interface ReservationTableProps {
@@ -13,6 +14,7 @@ interface ReservationTableProps {
   total: number
   filters: ReservationFilters
   onFiltersChange: (filters: Partial<ReservationFilters>) => void
+  onStatusChange?: (id: string, status: ReservationStatus) => Promise<void>
 }
 
 export function ReservationTable({
@@ -20,8 +22,67 @@ export function ReservationTable({
   total,
   filters,
   onFiltersChange,
+  onStatusChange,
 }: ReservationTableProps) {
   const totalPages = Math.ceil(total / filters.limit)
+  const [updatingId, setUpdatingId] = useState<string | null>(null)
+
+  async function handleStatusChange(id: string, status: ReservationStatus) {
+    if (!onStatusChange || updatingId) return
+    setUpdatingId(id)
+    try {
+      await onStatusChange(id, status)
+    } finally {
+      setUpdatingId(null)
+    }
+  }
+
+  function StatusActions({ reservation }: { reservation: Reservation }) {
+    if (!onStatusChange) return null
+    const { id, status } = reservation
+    const isUpdating = updatingId === id
+
+    if (isUpdating) {
+      return <Loader2 className="w-4 h-4 animate-spin text-granit" />
+    }
+
+    const btnBase = 'inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors'
+
+    return (
+      <div className="flex items-center gap-1">
+        {(status === 'pending' || status === 'cancelled') && (
+          <button
+            onClick={(e) => { e.preventDefault(); handleStatusChange(id, 'confirmed') }}
+            className={cn(btnBase, 'bg-blue-100 text-blue-700 hover:bg-blue-200 dark:bg-blue-900/40 dark:text-blue-300 dark:hover:bg-blue-800/60')}
+            title="Confirmer"
+          >
+            <Check className="w-3 h-3" />
+            Confirmer
+          </button>
+        )}
+        {status === 'confirmed' && (
+          <button
+            onClick={(e) => { e.preventDefault(); handleStatusChange(id, 'seated') }}
+            className={cn(btnBase, 'bg-purple-100 text-purple-700 hover:bg-purple-200 dark:bg-purple-900/40 dark:text-purple-300 dark:hover:bg-purple-800/60')}
+            title="En cours"
+          >
+            <Utensils className="w-3 h-3" />
+            En cours
+          </button>
+        )}
+        {(status === 'pending' || status === 'confirmed' || status === 'seated') && (
+          <button
+            onClick={(e) => { e.preventDefault(); handleStatusChange(id, 'cancelled') }}
+            className={cn(btnBase, 'bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/40 dark:text-red-300 dark:hover:bg-red-800/60')}
+            title="Annuler"
+          >
+            <X className="w-3 h-3" />
+            Annuler
+          </button>
+        )}
+      </div>
+    )
+  }
 
   function toggleSort(field: string) {
     if (filters.sort === field) {
@@ -64,6 +125,7 @@ export function ReservationTable({
               <th className="text-left p-4"><SortHeader field="guests_count">Couverts</SortHeader></th>
               <th className="text-left p-4"><span className="text-xs font-medium text-granit uppercase tracking-wider">Statut</span></th>
               <th className="text-left p-4"><SortHeader field="amount_cents">Montant</SortHeader></th>
+              {onStatusChange && <th className="text-left p-4"><span className="text-xs font-medium text-granit uppercase tracking-wider">Actions</span></th>}
               <th className="text-right p-4"></th>
             </tr>
           </thead>
@@ -91,6 +153,11 @@ export function ReservationTable({
                 <td className="p-4 text-sm">{r.guests_count}</td>
                 <td className="p-4"><StatusBadge status={r.status} /></td>
                 <td className="p-4 text-sm">{formatCurrency(r.amount_cents)}</td>
+                {onStatusChange && (
+                  <td className="p-4">
+                    <StatusActions reservation={r} />
+                  </td>
+                )}
                 <td className="p-4 text-right">
                   <Link
                     href={`/dashboard/reservations/${r.id}`}
@@ -109,22 +176,28 @@ export function ReservationTable({
       {/* Mobile cards */}
       <div className="md:hidden divide-y divide-sable dark:divide-granit/30">
         {reservations.map((r) => (
-          <Link
-            key={r.id}
-            href={`/dashboard/reservations/${r.id}`}
-            className="block p-4 hover:bg-sable/20 dark:hover:bg-granit/10 transition-colors"
-          >
+          <div key={r.id} className="p-4">
             <div className="flex items-center justify-between mb-2">
               <p className="font-medium text-sm">{r.client?.full_name || 'Anonyme'}</p>
               <StatusBadge status={r.status} />
             </div>
-            <div className="flex items-center gap-4 text-xs text-granit">
+            <div className="flex items-center gap-4 text-xs text-granit mb-3">
               <span>{formatDate(r.reservation_date)}</span>
               <span>{SERVICE_LABELS[r.service]}</span>
               <span>{r.guests_count} pers.</span>
               {r.amount_cents && <span className="ml-auto font-medium text-ardoise dark:text-blanc-ecume">{formatCurrency(r.amount_cents)}</span>}
             </div>
-          </Link>
+            <div className="flex items-center gap-2">
+              <StatusActions reservation={r} />
+              <Link
+                href={`/dashboard/reservations/${r.id}`}
+                className="ml-auto inline-flex items-center gap-1 text-xs text-cognac hover:underline"
+              >
+                <Eye className="w-3 h-3" />
+                Voir
+              </Link>
+            </div>
+          </div>
         ))}
       </div>
 
