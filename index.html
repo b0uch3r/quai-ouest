@@ -4,18 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Quai Ouest — Restaurant Bistronomique face à la mer | Saint-Pol-de-Léon</title>
-  <meta name="description" content="Restaurant bistronomique sur la Plage St Anne à Saint-Pol-de-Léon. Cuisine de saison, produits frais et locaux, vue panoramique sur la Baie de Morlaix. Réservation : 02 98 29 08 09.">
+  <meta name="description" content="Restaurant bistronomique à Saint-Pol-de-Léon, vue sur la Baie de Morlaix. Cuisine de saison, produits locaux. Menu anti-gaspi 14€. Réservation : 02 98 29 08 09.">
   <meta name="keywords" content="restaurant, Saint-Pol-de-Léon, bistronomique, fruits de mer, Baie de Morlaix, Bretagne, Finistère">
   <meta name="author" content="Quai Ouest">
   <meta name="robots" content="index, follow">
+  <meta name="geo.region" content="FR-29">
+  <meta name="geo.placename" content="Saint-Pol-de-Léon">
+  <meta name="geo.position" content="48.6847;-3.9870">
+  <meta name="ICBM" content="48.6847, -3.9870">
+  <meta name="theme-color" content="#2C5F7C">
 
   <!-- Canonical -->
-  <link rel="canonical" href="https://b0uch3r.github.io/quai-ouest/">
+  <link rel="canonical" href="https://quaiouest-saintpol.fr">
 
   <!-- Open Graph -->
   <meta property="og:title" content="Quai Ouest — Bistronomie face à la mer">
   <meta property="og:description" content="Restaurant bistronomique sur la Plage St Anne à Saint-Pol-de-Léon. Vue panoramique sur la Baie de Morlaix.">
-  <meta property="og:type" content="restaurant">
+  <meta property="og:type" content="website">
   <meta property="og:locale" content="fr_FR">
   <meta property="og:url" content="https://b0uch3r.github.io/quai-ouest/">
   <meta property="og:image" content="https://b0uch3r.github.io/quai-ouest/assets/images/hero-terrasse-plage.jpg">
@@ -26,6 +31,9 @@
   <meta name="twitter:title" content="Quai Ouest — Bistronomie face à la mer">
   <meta name="twitter:description" content="Restaurant bistronomique sur la Plage St Anne à Saint-Pol-de-Léon. Vue panoramique sur la Baie de Morlaix.">
   <meta name="twitter:image" content="https://b0uch3r.github.io/quai-ouest/assets/images/hero-terrasse-plage.jpg">
+
+  <!-- Preload hero image (LCP) -->
+  <link rel="preload" as="image" href="assets/images/hero-terrasse-plage.jpg" fetchpriority="high">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -70,7 +78,79 @@
       {"@type": "OpeningHoursSpecification","dayOfWeek": "Saturday","opens": "19:00","closes": "21:30"},
       {"@type": "OpeningHoursSpecification","dayOfWeek": "Sunday","opens": "12:00","closes": "14:00"}
     ],
-    "acceptsReservations": "True"
+    "acceptsReservations": true,
+    "hasMenu": "https://quaiouest-saintpol.fr#carte",
+    "paymentAccepted": "Cash, Credit Card",
+    "currenciesAccepted": "EUR",
+    "sameAs": [
+      "https://www.instagram.com/quaiouest.stpol/",
+      "https://www.facebook.com/p/Quai-Ouest-100068821471690/",
+      "https://www.tripadvisor.fr/Restaurant_Review-g660194-d23568654-Reviews-Quai_Ouest.html"
+    ],
+    "image": "https://b0uch3r.github.io/quai-ouest/assets/images/hero-terrasse-plage.jpg",
+    "amenityFeature": [
+      {"@type": "LocationFeatureSpecification", "name": "Terrasse vue mer", "value": true},
+      {"@type": "LocationFeatureSpecification", "name": "Accès PMR", "value": true},
+      {"@type": "LocationFeatureSpecification", "name": "Animaux acceptés", "value": true},
+      {"@type": "LocationFeatureSpecification", "name": "Parking", "value": true}
+    ]
+  }
+  </script>
+  <!-- FAQPage Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Quels sont les horaires du restaurant Quai Ouest ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Le Quai Ouest est ouvert du mardi au dimanche le midi (12h-14h). Le soir, ouverture le vendredi et samedi uniquement (19h-21h30). Fermé le lundi."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Comment réserver une table au Quai Ouest ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Par téléphone au 02 98 29 08 09 ou via le formulaire de contact sur notre site. Réservation conseillée pour le service du soir."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Où est situé le restaurant Quai Ouest ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "1 Promenade de Penarth, Plage St Anne, 29250 Saint-Pol-de-Léon, Finistère, Bretagne. Face à la Baie de Morlaix."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Quel est le prix du menu anti-gaspi ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Le menu anti-gaspi est proposé à partir de 14€ (Entrée + Plat ou Plat + Dessert), disponible du mardi au vendredi midi."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Le restaurant est-il accessible aux personnes à mobilité réduite ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Oui, le restaurant Quai Ouest dispose d'un accès PMR. Un parking est également disponible à proximité."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Les animaux sont-ils acceptés au Quai Ouest ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Oui, les animaux sont acceptés au restaurant Quai Ouest."
+        }
+      }
+    ]
   }
   </script>
 
