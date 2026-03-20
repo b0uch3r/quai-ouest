@@ -653,7 +653,7 @@
       .horaires-grid { grid-template-columns: 1fr; gap: 1.5rem; }
     }
 
-    /* ========== CONTACT ========== */
+    /* ========== CONTACT / RÉSERVATION ========== */
     #contact {
       background: linear-gradient(135deg, var(--bleu-baie), #1E4A5F);
       color: #fff;
@@ -663,9 +663,9 @@
 
     .contact-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1.15fr;
       gap: 3rem;
-      max-width: 900px;
+      max-width: 960px;
       margin: 0 auto;
     }
 
@@ -682,7 +682,9 @@
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
+      transition: background 0.3s;
     }
+    .contact-item:hover .contact-icon { background: rgba(255,255,255,0.18); }
     .contact-icon svg { width: 22px; height: 22px; stroke: var(--or-chaud); fill: none; stroke-width: 2; }
     .contact-item-text h4 { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.1rem; }
     .contact-item-text p { font-size: 0.9rem; opacity: 0.8; }
@@ -704,67 +706,192 @@
     .social-link:hover { background: var(--cognac); transform: translateY(-2px); }
     .social-link svg { width: 20px; height: 20px; fill: #fff; }
 
+    /* ---- Formulaire de réservation ---- */
     .contact-form {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 0.9rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+    .contact-form .form-header {
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+    .contact-form .form-header h3 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      margin-bottom: 0.25rem;
+    }
+    .contact-form .form-header p {
+      font-size: 0.8rem;
+      opacity: 0.6;
     }
     .contact-form input,
     .contact-form textarea,
     .contact-form select {
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.18);
       border-radius: 6px;
       padding: 0.8rem 1rem;
       color: #fff;
       font-family: var(--font-body);
       font-size: 0.9rem;
-      transition: border-color 0.3s;
+      transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
     }
     .contact-form input::placeholder,
-    .contact-form textarea::placeholder { color: rgba(255,255,255,0.4); }
+    .contact-form textarea::placeholder { color: rgba(255,255,255,0.45); }
     .contact-form input:focus,
     .contact-form textarea:focus,
     .contact-form select:focus {
       outline: none;
       border-color: var(--or-chaud);
+      background: rgba(255,255,255,0.12);
+      box-shadow: 0 0 0 3px rgba(212,168,83,0.15);
     }
-    .contact-form textarea { min-height: 100px; resize: vertical; }
+    .contact-form textarea { min-height: 80px; resize: vertical; }
     .contact-form select option { color: var(--granit); background: #fff; }
-    .form-row { display: flex; gap: 1rem; }
+    .form-row { display: flex; gap: 0.9rem; }
     .form-row > * { flex: 1; }
 
-    @media (max-width: 768px) {
-      .contact-grid { grid-template-columns: 1fr; }
-      .form-row { flex-direction: column; }
-    }
-
-    /* Form labels */
+    /* Labels */
     .contact-form label {
       display: block;
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       font-weight: 600;
       letter-spacing: 0.5px;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.65);
+      color: rgba(255,255,255,0.7);
       margin-bottom: 0.3rem;
     }
     .form-field { display: flex; flex-direction: column; flex: 1; }
     .form-row .form-field { flex: 1; }
 
-    /* Form success message */
+    /* Validation inline */
+    .form-field.has-error input,
+    .form-field.has-error select,
+    .form-field.has-error textarea {
+      border-color: #e57373;
+      background: rgba(229,115,115,0.08);
+    }
+    .form-field .field-error {
+      display: none;
+      font-size: 0.72rem;
+      color: #ef9a9a;
+      margin-top: 0.25rem;
+    }
+    .form-field.has-error .field-error { display: block; }
+
+    /* Jour fermé */
+    .form-field .closed-day-hint {
+      display: none;
+      font-size: 0.72rem;
+      color: var(--or-chaud);
+      margin-top: 0.25rem;
+    }
+    .form-field .closed-day-hint.visible { display: block; }
+
+    /* Submit button amélioré */
+    .btn-submit {
+      position: relative;
+      width: 100%;
+      padding: 0.9rem 2rem;
+      background: var(--cognac);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+      margin-top: 0.5rem;
+    }
+    .btn-submit:hover:not(:disabled) {
+      background: var(--or-chaud);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(196,114,58,0.3);
+    }
+    .btn-submit:active:not(:disabled) { transform: translateY(0); }
+    .btn-submit:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+    .btn-submit .btn-text { transition: opacity 0.2s; }
+    .btn-submit.is-loading .btn-text { opacity: 0; }
+    .btn-submit .btn-spinner {
+      display: none;
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 20px; height: 20px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+    .btn-submit.is-loading .btn-spinner { display: block; }
+    @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+    /* Success message amélioré */
     .form-success {
       display: none;
-      background: rgba(76, 175, 80, 0.2);
-      border: 1px solid rgba(76, 175, 80, 0.5);
-      border-radius: 8px;
-      padding: 1.5rem;
       text-align: center;
       color: #fff;
+      padding: 2rem 1.5rem;
     }
-    .form-success.visible { display: block; }
-    .form-success h4 { font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 0.4rem; }
-    .form-success p { font-size: 0.9rem; opacity: 0.85; }
+    .form-success.visible { display: block; animation: fadeInUp 0.5s ease; }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .form-success .success-icon {
+      width: 56px; height: 56px;
+      margin: 0 auto 1rem;
+      background: rgba(76,175,80,0.2);
+      border: 2px solid rgba(76,175,80,0.5);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .form-success .success-icon svg { width: 28px; height: 28px; stroke: #81c784; fill: none; stroke-width: 2.5; }
+    .form-success h4 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+    .form-success p { font-size: 0.9rem; opacity: 0.85; line-height: 1.5; }
+    .form-success .success-tel {
+      display: inline-block;
+      margin-top: 1rem;
+      color: var(--or-chaud);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .form-success .success-tel:hover { color: #fff; }
+
+    /* Error banner */
+    .form-error-banner {
+      display: none;
+      background: rgba(229,115,115,0.15);
+      border: 1px solid rgba(229,115,115,0.4);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      font-size: 0.82rem;
+      color: #ef9a9a;
+      text-align: center;
+    }
+    .form-error-banner.visible { display: block; animation: fadeInUp 0.3s ease; }
+    .form-error-banner a { color: #fff; font-weight: 600; }
+
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .form-row { flex-direction: column; }
+      .contact-form { padding: 1.5rem 1.25rem; }
+    }
 
     /* Modal mentions légales */
     .modal-overlay {
@@ -1628,57 +1755,77 @@
           </div>
         </div>
 
-        <form class="contact-form reveal reveal-delay-1" id="reservationForm" data-api="https://quai-ouest.vercel.app/api/reservations/public" method="POST">
+        <form class="contact-form reveal reveal-delay-1" id="reservationForm" data-api="https://quai-ouest.vercel.app/api/reservations/public" method="POST" novalidate>
+          <div class="form-header">
+            <h3>Demande de réservation</h3>
+            <p>Confirmation sous 24h par téléphone ou email</p>
+          </div>
           <!-- Honeypot anti-spam (invisible) -->
-          <input type="text" name="_gotcha" style="display:none !important" tabindex="-1" autocomplete="off">
+          <input type="text" name="_gotcha" style="display:none !important" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+          <div class="form-error-banner" id="formErrorBanner" role="alert"></div>
+
           <div class="form-row">
             <div class="form-field">
-              <label for="nom">Nom *</label>
-              <input type="text" id="nom" name="nom" placeholder="Votre nom" required>
+              <label for="nom">Nom <span aria-hidden="true">*</span></label>
+              <input type="text" id="nom" name="nom" placeholder="Votre nom" required autocomplete="name">
+              <span class="field-error">Veuillez indiquer votre nom</span>
             </div>
             <div class="form-field">
               <label for="telephone">Téléphone</label>
-              <input type="tel" id="telephone" name="telephone" placeholder="06 xx xx xx xx">
+              <input type="tel" id="telephone" name="telephone" placeholder="06 xx xx xx xx" autocomplete="tel">
             </div>
           </div>
           <div class="form-field">
-            <label for="email">Email *</label>
-            <input type="email" id="email" name="email" placeholder="votre@email.fr" required>
+            <label for="email">Email <span aria-hidden="true">*</span></label>
+            <input type="email" id="email" name="email" placeholder="votre@email.fr" required autocomplete="email">
+            <span class="field-error">Veuillez indiquer un email valide</span>
           </div>
           <div class="form-row">
             <div class="form-field">
-              <label for="date">Date souhaitée *</label>
+              <label for="date">Date souhaitée <span aria-hidden="true">*</span></label>
               <input type="date" id="date" name="date" required>
+              <span class="field-error">Veuillez choisir une date</span>
+              <span class="closed-day-hint" id="closedDayHint">⚠ Le restaurant est fermé ce jour-là</span>
             </div>
             <div class="form-field">
-              <label for="personnes">Nombre de personnes *</label>
+              <label for="personnes">Couverts <span aria-hidden="true">*</span></label>
               <select id="personnes" name="personnes" required>
-                <option value="" disabled selected>Choisir</option>
-                <option>1 personne</option>
-                <option>2 personnes</option>
-                <option>3 personnes</option>
-                <option>4 personnes</option>
-                <option>5 personnes</option>
-                <option>6+ personnes</option>
+                <option value="" disabled selected>Nb de personnes</option>
+                <option value="1">1 personne</option>
+                <option value="2">2 personnes</option>
+                <option value="3">3 personnes</option>
+                <option value="4">4 personnes</option>
+                <option value="5">5 personnes</option>
+                <option value="6">6 personnes</option>
+                <option value="7+">7+ (nous contacter)</option>
               </select>
+              <span class="field-error">Choisissez le nombre de couverts</span>
             </div>
           </div>
           <div class="form-field">
             <label for="service">Service</label>
             <select id="service" name="service">
-              <option value="" disabled selected>Choisir le service</option>
-              <option>Midi</option>
-              <option>Soir (jeudi, vendredi &amp; samedi)</option>
+              <option value="" disabled selected>Midi ou soir ?</option>
+              <option value="midi">Midi (mer. → dim.)</option>
+              <option value="soir">Soir (jeu. ven. sam.)</option>
             </select>
           </div>
           <div class="form-field">
-            <label for="message">Message (optionnel)</label>
-            <textarea id="message" name="message" placeholder="Allergies, occasion spéciale..."></textarea>
+            <label for="message">Message <span style="text-transform:none;font-weight:400;opacity:0.6;">(optionnel)</span></label>
+            <textarea id="message" name="message" placeholder="Allergies, occasion spéciale, terrasse..."></textarea>
           </div>
-          <button type="submit" class="btn-primary" style="width:100%;">Envoyer ma demande</button>
-          <div class="form-success" id="formSuccess">
+          <button type="submit" class="btn-submit" id="btnSubmit">
+            <span class="btn-text">Envoyer ma demande</span>
+            <span class="btn-spinner" aria-hidden="true"></span>
+          </button>
+          <div class="form-success" id="formSuccess" role="status">
+            <div class="success-icon">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
             <h4>Demande envoyée !</h4>
-            <p>Merci, nous vous confirmerons votre réservation par téléphone ou email sous 24h.</p>
+            <p>Nous vous confirmerons votre réservation par téléphone ou email sous 24h.</p>
+            <a href="tel:0298290809" class="success-tel">02 98 29 08 09</a>
           </div>
         </form>
       </div>
@@ -1762,7 +1909,7 @@
   </footer>
 
   <!-- ==================== FLOATING CTA MOBILE ==================== -->
-  <a href="tel:0298290809" class="floating-cta" id="floatingCta">
+  <a href="#contact" class="floating-cta" id="floatingCta">
     <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
     Réserver · 02 98 29 08 09
   </a>
@@ -1923,17 +2070,92 @@
       });
     });
 
-    // === RESERVATION API SUBMIT ===
+    // === RESERVATION — Date min = aujourd'hui + jours fermés ===
+    const dateInput = document.getElementById('date');
+    const closedHint = document.getElementById('closedDayHint');
+    const serviceSelect = document.getElementById('service');
+    if (dateInput) {
+      // Set min date to today
+      const today = new Date().toISOString().split('T')[0];
+      dateInput.setAttribute('min', today);
+
+      // Jours fermés: 0=dim open midi, 1=lun fermé, 2=mar fermé
+      // Soir: 4=jeu, 5=ven, 6=sam seulement
+      dateInput.addEventListener('change', () => {
+        const val = dateInput.value;
+        if (!val) return;
+        const day = new Date(val + 'T12:00:00').getDay();
+        const isClosed = (day === 1 || day === 2); // lundi, mardi
+        closedHint.classList.toggle('visible', isClosed);
+        dateInput.closest('.form-field').classList.toggle('has-error', isClosed);
+
+        // Auto-select service based on day
+        if (serviceSelect && !isClosed) {
+          const hasSoir = [4, 5, 6].includes(day); // jeu, ven, sam
+          // Reset service options availability
+          const soirOption = serviceSelect.querySelector('option[value="soir"]');
+          if (soirOption) soirOption.disabled = !hasSoir;
+        }
+      });
+    }
+
+    // === RESERVATION — Validation inline ===
+    function validateField(field) {
+      const formField = field.closest('.form-field');
+      if (!formField) return true;
+      let valid = true;
+      if (field.required && !field.value.trim()) valid = false;
+      if (field.type === 'email' && field.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)) valid = false;
+      formField.classList.toggle('has-error', !valid);
+      return valid;
+    }
+
+    // Live validation on blur
+    document.querySelectorAll('#reservationForm input[required], #reservationForm select[required]').forEach(f => {
+      f.addEventListener('blur', () => validateField(f));
+      f.addEventListener('input', () => {
+        if (f.closest('.form-field').classList.contains('has-error')) validateField(f);
+      });
+    });
+
+    // === RESERVATION — API SUBMIT ===
     const reservationForm = document.getElementById('reservationForm');
     if (reservationForm) {
       reservationForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const btn = reservationForm.querySelector('button[type="submit"]');
+        const btn = document.getElementById('btnSubmit');
+        const errorBanner = document.getElementById('formErrorBanner');
+        errorBanner.classList.remove('visible');
+
+        // Validate all required fields
+        let allValid = true;
+        reservationForm.querySelectorAll('[required]').forEach(f => {
+          if (!validateField(f)) allValid = false;
+        });
+
+        // Check closed day
+        if (dateInput.value) {
+          const day = new Date(dateInput.value + 'T12:00:00').getDay();
+          if (day === 1 || day === 2) {
+            closedHint.classList.add('visible');
+            allValid = false;
+          }
+        }
+
+        if (!allValid) {
+          // Scroll to first error
+          const firstErr = reservationForm.querySelector('.has-error input, .has-error select');
+          if (firstErr) firstErr.focus();
+          return;
+        }
+
+        // Submit
         btn.disabled = true;
-        btn.textContent = 'Envoi en cours…';
+        btn.classList.add('is-loading');
         try {
           const formData = new FormData(reservationForm);
           const data = Object.fromEntries(formData.entries());
+          delete data._gotcha; // Remove honeypot from payload
           const apiUrl = reservationForm.dataset.api;
           const response = await fetch(apiUrl, {
             method: 'POST',
@@ -1941,19 +2163,21 @@
             body: JSON.stringify(data)
           });
           if (response.ok) {
-            reservationForm.reset();
+            // Hide form fields, show success
+            reservationForm.querySelectorAll('.form-header, .form-row, .form-field, .btn-submit').forEach(el => el.style.display = 'none');
             document.getElementById('formSuccess').classList.add('visible');
-            btn.style.display = 'none';
           } else {
             const err = await response.json().catch(() => ({}));
             btn.disabled = false;
-            btn.textContent = 'Envoyer ma demande';
-            alert(err.error || 'Une erreur est survenue. Merci de nous appeler au 02 98 29 08 09.');
+            btn.classList.remove('is-loading');
+            errorBanner.innerHTML = err.error || 'Une erreur est survenue. Appelez-nous au <a href="tel:0298290809">02 98 29 08 09</a>';
+            errorBanner.classList.add('visible');
           }
         } catch {
           btn.disabled = false;
-          btn.textContent = 'Envoyer ma demande';
-          alert('Connexion impossible. Merci de nous appeler au 02 98 29 08 09.');
+          btn.classList.remove('is-loading');
+          errorBanner.innerHTML = 'Connexion impossible. Appelez-nous au <a href="tel:0298290809">02 98 29 08 09</a>';
+          errorBanner.classList.add('visible');
         }
       });
     }
