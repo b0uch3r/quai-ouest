@@ -7,7 +7,13 @@
       "Bash(pip install:*)",
       "Bash(python -c \":*)",
       "Bash(ls -la \"/c/Users/auror/Documents/GitHub/quai-ouest/assets/images/\"*.jpg)",
-      "mcp__Claude_Preview__preview_start"
+      "mcp__Claude_Preview__preview_start",
+      "Bash(taskkill //F //IM node.exe)",
+      "Bash(curl -s -X POST \"https://posftkscyxgylorwbqou.supabase.co/rest/v1/staff_profiles\" -H \"apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvc2Z0a3NjeXhneWxvcndicW91Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzk5NDkxNywiZXhwIjoyMDg5NTcwOTE3fQ.sSzksZwxVvUXFy7tQIUt2RAkC80OR_avrbL0fNGetDw\" -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvc2Z0a3NjeXhneWxvcndicW91Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzk5NDkxNywiZXhwIjoyMDg5NTcwOTE3fQ.sSzksZwxVvUXFy7tQIUt2RAkC80OR_avrbL0fNGetDw\" -H \"Content-Type: application/json\" -H \"Prefer: return=representation\" -d '{\"\"id\"\": \"\"9f06be49-7e87-4816-9fb5-04c18d900165\"\", \"\"full_name\"\": \"\"Directeur\"\", \"\"role\"\": \"\"owner\"\"}')",
+      "Bash(curl -s -X POST http://localhost:3000/api/reservations/public -H \"Content-Type: application/json\" -d '{\"\"\"\"nom\"\"\"\":\"\"\"\"Test Client\"\"\"\",\"\"\"\"email\"\"\"\":\"\"\"\"test@example.com\"\"\"\",\"\"\"\"telephone\"\"\"\":\"\"\"\"0612345678\"\"\"\",\"\"\"\"date\"\"\"\":\"\"\"\"2026-03-21\"\"\"\",\"\"\"\"personnes\"\"\"\":\"\"\"\"2 personnes\"\"\"\",\"\"\"\"service\"\"\"\":\"\"\"\"Midi\"\"\"\",\"\"\"\"message\"\"\"\":\"\"\"\"Test reservation\"\"\"\"}')",
+      "Bash(python -m json.tool)",
+      "Bash(curl -s -X POST http://localhost:3000/api/reservations/public -H 'Content-Type: application/json' -d '{\"\"\"\"nom\"\"\"\":\"\"\"\"Test Client\"\"\"\",\"\"\"\"email\"\"\"\":\"\"\"\"test@example.com\"\"\"\",\"\"\"\"telephone\"\"\"\":\"\"\"\"0612345678\"\"\"\",\"\"\"\"date\"\"\"\":\"\"\"\"2026-03-21\"\"\"\",\"\"\"\"personnes\"\"\"\":\"\"\"\"2 personnes\"\"\"\",\"\"\"\"service\"\"\"\":\"\"\"\"Midi\"\"\"\",\"\"\"\"message\"\"\"\":\"\"\"\"Test reservation\"\"\"\"}')",
+      "Bash(curl -s \"https://posftkscyxgylorwbqou.supabase.co/rest/v1/reservations?select=*,client:clients\\(full_name,email\\)&order=created_at.desc&limit=1\" -H \"apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvc2Z0a3NjeXhneWxvcndicW91Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzk5NDkxNywiZXhwIjoyMDg5NTcwOTE3fQ.sSzksZwxVvUXFy7tQIUt2RAkC80OR_avrbL0fNGetDw\" -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvc2Z0a3NjeXhneWxvcndicW91Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzk5NDkxNywiZXhwIjoyMDg5NTcwOTE3fQ.sSzksZwxVvUXFy7tQIUt2RAkC80OR_avrbL0fNGetDw\")"
     ]
   }
 }
