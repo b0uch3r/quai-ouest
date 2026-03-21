@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServiceClient } from '@/lib/supabase-server'
 import { rateLimit } from '@/lib/rate-limit'
+import { executeReservationWorkflow } from '@/lib/reservation-workflow'
 import { z } from 'zod'
 
 const publicReservationSchema = z.object({
@@ -21,16 +22,31 @@ const publicReservationSchema = z.object({
   _gotcha: z.string().max(0).optional(),
 })
 
+// CORS — restreint à l'origine autorisée uniquement
+const ALLOWED_ORIGIN = 'https://b0uch3r.github.io'
+
+function getCorsHeaders(request: NextRequest) {
+  const origin = request.headers.get('origin')
+  return {
+    'Access-Control-Allow-Origin': origin === ALLOWED_ORIGIN ? ALLOWED_ORIGIN : '',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+  }
+}
+
 // Endpoint public — remplace Formspree
 // Appelé directement par le formulaire du site principal
+// Workflow complet : Capture → Email → Dashboard
 export async function POST(request: NextRequest) {
+  const cors = getCorsHeaders(request)
+
   // Rate limiting distribué (Upstash Redis)
   const ip = request.headers.get('x-forwarded-for')?.split(',')[0] || 'unknown'
   const { success } = await rateLimit(ip)
   if (!success) {
     return NextResponse.json(
       { error: 'Trop de demandes. Réessayez dans une heure.' },
-      { status: 429 }
+      { status: 429, headers: cors }
     )
   }
 
@@ -39,77 +55,51 @@ export async function POST(request: NextRequest) {
   // Honeypot check
   if (body._gotcha) {
     // Bot detected — return 200 silently
-    return NextResponse.json({ ok: true })
+    return NextResponse.json({ ok: true }, { headers: cors })
   }
 
   const parsed = publicReservationSchema.safeParse(body)
   if (!parsed.success) {
     return NextResponse.json(
       { error: 'Données invalides', details: parsed.error.flatten().fieldErrors },
-      { status: 400 }
+      { status: 400, headers: cors }
     )
   }
 
   const { nom, email, telephone, date, personnes, service, message } = parsed.data
   const supabase = createServiceClient()
 
-  // Parse guests count: "2 personnes" → 2, "6+ personnes" → 6
-  const guestsCount = parseInt(personnes) || 2
+  // ── Exécution du workflow complet ──
+  // 1. Insertion en base (client + réservation)
+  // 2. Envoi email de confirmation au client
+  // 3. Log de notification pour le dashboard
+  const result = await executeReservationWorkflow(supabase, {
+    nom,
+    email,
+    telephone,
+    date,
+    personnes,
+    service,
+    message,
+  })
 
-  // Parse service: "Soir (vendredi & samedi)" → "soir", "Midi" → "midi"
-  const serviceType = service.toLowerCase().startsWith('soir') ? 'soir' : 'midi'
-
-  // Upsert client
-  let clientId: string | null = null
-  const { data: existingClient } = await supabase
-    .from('clients')
-    .select('id')
-    .eq('email', email)
-    .single()
-
-  if (existingClient) {
-    clientId = existingClient.id
-    await supabase.rpc('increment_visits', { p_client_id: clientId })
-  } else {
-    const { data: newClient } = await supabase
-      .from('clients')
-      .insert({
-        full_name: nom,
-        email,
-        phone: telephone || null,
-        total_visits: 1,
-        last_visit_at: new Date().toISOString(),
-        consent_given_at: new Date().toISOString(),
-      })
-      .select('id')
-      .single()
-
-    if (newClient) clientId = newClient.id
+  if (!result.success) {
+    console.error('[PUBLIC] Workflow échoué:', result.log)
+    return NextResponse.json({ error: 'Erreur serveur' }, { status: 500, headers: cors })
   }
 
-  // Insert reservation
-  const { error } = await supabase
-    .from('reservations')
-    .insert({
-      client_id: clientId,
-      reservation_date: date,
-      service: serviceType,
-      guests_count: guestsCount,
-      status: 'pending',
-      special_requests: message || null,
-      source: 'website',
-    })
+  // Log structuré pour monitoring
+  console.log(`[PUBLIC] ${result.log}`)
 
-  if (error) {
-    console.error('Reservation insert error:', error)
-    return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })
-  }
-
-  return NextResponse.json({ ok: true }, { status: 201 })
+  return NextResponse.json(
+    {
+      ok: true,
+      reservation_id: result.reservationId,
+      email_sent: result.email.sent,
+    },
+    { status: 201, headers: cors }
+  )
 }
-
-// CORS preflight — restreint à l'origine autorisée uniquement
-const ALLOWED_ORIGIN = 'https://b0uch3r.github.io'
 
 export async function OPTIONS(request: NextRequest) {
   const origin = request.headers.get('origin')

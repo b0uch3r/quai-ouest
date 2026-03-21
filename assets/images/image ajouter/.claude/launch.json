@@ -3,15 +3,15 @@
   "configurations": [
     {
       "name": "quai-ouest",
-      "runtimeExecutable": "bash",
-      "runtimeArgs": ["-c", "cd /c/Users/auror/Documents/GitHub/quai-ouest/reservation-app && npx next dev -p 3000"],
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["C:\\Users\\auror\\Documents\\GitHub\\quai-ouest\\reservation-app\\dev-server.js", "dev", "-p", "3000"],
       "port": 3000,
       "autoPort": true
     },
     {
       "name": "quai-ouest-static",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "8080", "--directory", "C:/Users/auror/Documents/GitHub/quai-ouest"],
+      "runtimeArgs": ["-m", "http.server", "8080", "--directory", "C:\\Users\\auror\\Documents\\GitHub\\quai-ouest"],
       "port": 8080
     }
   ]
