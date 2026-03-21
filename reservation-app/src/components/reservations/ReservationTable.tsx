@@ -2,7 +2,8 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { ArrowUpDown, Eye, Check, X, Loader2, Utensils } from 'lucide-react'
+import { ArrowUpDown, Eye, Check, X, Loader2, Utensils, Trash2 } from 'lucide-react'
+import { ConfirmModal } from '@/components/ui/ConfirmModal'
 import { StatusBadge } from '@/components/ui/StatusBadge'
 import { Pagination } from '@/components/ui/Pagination'
 import { formatDate, formatCurrency, getInitials, cn } from '@/lib/utils'
@@ -15,6 +16,7 @@ interface ReservationTableProps {
   filters: ReservationFilters
   onFiltersChange: (filters: Partial<ReservationFilters>) => void
   onStatusChange?: (id: string, status: ReservationStatus) => Promise<void>
+  onDelete?: (id: string) => Promise<void>
 }
 
 export function ReservationTable({
@@ -23,9 +25,12 @@ export function ReservationTable({
   filters,
   onFiltersChange,
   onStatusChange,
+  onDelete,
 }: ReservationTableProps) {
   const totalPages = Math.ceil(total / filters.limit)
   const [updatingId, setUpdatingId] = useState<string | null>(null)
+  const [deleteTarget, setDeleteTarget] = useState<Reservation | null>(null)
+  const [deleting, setDeleting] = useState(false)
 
   async function handleStatusChange(id: string, status: ReservationStatus) {
     if (!onStatusChange || updatingId) return
@@ -84,6 +89,17 @@ export function ReservationTable({
     )
   }
 
+  async function handleDelete() {
+    if (!onDelete || !deleteTarget || deleting) return
+    setDeleting(true)
+    try {
+      await onDelete(deleteTarget.id)
+      setDeleteTarget(null)
+    } finally {
+      setDeleting(false)
+    }
+  }
+
   function toggleSort(field: string) {
     if (filters.sort === field) {
       onFiltersChange({ order: filters.order === 'asc' ? 'desc' : 'asc' })
@@ -126,6 +142,7 @@ export function ReservationTable({
               <th className="text-left p-4"><span className="text-xs font-medium text-granit uppercase tracking-wider">Statut</span></th>
               <th className="text-left p-4"><SortHeader field="amount_cents">Montant</SortHeader></th>
               {onStatusChange && <th className="text-left p-4"><span className="text-xs font-medium text-granit uppercase tracking-wider">Actions</span></th>}
+              {onDelete && <th className="text-right p-4"></th>}
               <th className="text-right p-4"></th>
             </tr>
           </thead>
@@ -156,6 +173,17 @@ export function ReservationTable({
                 {onStatusChange && (
                   <td className="p-4">
                     <StatusActions reservation={r} />
+                  </td>
+                )}
+                {onDelete && (
+                  <td className="p-4 text-right">
+                    <button
+                      onClick={(e) => { e.preventDefault(); setDeleteTarget(r) }}
+                      className="inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20 transition-colors"
+                      title="Supprimer"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
                   </td>
                 )}
                 <td className="p-4 text-right">
@@ -189,6 +217,15 @@ export function ReservationTable({
             </div>
             <div className="flex items-center gap-2">
               <StatusActions reservation={r} />
+              {onDelete && (
+                <button
+                  onClick={() => setDeleteTarget(r)}
+                  className="inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20 transition-colors"
+                  title="Supprimer"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                </button>
+              )}
               <Link
                 href={`/dashboard/reservations/${r.id}`}
                 className="ml-auto inline-flex items-center gap-1 text-xs text-cognac hover:underline"
@@ -205,6 +242,20 @@ export function ReservationTable({
         page={filters.page}
         totalPages={totalPages}
         onPageChange={(page) => onFiltersChange({ page })}
+      />
+
+      {/* Delete confirmation modal */}
+      <ConfirmModal
+        open={!!deleteTarget}
+        title="Supprimer la réservation"
+        message={
+          deleteTarget
+            ? `Attention : la réservation de ${deleteTarget.client?.full_name || 'Anonyme'} du ${formatDate(deleteTarget.reservation_date)} va être supprimée définitivement. Cette action est irréversible.`
+            : ''
+        }
+        loading={deleting}
+        onConfirm={handleDelete}
+        onCancel={() => !deleting && setDeleteTarget(null)}
       />
     </div>
   )

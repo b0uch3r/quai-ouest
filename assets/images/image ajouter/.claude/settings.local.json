@@ -38,7 +38,10 @@
       "Bash(ls -lh /c/Users/auror/Documents/GitHub/quai-ouest/assets/images/*.jpg)",
       "Bash(node -e \"require\\(''sharp''\\)\")",
       "Bash(npm install:*)",
-      "Bash(node scripts/optimize-images.js)"
+      "Bash(node scripts/optimize-images.js)",
+      "Bash(taskkill //PID 27276 //F)",
+      "Read(//c/Users/auror/Documents/GitHub/quai-ouest/reservation-app/**)",
+      "Bash(npx next:*)"
     ]
   }
 }

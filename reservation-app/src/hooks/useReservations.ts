@@ -127,5 +127,77 @@ export function useReservations(initialFilters?: Partial<ReservationFilters>) {
     }))
   }, [])
 
-  return { ...data, filters, updateFilters, loading, error, refetch: fetchReservations, updateStatus }
+  const deleteReservation = useCallback(async (id: string) => {
+    const supabase = createClient()
+    // Delete associated notes first
+    await supabase
+      .from('reservation_notes')
+      .delete()
+      .eq('reservation_id', id)
+    // Delete the reservation
+    const { error } = await supabase
+      .from('reservations')
+      .delete()
+      .eq('id', id)
+    if (error) throw error
+    // Remove from local state
+    setData((prev) => ({
+      ...prev,
+      data: prev.data.filter((r) => r.id !== id),
+      total: prev.total - 1,
+    }))
+  }, [])
+
+  const deleteByPeriod = useCallback(async (dateFrom: string, dateTo: string) => {
+    const supabase = createClient()
+    // Get IDs to delete notes first
+    const { data: toDelete } = await supabase
+      .from('reservations')
+      .select('id')
+      .gte('reservation_date', dateFrom)
+      .lte('reservation_date', dateTo)
+
+    if (toDelete && toDelete.length > 0) {
+      const ids = toDelete.map((r) => r.id)
+      await supabase
+        .from('reservation_notes')
+        .delete()
+        .in('reservation_id', ids)
+    }
+
+    const { error } = await supabase
+      .from('reservations')
+      .delete()
+      .gte('reservation_date', dateFrom)
+      .lte('reservation_date', dateTo)
+    if (error) throw error
+    const deletedCount = toDelete?.length || 0
+    // Refresh data
+    await fetchReservations()
+    return deletedCount
+  }, [fetchReservations])
+
+  const countByPeriod = useCallback(async (dateFrom: string, dateTo: string) => {
+    const supabase = createClient()
+    const { count, error } = await supabase
+      .from('reservations')
+      .select('id', { count: 'exact', head: true })
+      .gte('reservation_date', dateFrom)
+      .lte('reservation_date', dateTo)
+    if (error) throw error
+    return count || 0
+  }, [])
+
+  return {
+    ...data,
+    filters,
+    updateFilters,
+    loading,
+    error,
+    refetch: fetchReservations,
+    updateStatus,
+    deleteReservation,
+    deleteByPeriod,
+    countByPeriod,
+  }
 }
