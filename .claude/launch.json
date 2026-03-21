@@ -8,6 +8,12 @@
       "cwd": "reservation-app",
       "port": 3000,
       "autoPort": true
+    },
+    {
+      "name": "quai-ouest-static",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", ".", "-p", "8080", "--no-clipboard"],
+      "port": 8080
     }
   ]
 }
