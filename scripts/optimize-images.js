@@ -5,53 +5,41 @@
  *   node scripts/optimize-images.js
  *
  * Prérequis:
- *   npm install sharp glob
+ *   npm install sharp
  *
  * Ce script :
- * 1. Prend toutes les images dans assets/images/instagram/ et assets/images/facebook/
+ * 1. Prend toutes les images JPG dans assets/images/ (racine)
  * 2. Génère des versions WebP optimisées dans assets/images/optimized/
  * 3. Génère plusieurs tailles (responsive) pour chaque image
- * 4. Met à jour gallery.json avec le champ "downloaded: true" automatiquement
  */
 
 const sharp = require('sharp');
 const path = require('path');
 const fs = require('fs');
-const { glob } = require('glob');
 
 const ROOT = path.join(__dirname, '..');
-const SOURCES = [
-  path.join(ROOT, 'assets/images/instagram'),
-  path.join(ROOT, 'assets/images/facebook'),
-];
+const SOURCE_DIR = path.join(ROOT, 'assets/images');
 const OUTPUT_DIR = path.join(ROOT, 'assets/images/optimized');
-const GALLERY_JSON = path.join(ROOT, 'content/gallery.json');
 
 // Tailles générées pour chaque image (responsive)
 const SIZES = [
-  { name: 'thumb',  width: 400,  quality: 80 },  // Galerie — vignette
-  { name: 'medium', width: 800,  quality: 82 },  // Galerie — affichage normal
-  { name: 'large',  width: 1200, quality: 85 },  // Lightbox / Hero
-  { name: 'hero',   width: 1920, quality: 88 },  // Hero plein écran
+  { name: 'small',  width: 400,  quality: 80 },  // Mobile / vignette galerie
+  { name: 'medium', width: 800,  quality: 82 },  // Tablette / galerie desktop
+  { name: 'large',  width: 1200, quality: 85 },  // Lightbox / desktop
 ];
 
 async function ensureDir(dir) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 }
 
-async function optimizeImage(inputPath, filename) {
-  const base = path.basename(filename, path.extname(filename));
-  const outputSubDir = path.join(OUTPUT_DIR, base);
-  await ensureDir(outputSubDir);
-
+async function optimizeImage(inputPath, base) {
   const results = [];
 
   for (const size of SIZES) {
-    const outputFile = path.join(outputSubDir, `${base}-${size.name}.webp`);
+    const outputFile = path.join(OUTPUT_DIR, `${base}-${size.name}.webp`);
 
     try {
       const metadata = await sharp(inputPath).metadata();
-      // Ne pas upscaler une image plus petite que la taille cible
       const targetWidth = Math.min(size.width, metadata.width || size.width);
 
       await sharp(inputPath)
@@ -63,7 +51,7 @@ async function optimizeImage(inputPath, filename) {
       results.push({
         size: size.name,
         width: targetWidth,
-        file: `assets/images/optimized/${base}/${base}-${size.name}.webp`,
+        file: `assets/images/optimized/${base}-${size.name}.webp`,
         sizeKb: Math.round(stat.size / 1024),
       });
 
@@ -76,74 +64,55 @@ async function optimizeImage(inputPath, filename) {
   return results;
 }
 
-async function updateGalleryJson(processedFiles) {
-  const gallery = JSON.parse(fs.readFileSync(GALLERY_JSON, 'utf-8'));
-
-  for (const photo of gallery.photos) {
-    const targetFile = photo.filename;
-    if (processedFiles.has(targetFile)) {
-      photo.downloaded = true;
-      photo.optimized = processedFiles.get(targetFile);
-    }
-  }
-
-  gallery._meta.lastUpdated = new Date().toISOString().split('T')[0];
-  fs.writeFileSync(GALLERY_JSON, JSON.stringify(gallery, null, 2), 'utf-8');
-  console.log('\n✓ gallery.json mis à jour');
-}
-
 async function main() {
-  console.log('🖼️  Optimisation des images — Quai Ouest\n');
+  console.log('Optimisation des images — Quai Ouest\n');
   await ensureDir(OUTPUT_DIR);
 
-  const processedFiles = new Map();
+  // Lister les JPG dans le dossier racine images (pas les sous-dossiers)
+  const files = fs.readdirSync(SOURCE_DIR)
+    .filter(f => /\.(jpg|jpeg|png)$/i.test(f));
+
+  if (files.length === 0) {
+    console.log('Aucune image trouvée dans assets/images/');
+    return;
+  }
+
+  console.log(`${files.length} images à optimiser\n`);
+
   let total = 0;
   let skipped = 0;
+  let savedBytes = 0;
 
-  for (const sourceDir of SOURCES) {
-    if (!fs.existsSync(sourceDir)) {
-      console.log(`⚠️  Dossier introuvable: ${sourceDir} (ignoré)`);
+  for (const filename of files) {
+    const inputPath = path.join(SOURCE_DIR, filename);
+    const base = path.basename(filename, path.extname(filename));
+
+    // Skip si déjà optimisé
+    const checkFile = path.join(OUTPUT_DIR, `${base}-medium.webp`);
+    if (fs.existsSync(checkFile)) {
+      console.log(`  ↩ ${filename} (déjà optimisé)`);
+      skipped++;
       continue;
     }
 
-    const images = await glob('*.{jpg,jpeg,png,JPG,JPEG,PNG}', { cwd: sourceDir });
+    const originalSize = fs.statSync(inputPath).size;
+    console.log(`→ ${filename} (${Math.round(originalSize / 1024)} Ko)`);
 
-    if (images.length === 0) {
-      console.log(`ℹ️  Aucune image dans: ${sourceDir}`);
-      continue;
-    }
-
-    console.log(`📁 ${path.relative(ROOT, sourceDir)} (${images.length} images)`);
-
-    for (const filename of images) {
-      const inputPath = path.join(sourceDir, filename);
-      const outputBase = path.join(OUTPUT_DIR, path.basename(filename, path.extname(filename)));
-
-      // Vérifier si déjà optimisé (skip si tous les fichiers existent)
-      const existingWebp = `${outputBase}-large.webp`;
-      if (fs.existsSync(existingWebp)) {
-        console.log(`  ↩ ${filename} (déjà optimisé)`);
-        skipped++;
-        continue;
+    try {
+      const results = await optimizeImage(inputPath, base);
+      const mediumResult = results.find(r => r.size === 'medium');
+      if (mediumResult) {
+        savedBytes += originalSize - (mediumResult.sizeKb * 1024);
       }
-
-      console.log(`  → ${filename}`);
-      try {
-        const results = await optimizeImage(inputPath, filename);
-        processedFiles.set(filename, results);
-        total++;
-      } catch (err) {
-        console.error(`  ✗ ${filename}: ${err.message}`);
-      }
+      total++;
+    } catch (err) {
+      console.error(`  ✗ ${filename}: ${err.message}`);
     }
   }
 
-  if (processedFiles.size > 0) {
-    await updateGalleryJson(processedFiles);
-  }
-
-  console.log(`\n✅ Terminé — ${total} optimisées, ${skipped} ignorées (déjà traitées)`);
-  console.log(`📂 Résultat dans: assets/images/optimized/`);
+  console.log(`\nTerminé — ${total} optimisées, ${skipped} ignorées`);
+  console.log(`Économie estimée : ~${Math.round(savedBytes / 1024)} Ko`);
+  console.log(`Résultat dans : assets/images/optimized/`);
 }
 
 main().catch(console.error);

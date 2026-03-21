@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase-server'
 
 export async function GET(request: NextRequest) {
-  const supabase = createClient()
+  const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
 
@@ -18,7 +18,8 @@ export async function GET(request: NextRequest) {
     .order('last_visit_at', { ascending: false, nullsFirst: false })
 
   if (q) {
-    query = query.or(`full_name.ilike.%${q}%,email.ilike.%${q}%,phone.ilike.%${q}%`)
+    const sanitizedQ = q.replace(/[%_\\]/g, '\\$&').slice(0, 100)
+    query = query.or(`full_name.ilike.%${sanitizedQ}%,email.ilike.%${sanitizedQ}%,phone.ilike.%${sanitizedQ}%`)
   }
 
   const from = (page - 1) * limit

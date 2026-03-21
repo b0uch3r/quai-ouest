@@ -4,16 +4,17 @@ import { clientUpdateSchema } from '@/lib/validations'
 
 export async function GET(
   _request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const supabase = createClient()
+  const { id } = await params
+  const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
 
   const { data, error } = await supabase
     .from('clients')
     .select('*, reservations(*)')
-    .eq('id', params.id)
+    .eq('id', id)
     .single()
 
   if (error) return NextResponse.json({ error: 'Client introuvable' }, { status: 404 })
@@ -22,9 +23,10 @@ export async function GET(
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const supabase = createClient()
+  const { id } = await params
+  const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
 
@@ -37,7 +39,7 @@ export async function PATCH(
   const { data, error } = await supabase
     .from('clients')
     .update({ ...parsed.data, updated_at: new Date().toISOString() })
-    .eq('id', params.id)
+    .eq('id', id)
     .select()
     .single()
 
@@ -48,9 +50,10 @@ export async function PATCH(
 // RGPD: Droit à l'oubli - anonymise les données au lieu de supprimer
 export async function DELETE(
   _request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const supabase = createClient()
+  const { id } = await params
+  const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
 
@@ -76,7 +79,7 @@ export async function DELETE(
       deletion_requested_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     })
-    .eq('id', params.id)
+    .eq('id', id)
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   return NextResponse.json({ message: 'Client anonymisé (RGPD)' })

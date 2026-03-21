@@ -3,7 +3,7 @@ import { createClient } from '@/lib/supabase-server'
 import { exportSchema } from '@/lib/validations'
 
 export async function GET(request: NextRequest) {
-  const supabase = createClient()
+  const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
 

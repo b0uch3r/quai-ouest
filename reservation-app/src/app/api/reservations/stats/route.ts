@@ -3,7 +3,7 @@ import { createClient } from '@/lib/supabase-server'
 import type { ReservationStats, ReservationStatus, ServiceType } from '@/types'
 
 export async function GET() {
-  const supabase = createClient()
+  const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
 

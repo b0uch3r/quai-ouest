@@ -16,7 +16,29 @@
       "Bash(curl -s \"https://posftkscyxgylorwbqou.supabase.co/rest/v1/reservations?select=*,client:clients\\(full_name,email\\)&order=created_at.desc&limit=1\" -H \"apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvc2Z0a3NjeXhneWxvcndicW91Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzk5NDkxNywiZXhwIjoyMDg5NTcwOTE3fQ.sSzksZwxVvUXFy7tQIUt2RAkC80OR_avrbL0fNGetDw\" -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvc2Z0a3NjeXhneWxvcndicW91Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzk5NDkxNywiZXhwIjoyMDg5NTcwOTE3fQ.sSzksZwxVvUXFy7tQIUt2RAkC80OR_avrbL0fNGetDw\")",
       "Bash(curl -s -X POST \"https://quai-ouest.vercel.app/api/reservations/public\" -H \"Content-Type: application/json\" -d '{\"\"nom\"\":\"\"Test Vercel\"\",\"\"email\"\":\"\"test.vercel@example.com\"\",\"\"telephone\"\":\"\"0698765432\"\",\"\"date\"\":\"\"2026-03-22\"\",\"\"personnes\"\":\"\"3 personnes\"\",\"\"service\"\":\"\"Soir\"\",\"\"message\"\":\"\"Test depuis Vercel\"\"}')",
       "Bash(curl -s \"https://posftkscyxgylorwbqou.supabase.co/rest/v1/reservations?select=reservation_date,service,guests_count,status,client:clients\\(full_name,email\\)&order=created_at.desc&limit=2\" -H \"apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvc2Z0a3NjeXhneWxvcndicW91Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzk5NDkxNywiZXhwIjoyMDg5NTcwOTE3fQ.sSzksZwxVvUXFy7tQIUt2RAkC80OR_avrbL0fNGetDw\")",
-      "Bash(curl -s \"https://posftkscyxgylorwbqou.supabase.co/rest/v1/reservations?select=reservation_date,service,guests_count,status,client:clients\\(full_name,email\\)&order=created_at.desc&limit=5\" -H \"apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvc2Z0a3NjeXhneWxvcndicW91Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzk5NDkxNywiZXhwIjoyMDg5NTcwOTE3fQ.sSzksZwxVvUXFy7tQIUt2RAkC80OR_avrbL0fNGetDw\" -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvc2Z0a3NjeXhneWxvcndicW91Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzk5NDkxNywiZXhwIjoyMDg5NTcwOTE3fQ.sSzksZwxVvUXFy7tQIUt2RAkC80OR_avrbL0fNGetDw\")"
+      "Bash(curl -s \"https://posftkscyxgylorwbqou.supabase.co/rest/v1/reservations?select=reservation_date,service,guests_count,status,client:clients\\(full_name,email\\)&order=created_at.desc&limit=5\" -H \"apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvc2Z0a3NjeXhneWxvcndicW91Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzk5NDkxNywiZXhwIjoyMDg5NTcwOTE3fQ.sSzksZwxVvUXFy7tQIUt2RAkC80OR_avrbL0fNGetDw\" -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvc2Z0a3NjeXhneWxvcndicW91Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzk5NDkxNywiZXhwIjoyMDg5NTcwOTE3fQ.sSzksZwxVvUXFy7tQIUt2RAkC80OR_avrbL0fNGetDw\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3001/api/reservations/public)",
+      "Bash(curl -s -X POST http://localhost:3001/api/reservations/public -H \"Content-Type: application/json\" -d '{\"\"nom\"\":\"\"Test\"\",\"\"email\"\":\"\"test@test.com\"\",\"\"date\"\":\"\"2026-04-01\"\",\"\"personnes\"\":\"\"2\"\"}')",
+      "Bash(curl -s -m 10 -X POST http://localhost:3001/api/reservations/public -H \"Content-Type: application/json\" -d '{\"\"nom\"\":\"\"Test\"\",\"\"email\"\":\"\"test@test.com\"\",\"\"date\"\":\"\"2026-04-01\"\",\"\"personnes\"\":\"\"2\"\"}')",
+      "Bash(taskkill //F //FI 'WINDOWTITLE eq next*')",
+      "Bash(lsof -ti:3001)",
+      "Bash(xargs kill:*)",
+      "Bash(netstat -ano)",
+      "Bash(taskkill //F //PID 110656)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:57300/login)",
+      "Bash(curl -s -X POST http://localhost:3002/api/reservations/public -H \"Content-Type: application/json\" -d '{\"\"nom\"\":\"\"Test Dupont\"\",\"\"email\"\":\"\"test@example.com\"\",\"\"date\"\":\"\"2026-04-15\"\",\"\"personnes\"\":\"\"2\"\",\"\"service\"\":\"\"Midi\"\"}')",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3002/api/reservations)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3002/api/reservations/stats)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3002/api/clients)",
+      "Bash(cp \"image ajouter/1da18c7d-e5a9-4e3e-9fc6-c5c19680bae1.jpg\" galerie-buffet-crevettes-vue-mer.jpg)",
+      "Bash(cp \"image ajouter/24f4ccb3-2f25-40c7-a053-06c09ed80e36.jpg\" galerie-lounge-vue-baie.jpg)",
+      "Bash(cp \"image ajouter/2e5dcb14-a3ab-4ad4-b921-e4a88eee1d91.jpg\" galerie-terrasse-baie-morlaix.jpg)",
+      "Bash(cp \"image ajouter/3be93a54-cf36-4412-a69f-24ac2937f248.jpg\" galerie-bar-comptoir.jpg)",
+      "Bash(cp \"image ajouter/47255623-c1a0-4427-bae2-1c7063eebe66.jpg\" galerie-plage-soleil.jpg)",
+      "Bash(ls -lh /c/Users/auror/Documents/GitHub/quai-ouest/assets/images/*.jpg)",
+      "Bash(node -e \"require\\(''sharp''\\)\")",
+      "Bash(npm install:*)",
+      "Bash(node scripts/optimize-images.js)"
     ]
   }
 }

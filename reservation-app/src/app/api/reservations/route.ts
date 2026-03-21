@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase-server'
 
 export async function GET(request: NextRequest) {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   // Auth check
   const { data: { user } } = await supabase.auth.getUser()
@@ -42,8 +42,10 @@ export async function GET(request: NextRequest) {
     query = query.eq('service', service)
   }
   if (q) {
+    // Sanitize : échapper les caractères spéciaux SQL/ilike pour éviter l'injection wildcard
+    const sanitizedQ = q.replace(/[%_\\]/g, '\\$&').slice(0, 100)
     query = query.or(
-      `special_requests.ilike.%${q}%,staff_notes.ilike.%${q}%`
+      `special_requests.ilike.%${sanitizedQ}%,staff_notes.ilike.%${sanitizedQ}%`
     )
   }
 
@@ -55,7 +57,8 @@ export async function GET(request: NextRequest) {
   const { data, count, error } = await query
 
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 })
+    console.error('Reservations list error:', error.message)
+    return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })
   }
 
   return NextResponse.json({

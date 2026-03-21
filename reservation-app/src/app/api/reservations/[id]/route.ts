@@ -4,16 +4,17 @@ import { reservationUpdateSchema, noteSchema } from '@/lib/validations'
 
 export async function GET(
   _request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const supabase = createClient()
+  const { id } = await params
+  const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
 
   const { data, error } = await supabase
     .from('reservations')
     .select('*, client:clients(*), notes:reservation_notes(*, author:staff_profiles(full_name))')
-    .eq('id', params.id)
+    .eq('id', id)
     .single()
 
   if (error) return NextResponse.json({ error: 'Réservation introuvable' }, { status: 404 })
@@ -22,9 +23,10 @@ export async function GET(
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const supabase = createClient()
+  const { id } = await params
+  const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
 
@@ -45,20 +47,24 @@ export async function PATCH(
   const { data, error } = await supabase
     .from('reservations')
     .update(updates)
-    .eq('id', params.id)
+    .eq('id', id)
     .select()
     .single()
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+  if (error) {
+    console.error('Reservation update error:', error.message)
+    return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })
+  }
   return NextResponse.json(data)
 }
 
 // POST note on reservation
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const supabase = createClient()
+  const { id } = await params
+  const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
 
@@ -71,13 +77,16 @@ export async function POST(
   const { data, error } = await supabase
     .from('reservation_notes')
     .insert({
-      reservation_id: params.id,
+      reservation_id: id,
       author_id: user.id,
       content: parsed.data.content,
     })
     .select('*, author:staff_profiles(full_name)')
     .single()
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+  if (error) {
+    console.error('Note insert error:', error.message)
+    return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })
+  }
   return NextResponse.json(data, { status: 201 })
 }
