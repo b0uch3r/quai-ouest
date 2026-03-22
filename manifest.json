@@ -1,0 +1,22 @@
+{
+  "name": "Quai Ouest",
+  "short_name": "Quai Ouest",
+  "description": "Restaurant bistronomique face a la mer a Saint-Pol-de-Leon.",
+  "start_url": "/quai-ouest/",
+  "scope": "/quai-ouest/",
+  "display": "standalone",
+  "background_color": "#F7F5F0",
+  "theme_color": "#2C5F7C",
+  "icons": [
+    {
+      "src": "/quai-ouest/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/quai-ouest/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
