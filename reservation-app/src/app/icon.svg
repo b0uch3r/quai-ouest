@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+  <title>Quai Ouest</title>
+  <circle cx="320" cy="320" r="290" fill="#F7F5F0" />
+  <g fill="none" stroke="#2C5F7C" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M92 268 A228 228 0 0 1 548 268" stroke-width="13" />
+    <path d="M118 268 A202 202 0 0 1 522 268" stroke-width="9" />
+    <path d="M118 372 A202 202 0 0 0 522 372" stroke-width="9" />
+    <path d="M92 372 A228 228 0 0 0 548 372" stroke-width="13" />
+    <g stroke-width="8">
+      <path d="M307 223l-8 39c-2 9 5 15 14 15h14c9 0 16-6 14-15l-8-39" />
+      <path d="M320 277v35" />
+      <path d="M344 220l14 10" />
+      <path d="M350 233l14 10" />
+      <path d="M355 246l14 10" />
+    </g>
+  </g>
+  <text
+    x="320"
+    y="356"
+    text-anchor="middle"
+    fill="#2C5F7C"
+    font-family="'DM Sans', Arial, sans-serif"
+    font-size="86"
+    font-weight="700"
+    letter-spacing="8"
+    textLength="438"
+    lengthAdjust="spacingAndGlyphs"
+  >
+    QUAI OUEST
+  </text>
+</svg>
