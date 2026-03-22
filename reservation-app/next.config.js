@@ -2,6 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false, // Masquer le header "X-Powered-By: Next.js"
+  outputFileTracingRoot: __dirname,
   async headers() {
     return [
       {
