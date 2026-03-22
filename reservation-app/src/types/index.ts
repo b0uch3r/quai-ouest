@@ -87,9 +87,18 @@ export interface ReservationStats {
   no_show_rate: number
 }
 
+export const RESERVATION_STATUS_OPTIONS: ReservationStatus[] = [
+  'pending',
+  'confirmed',
+  'seated',
+  'completed',
+  'cancelled',
+  'no_show',
+]
+
 export const STATUS_LABELS: Record<ReservationStatus, string> = {
   pending: 'En attente',
-  confirmed: 'Confirmée',
+  confirmed: 'Réservée',
   seated: 'À table',
   completed: 'Terminée',
   cancelled: 'Annulée',

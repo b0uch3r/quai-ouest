@@ -17,9 +17,10 @@ import {
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase-browser'
 import { StatusBadge } from '@/components/ui/StatusBadge'
-import { formatDate, formatDateTime, formatCurrency, cn } from '@/lib/utils'
+import { StatusSelect } from '@/components/ui/StatusSelect'
+import { formatDate, formatDateTime, formatCurrency } from '@/lib/utils'
 import type { Reservation, ReservationNote, ReservationStatus } from '@/types'
-import { STATUS_LABELS, SERVICE_LABELS } from '@/types'
+import { SERVICE_LABELS } from '@/types'
 
 export default function ReservationDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -56,8 +57,12 @@ export default function ReservationDetailPage() {
   async function updateStatus(status: ReservationStatus) {
     setSaving(true)
     const supabase = createClient()
-    const updates: Record<string, unknown> = { status, updated_at: new Date().toISOString() }
-    if (status === 'cancelled') updates.cancelled_at = new Date().toISOString()
+    const now = new Date().toISOString()
+    const updates: Record<string, unknown> = {
+      status,
+      updated_at: now,
+      cancelled_at: status === 'cancelled' ? now : null,
+    }
 
     const { error } = await supabase
       .from('reservations')
@@ -65,7 +70,12 @@ export default function ReservationDetailPage() {
       .eq('id', id)
 
     if (!error && reservation) {
-      setReservation({ ...reservation, status })
+      setReservation({
+        ...reservation,
+        status,
+        updated_at: now,
+        cancelled_at: updates.cancelled_at as string | null,
+      })
     }
     setSaving(false)
   }
@@ -186,22 +196,19 @@ export default function ReservationDetailPage() {
           {/* Status actions */}
           <div className="card p-5">
             <h2 className="font-medium text-sm text-granit uppercase tracking-wider mb-3">Changer le statut</h2>
-            <div className="flex flex-wrap gap-2">
-              {(Object.keys(STATUS_LABELS) as ReservationStatus[]).map((status) => (
-                <button
-                  key={status}
-                  onClick={() => updateStatus(status)}
-                  disabled={saving || r.status === status}
-                  className={cn(
-                    'px-3 py-1.5 rounded-lg text-xs font-medium transition-colors',
-                    r.status === status
-                      ? 'bg-cognac text-white'
-                      : 'bg-sable/50 dark:bg-granit/20 text-granit hover:bg-sable dark:hover:bg-granit/30'
-                  )}
-                >
-                  {STATUS_LABELS[status]}
-                </button>
-              ))}
+            <div className="flex items-center gap-3">
+              <StatusSelect
+                value={r.status}
+                disabled={saving}
+                onChange={(status) => {
+                  if (status !== r.status) {
+                    void updateStatus(status)
+                  }
+                }}
+              />
+              {saving && (
+                <div className="w-5 h-5 border-2 border-cognac/30 border-t-cognac rounded-full animate-spin" />
+              )}
             </div>
           </div>
 

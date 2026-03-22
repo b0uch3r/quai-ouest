@@ -2,11 +2,12 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { ArrowUpDown, Eye, Check, X, Loader2, Utensils, Trash2 } from 'lucide-react'
+import { ArrowUpDown, Eye, Loader2, Trash2 } from 'lucide-react'
 import { ConfirmModal } from '@/components/ui/ConfirmModal'
 import { StatusBadge } from '@/components/ui/StatusBadge'
+import { StatusSelect } from '@/components/ui/StatusSelect'
 import { Pagination } from '@/components/ui/Pagination'
-import { formatDate, formatCurrency, getInitials, cn } from '@/lib/utils'
+import { formatDate, formatCurrency, getInitials } from '@/lib/utils'
 import type { Reservation, ReservationFilters, ReservationStatus } from '@/types'
 import { SERVICE_LABELS } from '@/types'
 
@@ -47,44 +48,19 @@ export function ReservationTable({
     const { id, status } = reservation
     const isUpdating = updatingId === id
 
-    if (isUpdating) {
-      return <Loader2 className="w-4 h-4 animate-spin text-granit" />
-    }
-
-    const btnBase = 'inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors'
-
     return (
-      <div className="flex items-center gap-1">
-        {(status === 'pending' || status === 'cancelled') && (
-          <button
-            onClick={(e) => { e.preventDefault(); handleStatusChange(id, 'confirmed') }}
-            className={cn(btnBase, 'bg-blue-100 text-blue-700 hover:bg-blue-200 dark:bg-blue-900/40 dark:text-blue-300 dark:hover:bg-blue-800/60')}
-            title="Confirmer"
-          >
-            <Check className="w-3 h-3" />
-            Confirmer
-          </button>
-        )}
-        {status === 'confirmed' && (
-          <button
-            onClick={(e) => { e.preventDefault(); handleStatusChange(id, 'seated') }}
-            className={cn(btnBase, 'bg-purple-100 text-purple-700 hover:bg-purple-200 dark:bg-purple-900/40 dark:text-purple-300 dark:hover:bg-purple-800/60')}
-            title="En cours"
-          >
-            <Utensils className="w-3 h-3" />
-            En cours
-          </button>
-        )}
-        {(status === 'pending' || status === 'confirmed' || status === 'seated') && (
-          <button
-            onClick={(e) => { e.preventDefault(); handleStatusChange(id, 'cancelled') }}
-            className={cn(btnBase, 'bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/40 dark:text-red-300 dark:hover:bg-red-800/60')}
-            title="Annuler"
-          >
-            <X className="w-3 h-3" />
-            Annuler
-          </button>
-        )}
+      <div className="flex items-center gap-2">
+        <StatusSelect
+          value={status}
+          compact
+          disabled={isUpdating}
+          onChange={(nextStatus) => {
+            if (nextStatus !== status) {
+              void handleStatusChange(id, nextStatus)
+            }
+          }}
+        />
+        {isUpdating && <Loader2 className="w-4 h-4 animate-spin text-granit" />}
       </div>
     )
   }
@@ -141,7 +117,7 @@ export function ReservationTable({
               <th className="text-left p-4"><SortHeader field="guests_count">Couverts</SortHeader></th>
               <th className="text-left p-4"><span className="text-xs font-medium text-granit uppercase tracking-wider">Statut</span></th>
               <th className="text-left p-4"><SortHeader field="amount_cents">Montant</SortHeader></th>
-              {onStatusChange && <th className="text-left p-4"><span className="text-xs font-medium text-granit uppercase tracking-wider">Actions</span></th>}
+              {onStatusChange && <th className="text-left p-4"><span className="text-xs font-medium text-granit uppercase tracking-wider">Statut rapide</span></th>}
               {onDelete && <th className="text-right p-4"></th>}
               <th className="text-right p-4"></th>
             </tr>

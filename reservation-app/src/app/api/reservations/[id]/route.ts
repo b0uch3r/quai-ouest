@@ -40,8 +40,9 @@ export async function PATCH(
     ...parsed.data,
     updated_at: new Date().toISOString(),
   }
-  if (parsed.data.status === 'cancelled') {
-    updates.cancelled_at = new Date().toISOString()
+  if (parsed.data.status) {
+    updates.cancelled_at =
+      parsed.data.status === 'cancelled' ? new Date().toISOString() : null
   }
 
   const { data, error } = await supabase

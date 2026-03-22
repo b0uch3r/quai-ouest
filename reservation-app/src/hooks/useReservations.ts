@@ -100,12 +100,11 @@ export function useReservations(initialFilters?: Partial<ReservationFilters>) {
 
   const updateStatus = useCallback(async (id: string, status: ReservationStatus) => {
     const supabase = createClient()
+    const now = new Date().toISOString()
     const updates: Record<string, unknown> = {
       status,
-      updated_at: new Date().toISOString(),
-    }
-    if (status === 'cancelled') {
-      updates.cancelled_at = new Date().toISOString()
+      updated_at: now,
+      cancelled_at: status === 'cancelled' ? now : null,
     }
     const { error } = await supabase
       .from('reservations')
@@ -119,8 +118,8 @@ export function useReservations(initialFilters?: Partial<ReservationFilters>) {
           ? {
               ...r,
               status,
-              updated_at: updates.updated_at as string,
-              ...(status === 'cancelled' ? { cancelled_at: updates.cancelled_at as string } : {}),
+              updated_at: now,
+              cancelled_at: updates.cancelled_at as string | null,
             }
           : r
       ),
