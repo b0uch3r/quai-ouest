@@ -78,6 +78,7 @@ export interface PaginatedResponse<T> {
 
 export interface ReservationStats {
   total_reservations: number
+  today_reservations: number
   total_clients: number
   total_revenue_cents: number
   by_status: Record<ReservationStatus, number>

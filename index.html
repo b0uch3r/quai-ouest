@@ -28,7 +28,15 @@
   <meta name="twitter:image" content="https://b0uch3r.github.io/quai-ouest/assets/images/hero-terrasse-plage.jpg">
 
   <!-- Preload hero image -->
-  <link rel="preload" as="image" href="assets/images/hero-terrasse-plage.jpg">
+  <link
+    rel="preload"
+    as="image"
+    href="assets/images/optimized/hero-terrasse-plage-1280.avif"
+    type="image/avif"
+    imagesrcset="assets/images/optimized/hero-terrasse-plage-768.avif 768w,
+                 assets/images/optimized/hero-terrasse-plage-1280.avif 1280w,
+                 assets/images/optimized/hero-terrasse-plage-1600.avif 1600w"
+    imagesizes="100vw">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -216,7 +224,7 @@
 
     @media (prefers-reduced-motion: reduce) {
       .reveal { opacity: 1; transform: none; transition: none; }
-      .hero-bg { transition: none; }
+      .hero-media { transition: none; }
       header, header * { transition: none !important; }
       .scroll-indicator { animation: none; }
       * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
@@ -377,16 +385,22 @@
       color: #fff;
       overflow: hidden;
     }
-    .hero-bg {
+    .hero-media {
       position: absolute;
       inset: 0;
-      background-image: url('assets/images/hero-terrasse-plage.jpg');
-      background-size: cover;
-      background-position: center;
+      display: block;
       background-color: var(--bleu-baie);
       transform: scale(1.05);
       transition: transform 0.3s;
       will-change: transform;
+      pointer-events: none;
+    }
+    .hero-media img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: center;
     }
     .hero-overlay {
       position: absolute;
@@ -1398,7 +1412,7 @@
 <body>
 
   <!-- Skip to content (Accessibilité) -->
-  <a href="#restaurant" class="skip-to-content">Aller au contenu principal</a>
+  <a href="#main-content" class="skip-to-content">Aller au contenu principal</a>
 
   <!-- ==================== HEADER ==================== -->
   <header id="header" role="banner">
@@ -1458,9 +1472,30 @@
     <a href="tel:0298290809" class="btn-primary" style="text-align:center;margin-top:1rem;" onclick="toggleMobileNav()">Réserver</a>
   </div>
 
+  <main id="main-content">
   <!-- ==================== HERO ==================== -->
   <section class="hero" id="hero">
-    <div class="hero-bg" id="heroBg"></div>
+    <picture class="hero-media" id="heroBg" aria-hidden="true">
+      <source
+        type="image/avif"
+        srcset="assets/images/optimized/hero-terrasse-plage-768.avif 768w,
+                assets/images/optimized/hero-terrasse-plage-1280.avif 1280w,
+                assets/images/optimized/hero-terrasse-plage-1600.avif 1600w"
+        sizes="100vw">
+      <source
+        type="image/webp"
+        srcset="assets/images/optimized/hero-terrasse-plage-768.webp 768w,
+                assets/images/optimized/hero-terrasse-plage-1280.webp 1280w,
+                assets/images/optimized/hero-terrasse-plage-1600.webp 1600w"
+        sizes="100vw">
+      <img
+        src="assets/images/hero-terrasse-plage.jpg"
+        alt=""
+        width="1600"
+        height="900"
+        fetchpriority="high"
+        decoding="async">
+    </picture>
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <h1>Bistronomie<br>face à la mer</h1>
@@ -2031,7 +2066,7 @@
             <p>Confirmation sous 24h par téléphone ou email</p>
           </div>
           <!-- Honeypot anti-spam (invisible) -->
-          <input type="text" name="_gotcha" style="display:none !important" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <input type="text" name="_gotcha" hidden tabindex="-1" autocomplete="off" aria-label="Ne pas remplir ce champ">
 
           <div class="form-error-banner" id="formErrorBanner" role="alert"></div>
 
@@ -2114,6 +2149,8 @@
       <div class="map-container reveal" style="margin-top: 2rem;">
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2619.5!2d-3.987!3d48.6847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4816b8a8d5b4c0e7%3A0x0!2s1+Promenade+de+Penarth+29250+Saint-Pol-de-L%C3%A9on!5e0!3m2!1sfr!2sfr!4v1"
+          width="1200"
+          height="400"
           allowfullscreen
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
@@ -2139,6 +2176,8 @@
   </section>
 
   <!-- ==================== FOOTER ==================== -->
+  </main>
+
   <footer>
     <div class="footer-inner">
       <div class="footer-col">
@@ -2247,11 +2286,50 @@
 
   <!-- ==================== JAVASCRIPT ==================== -->
   <script>
-    // === HEADER SCROLL ===
+    // === HEADER + PARALLAX + BACK TO TOP + NAV ACTIVE ===
     const header = document.getElementById('header');
-    window.addEventListener('scroll', () => {
-      header.classList.toggle('scrolled', window.scrollY > 60);
-    }, { passive: true });
+    const heroBg = document.getElementById('heroBg');
+    const backToTopBtn = document.getElementById('backToTop');
+    const sections = document.querySelectorAll('main section[id]');
+    const navLinks = document.querySelectorAll('nav a[href^="#"], .mobile-nav a[href^="#"]');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function updateActiveNav(scrollY = window.scrollY) {
+      let currentSection = '';
+      sections.forEach(section => {
+        const top = section.offsetTop - 150;
+        if (scrollY >= top) {
+          currentSection = section.getAttribute('id');
+        }
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('active-section');
+        if (link.getAttribute('href') === '#' + currentSection) {
+          link.classList.add('active-section');
+        }
+      });
+    }
+
+    let scrollTicking = false;
+    function handleScrollState() {
+      if (scrollTicking) return;
+      scrollTicking = true;
+      requestAnimationFrame(() => {
+        const scrollY = window.scrollY;
+        header.classList.toggle('scrolled', scrollY > 60);
+        if (backToTopBtn) {
+          backToTopBtn.classList.toggle('visible', scrollY > 600);
+        }
+        if (!prefersReducedMotion && heroBg && scrollY < window.innerHeight) {
+          heroBg.style.transform = `scale(1.05) translateY(${scrollY * 0.4}px)`;
+        }
+        updateActiveNav(scrollY);
+        scrollTicking = false;
+      });
+    }
+
+    window.addEventListener('scroll', handleScrollState, { passive: true });
+    handleScrollState();
 
     // === MOBILE NAV ===
     function toggleMobileNav() {
@@ -2262,17 +2340,6 @@
       document.querySelector('.mobile-overlay').classList.toggle('open');
       document.body.style.overflow = isOpen ? 'hidden' : '';
       hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    }
-
-    // === PARALLAX HERO ===
-    const heroBg = document.getElementById('heroBg');
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!prefersReducedMotion) {
-      window.addEventListener('scroll', () => {
-        if (window.scrollY < window.innerHeight) {
-          heroBg.style.transform = `scale(1.05) translateY(${window.scrollY * 0.4}px)`;
-        }
-      }, { passive: true });
     }
 
     // === INTERSECTION OBSERVER (Reveal animations) ===
@@ -2518,34 +2585,6 @@
         });
       });
     });
-
-    // === BACK TO TOP ===
-    const backToTopBtn = document.getElementById('backToTop');
-    window.addEventListener('scroll', () => {
-      backToTopBtn.classList.toggle('visible', window.scrollY > 600);
-    }, { passive: true });
-
-    // === NAV ACTIVE SECTION INDICATOR ===
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('nav a[href^="#"], .mobile-nav a[href^="#"]');
-
-    function updateActiveNav() {
-      let currentSection = '';
-      sections.forEach(section => {
-        const top = section.offsetTop - 150;
-        if (window.scrollY >= top) {
-          currentSection = section.getAttribute('id');
-        }
-      });
-      navLinks.forEach(link => {
-        link.classList.remove('active-section');
-        if (link.getAttribute('href') === '#' + currentSection) {
-          link.classList.add('active-section');
-        }
-      });
-    }
-    window.addEventListener('scroll', updateActiveNav, { passive: true });
-    updateActiveNav();
 
     // === COOKIE BANNER ===
     function acceptCookies() {

@@ -2,10 +2,39 @@ import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase-server'
 import type { ReservationStats, ReservationStatus, ServiceType } from '@/types'
 
+function normalizeStats(payload: unknown): ReservationStats | null {
+  if (!payload || typeof payload !== 'object') return null
+
+  const stats = payload as Partial<ReservationStats>
+
+  return {
+    total_reservations: Number(stats.total_reservations || 0),
+    today_reservations: Number(stats.today_reservations || 0),
+    total_clients: Number(stats.total_clients || 0),
+    total_revenue_cents: Number(stats.total_revenue_cents || 0),
+    by_status: (stats.by_status || {}) as Record<ReservationStatus, number>,
+    by_service: (stats.by_service || {}) as Record<ServiceType, number>,
+    by_month: Array.isArray(stats.by_month) ? stats.by_month : [],
+    avg_guests: Number(stats.avg_guests || 0),
+    no_show_rate: Number(stats.no_show_rate || 0),
+  }
+}
+
 export async function GET() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
+  if (!user) return NextResponse.json({ error: 'Non autorise' }, { status: 401 })
+
+  const { data: rpcStats, error: rpcError } = await supabase.rpc('get_reservation_stats')
+  const normalizedStats = normalizeStats(rpcStats)
+
+  if (!rpcError && normalizedStats) {
+    return NextResponse.json(normalizedStats)
+  }
+
+  if (rpcError) {
+    console.warn('[stats] RPC fallback:', rpcError.message)
+  }
 
   const { data: reservations, error } = await supabase
     .from('reservations')
@@ -21,31 +50,36 @@ export async function GET() {
   let totalRevenue = 0
   let totalGuests = 0
   let noShowCount = 0
-  const clientIds = new Set<string>()
+  let todayReservations = 0
+  const todayStr = new Date().toISOString().slice(0, 10)
 
-  for (const r of all) {
-    // By status
-    byStatus[r.status as ReservationStatus] = (byStatus[r.status as ReservationStatus] || 0) + 1
-    // By service
-    byService[r.service as ServiceType] = (byService[r.service as ServiceType] || 0) + 1
-    // Revenue
-    totalRevenue += r.amount_cents || 0
-    totalGuests += r.guests_count
-    if (r.status === 'no_show') noShowCount++
-    // By month
-    const month = r.reservation_date.slice(0, 7) // YYYY-MM
-    const m = byMonth.get(month) || { count: 0, revenue_cents: 0 }
-    m.count++
-    m.revenue_cents += r.amount_cents || 0
-    byMonth.set(month, m)
+  for (const reservation of all) {
+    byStatus[reservation.status as ReservationStatus] =
+      (byStatus[reservation.status as ReservationStatus] || 0) + 1
+    byService[reservation.service as ServiceType] =
+      (byService[reservation.service as ServiceType] || 0) + 1
+
+    totalRevenue += reservation.amount_cents || 0
+    totalGuests += reservation.guests_count
+
+    if (reservation.status === 'no_show') noShowCount++
+    if (reservation.reservation_date === todayStr) todayReservations++
+
+    const month = reservation.reservation_date.slice(0, 7)
+    const monthStats = byMonth.get(month) || { count: 0, revenue_cents: 0 }
+    monthStats.count++
+    monthStats.revenue_cents += reservation.amount_cents || 0
+    byMonth.set(month, monthStats)
   }
 
   const { count: clientCount } = await supabase
     .from('clients')
     .select('id', { count: 'exact', head: true })
+    .is('deletion_requested_at', null)
 
   const stats: ReservationStats = {
     total_reservations: all.length,
+    today_reservations: todayReservations,
     total_clients: clientCount || 0,
     total_revenue_cents: totalRevenue,
     by_status: byStatus,
