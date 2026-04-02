@@ -15,7 +15,7 @@
   <!-- Open Graph -->
   <meta property="og:title" content="Quai Ouest — Bistronomie face à la mer">
   <meta property="og:description" content="Restaurant bistronomique sur la Plage St Anne à Saint-Pol-de-Léon. Vue panoramique sur la Baie de Morlaix.">
-  <meta property="og:type" content="restaurant">
+  <meta property="og:type" content="website">
   <meta property="og:locale" content="fr_FR">
   <meta property="og:url" content="https://b0uch3r.github.io/quai-ouest/">
   <meta property="og:image" content="https://b0uch3r.github.io/quai-ouest/assets/images/hero-terrasse-plage.jpg">
@@ -76,6 +76,15 @@
     },
     "servesCuisine": ["Bistronomique", "Fruits de mer", "Bretonne"],
     "priceRange": "€€",
+    "foundingDate": "2018-03-21",
+    "award": "Tripadvisor Travellers' Choice 2025",
+    "sameAs": [
+      "https://www.instagram.com/quaiouest.stpol/",
+      "https://www.facebook.com/p/Quai-Ouest-100068821471690/",
+      "https://www.google.com/maps/?cid=17426717769622004663",
+      "https://www.tripadvisor.fr/Restaurant_Review-g660194-d23568654-Reviews-Quai_Ouest-Saint_Pol_de_Leon_Finistere_Brittany.html",
+      "https://www.roscoff-tourisme.com/fr/fiche/restauration/quai-ouest-saint-pol-de-leon_TFORESBRE029FS000LK/"
+    ],
     "openingHoursSpecification": [
       {"@type": "OpeningHoursSpecification","dayOfWeek": "Wednesday","opens": "12:00","closes": "14:00"},
       {"@type": "OpeningHoursSpecification","dayOfWeek": "Thursday","opens": "12:00","closes": "14:00"},
@@ -546,6 +555,142 @@
       }
     }
 
+    /* ========== NOTRE HISTOIRE ========== */
+    #histoire {
+      background:
+        radial-gradient(circle at top right, rgba(212, 168, 83, 0.18), transparent 34%),
+        linear-gradient(180deg, #fff 0%, var(--blanc-ecume) 100%);
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+      gap: 2rem;
+      align-items: start;
+      margin-top: 2rem;
+    }
+
+    .story-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .story-kicker {
+      display: inline-flex;
+      align-self: flex-start;
+      padding: 0.4rem 0.8rem;
+      border-radius: 999px;
+      background: rgba(44, 95, 124, 0.08);
+      color: var(--bleu-baie);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .story-copy p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: rgba(74, 74, 74, 0.92);
+    }
+
+    .story-pillars {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .story-card {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(44, 95, 124, 0.1);
+      border-radius: 16px;
+      padding: 1.25rem;
+      box-shadow: 0 10px 30px rgba(44, 95, 124, 0.06);
+    }
+
+    .story-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      color: var(--bleu-baie);
+      margin-bottom: 0.45rem;
+    }
+
+    .story-card p {
+      font-size: 0.92rem;
+      line-height: 1.7;
+      color: rgba(74, 74, 74, 0.9);
+    }
+
+    .story-aside {
+      background:
+        linear-gradient(180deg, rgba(45, 45, 45, 0.98), rgba(30, 74, 95, 0.98));
+      color: rgba(255, 255, 255, 0.82);
+      border-radius: 22px;
+      padding: 2rem;
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.14);
+    }
+
+    .story-aside h3 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+
+    .story-aside p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+
+    .story-metrics {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .story-metric {
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .story-metric:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .story-metric span {
+      display: block;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.55);
+      margin-bottom: 0.25rem;
+    }
+
+    .story-metric strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--or-chaud);
+      margin-bottom: 0.25rem;
+    }
+
+    .story-metric p {
+      margin: 0;
+      font-size: 0.92rem;
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    @media (max-width: 900px) {
+      .story-grid,
+      .story-pillars {
+        grid-template-columns: 1fr;
+      }
+    }
+
     /* ========== CARTE / MENUS ========== */
     #carte {
       background: var(--ardoise);
@@ -687,6 +832,120 @@
     @media (max-width: 768px) {
       .galerie-grid { grid-template-columns: repeat(2, 1fr); }
       .galerie-item:nth-child(1) { grid-row: span 1; aspect-ratio: 1; }
+    }
+
+    /* ========== PREUVES ========== */
+    #preuves { background: #fff; }
+
+    .proof-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+
+    .proof-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      padding: 1.5rem;
+      border-radius: 18px;
+      border: 1px solid rgba(44, 95, 124, 0.12);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(232, 222, 209, 0.34));
+      box-shadow: 0 12px 32px rgba(44, 95, 124, 0.07);
+    }
+
+    .proof-tag {
+      display: inline-flex;
+      align-self: flex-start;
+      padding: 0.38rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(212, 168, 83, 0.14);
+      color: var(--bleu-baie);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .proof-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: var(--bleu-baie);
+    }
+
+    .proof-value {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      line-height: 1;
+      color: var(--ardoise);
+    }
+
+    .proof-value small {
+      display: block;
+      margin-top: 0.45rem;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(74, 74, 74, 0.72);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .proof-card p {
+      font-size: 0.94rem;
+      line-height: 1.7;
+      color: rgba(74, 74, 74, 0.9);
+    }
+
+    .proof-link {
+      display: inline-flex;
+      align-self: flex-start;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: auto;
+      color: var(--cognac);
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      transition: color 0.3s, transform 0.3s;
+    }
+
+    .proof-link:hover {
+      color: var(--bleu-baie);
+      transform: translateX(2px);
+    }
+
+    .proof-socials {
+      display: flex;
+      justify-content: center;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+
+    .proof-socials a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.75rem 1rem;
+      border-radius: 999px;
+      background: rgba(44, 95, 124, 0.07);
+      color: var(--bleu-baie);
+      font-size: 0.88rem;
+      font-weight: 700;
+      transition: background 0.3s, color 0.3s, transform 0.3s;
+    }
+
+    .proof-socials a:hover {
+      background: rgba(196, 114, 58, 0.14);
+      color: var(--cognac);
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 900px) {
+      .proof-grid { grid-template-columns: 1fr; }
     }
 
     /* ========== HORAIRES ========== */
@@ -856,6 +1115,37 @@
     .social-link:hover { background: var(--cognac); transform: translateY(-2px); }
     .social-link svg { width: 20px; height: 20px; fill: #fff; }
 
+    .contact-trust {
+      margin-top: 0.75rem;
+      padding: 1.35rem;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px;
+    }
+
+    .contact-trust h3 {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      margin-bottom: 0.85rem;
+      color: #fff;
+    }
+
+    .contact-trust ul {
+      list-style: none;
+      display: grid;
+      gap: 0.65rem;
+    }
+
+    .contact-trust li {
+      display: flex;
+      gap: 0.65rem;
+      align-items: flex-start;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.84);
+    }
+
+    .contact-trust li strong { color: #fff; }
+
     /* ---- Formulaire de réservation ---- */
     .contact-form {
       display: flex;
@@ -943,6 +1233,55 @@
     }
     .form-field .closed-day-hint.visible { display: block; }
 
+    .contact-process {
+      display: grid;
+      gap: 0.65rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .contact-step {
+      display: flex;
+      gap: 0.8rem;
+      align-items: flex-start;
+      padding: 0.8rem 0.9rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+    }
+
+    .contact-step-number {
+      width: 1.65rem;
+      height: 1.65rem;
+      border-radius: 50%;
+      background: var(--or-chaud);
+      color: var(--ardoise);
+      font-size: 0.76rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 0.05rem;
+    }
+
+    .contact-step p {
+      margin: 0;
+      font-size: 0.84rem;
+      line-height: 1.55;
+      color: rgba(255,255,255,0.82);
+    }
+
+    .contact-helper {
+      text-align: center;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.76);
+    }
+
+    .contact-helper a {
+      color: #fff;
+      font-weight: 700;
+    }
+
     /* Submit button amélioré */
     .btn-submit {
       position: relative;
@@ -1014,6 +1353,11 @@
       margin-bottom: 0.5rem;
     }
     .form-success p { font-size: 0.9rem; opacity: 0.85; line-height: 1.5; }
+    .form-success .success-summary {
+      font-size: 0.96rem;
+      color: #fff;
+      margin-bottom: 0.45rem;
+    }
     .form-success .success-tel {
       display: inline-block;
       margin-top: 1rem;
@@ -1112,6 +1456,35 @@
     }
     .acces-item strong { display: block; color: var(--bleu-baie); margin-bottom: 0.25rem; }
 
+    .location-links {
+      display: flex;
+      justify-content: center;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    .location-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.85rem 1.1rem;
+      background: #fff;
+      border: 1px solid rgba(44,95,124,0.12);
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--bleu-baie);
+      box-shadow: 0 6px 18px rgba(44,95,124,0.08);
+      transition: transform 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    .location-links a:hover {
+      color: var(--cognac);
+      border-color: rgba(196,114,58,0.25);
+      transform: translateY(-1px);
+    }
+
     /* ========== FOOTER ========== */
     footer {
       background: var(--ardoise);
@@ -1152,6 +1525,32 @@
 
     @media (max-width: 768px) {
       .footer-inner { grid-template-columns: 1fr; text-align: center; }
+    }
+
+    /* ========== FLOATING CTA MOBILE ========== */
+    .floating-cta {
+      display: none;
+      position: fixed;
+      bottom: 1rem;
+      left: 1rem; right: 1rem;
+      z-index: 90;
+      background: var(--cognac);
+      color: #fff;
+      text-align: center;
+      padding: 0.9rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 20px rgba(196,114,58,0.4);
+      transition: background 0.3s;
+    }
+    .floating-cta:hover { background: var(--or-chaud); }
+    .floating-cta svg { display: inline-block; vertical-align: middle; margin-right: 0.5rem; width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2; }
+
+    @media (max-width: 768px) {
+      .floating-cta { display: block; }
     }
 
     /* ========== SKIP TO CONTENT (Accessibilité) ========== */
@@ -1563,6 +1962,63 @@
     </div>
   </section>
 
+  <!-- ==================== NOTRE HISTOIRE ==================== -->
+  <section id="histoire">
+    <div class="section-inner">
+      <div class="reveal">
+        <h2 class="section-title">Notre Histoire</h2>
+        <p class="section-subtitle">Une maison de bord de baie, portée par Yannick Uguen depuis 2018</p>
+        <div class="wave-divider"></div>
+      </div>
+
+      <div class="story-grid">
+        <div class="story-copy reveal">
+          <span class="story-kicker">Le lieu, la cuisine, l'intention</span>
+          <p>Installé plage Sainte-Anne à Saint-Pol-de-Léon depuis 2018, Quai Ouest a été imaginé comme une table ouverte sur la Baie de Morlaix. Après un parcours en restauration à Dinan puis à Bordeaux, le chef Yannick Uguen a choisi cette adresse pour y défendre une cuisine lisible, généreuse et attachée au rythme de la côte nord bretonne.</p>
+          <p>Ici, la vue n'est pas un simple décor. Elle fait partie de l'expérience. Le midi, la salle reste lumineuse et accessible. Le soir, le restaurant resserre le nombre de couverts pour garder une ambiance plus intime, plus posée, presque comme une maison face à l'horizon.</p>
+          <p>La cuisine suit la saison, les arrivages et les bons produits plutôt qu'un discours figé. L'esprit reste le même dans toute la carte : faire maison, travailler juste, et donner envie de revenir autant pour l'assiette que pour le lieu.</p>
+
+          <div class="story-pillars">
+            <article class="story-card reveal reveal-delay-1">
+              <h3>Le chef</h3>
+              <p>Yannick Uguen signe une cuisine bistronomique directe, entre mer, terroir breton et plaisir de table sans raideur.</p>
+            </article>
+            <article class="story-card reveal reveal-delay-2">
+              <h3>La philosophie</h3>
+              <p>Produits frais, carte de saison, service humain et rythme du lieu respecté entre déjeuner vivant et dîner plus confidentiel.</p>
+            </article>
+            <article class="story-card reveal reveal-delay-3">
+              <h3>Les engagements</h3>
+              <p>Le menu anti-gaspi mené avec Finisterestes29 reflète l'envie de mieux valoriser les produits et de réduire le gaspillage.</p>
+            </article>
+          </div>
+        </div>
+
+        <aside class="story-aside reveal reveal-delay-1">
+          <h3>Pourquoi le lieu marque les esprits</h3>
+          <p>Quai Ouest tient à un équilibre rare : une vraie adresse de bord de mer, un décor naturel spectaculaire, et une table qui reste accueillante sans perdre en exigence.</p>
+          <div class="story-metrics">
+            <div class="story-metric">
+              <span>Depuis</span>
+              <strong>2018</strong>
+              <p>Une présence installée sur la plage Sainte-Anne, à Saint-Pol-de-Léon.</p>
+            </div>
+            <div class="story-metric">
+              <span>Cadre</span>
+              <strong>Baie de Morlaix</strong>
+              <p>Véranda panoramique, lumière changeante, horizon visible à chaque service.</p>
+            </div>
+            <div class="story-metric">
+              <span>Signature</span>
+              <strong>Anti-gaspi & saison</strong>
+              <p>Une cuisine pensée pour rester sincère, locale quand c'est juste, et cohérente toute l'année.</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
   <!-- ==================== LA CARTE ==================== -->
   <section id="carte">
     <div class="section-inner">
@@ -1891,9 +2347,53 @@
       </div>
 
       <div class="galerie-insta reveal" style="margin-top: 2rem;">
-        <a href="https://instagram.com/quaiouest.stpol" target="_blank" rel="noopener">
+        <a href="https://www.instagram.com/quaiouest.stpol/" target="_blank" rel="noopener noreferrer">
           Suivez-nous sur Instagram @quaiouest.stpol →
         </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PREUVES ==================== -->
+  <section id="preuves">
+    <div class="section-inner">
+      <div class="reveal">
+        <h2 class="section-title">Des preuves bien réelles</h2>
+        <p class="section-subtitle">Avis, référencement local et adresses officielles pour rassurer avant même la réservation</p>
+        <div class="wave-divider"></div>
+      </div>
+
+      <div class="proof-grid">
+        <article class="proof-card reveal">
+          <span class="proof-tag">Tripadvisor</span>
+          <h3>Travellers' Choice 2025</h3>
+          <div class="proof-value">4,3 / 5<small>90 avis</small></div>
+          <p>Une page active, des photos voyageurs, et une distinction 2025 qui crédibilise la table auprès d'une clientèle de séjour comme de passage.</p>
+          <a class="proof-link" href="https://www.tripadvisor.fr/Restaurant_Review-g660194-d23568654-Reviews-Quai_Ouest-Saint_Pol_de_Leon_Finistere_Brittany.html" target="_blank" rel="noopener noreferrer">Voir les avis Tripadvisor →</a>
+        </article>
+
+        <article class="proof-card reveal reveal-delay-1">
+          <span class="proof-tag">Google Maps</span>
+          <h3>La fiche locale</h3>
+          <div class="proof-value">Itinéraire<small>Horaires, localisation, contact</small></div>
+          <p>La fiche Google Maps du restaurant permet de préparer facilement une visite, de partager l'adresse et de laisser un avis après l'expérience.</p>
+          <a class="proof-link" href="https://www.google.com/maps/?cid=17426717769622004663" target="_blank" rel="noopener noreferrer">Ouvrir la fiche Google →</a>
+        </article>
+
+        <article class="proof-card reveal reveal-delay-2">
+          <span class="proof-tag">Office de tourisme</span>
+          <h3>Adresse référencée</h3>
+          <div class="proof-value">Roscoff Côte des Sables<small>Table vue mer, terrasse, menu anti-gaspi</small></div>
+          <p>Le Quai Ouest figure dans la sélection locale de l'Office de tourisme, un vrai signal de confiance pour une clientèle qui découvre le secteur.</p>
+          <a class="proof-link" href="https://www.roscoff-tourisme.com/fr/fiche/restauration/quai-ouest-saint-pol-de-leon_TFORESBRE029FS000LK/" target="_blank" rel="noopener noreferrer">Voir la fiche touristique →</a>
+        </article>
+      </div>
+
+      <div class="proof-socials reveal" aria-label="Liens sociaux du Quai Ouest">
+        <a href="https://www.instagram.com/quaiouest.stpol/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://www.facebook.com/p/Quai-Ouest-100068821471690/" target="_blank" rel="noopener noreferrer">Facebook</a>
+        <a href="https://www.google.com/maps/?cid=17426717769622004663" target="_blank" rel="noopener noreferrer">Google Maps</a>
+        <a href="https://www.tripadvisor.fr/Restaurant_Review-g660194-d23568654-Reviews-Quai_Ouest-Saint_Pol_de_Leon_Finistere_Brittany.html" target="_blank" rel="noopener noreferrer">Tripadvisor</a>
       </div>
     </div>
   </section>
@@ -2048,27 +2548,51 @@
           </div>
 
           <div class="contact-social">
-            <a href="https://instagram.com/quaiouest.stpol" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
+            <a href="https://www.instagram.com/quaiouest.stpol/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
               <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="#fff" stroke-width="2"/><circle cx="12" cy="12" r="5" fill="none" stroke="#fff" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="#fff"/></svg>
             </a>
-            <a href="https://facebook.com/QuaiOuest" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">
+            <a href="https://www.facebook.com/p/Quai-Ouest-100068821471690/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Facebook">
               <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" fill="#fff"/></svg>
             </a>
-            <a href="https://www.tripadvisor.fr/Restaurant_Review-Saint_Pol_de_Leon-Quai_Ouest.html" target="_blank" rel="noopener" class="social-link" aria-label="TripAdvisor">
+            <a href="https://www.tripadvisor.fr/Restaurant_Review-g660194-d23568654-Reviews-Quai_Ouest-Saint_Pol_de_Leon_Finistere_Brittany.html" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="TripAdvisor">
               <svg viewBox="0 0 24 24"><circle cx="6.5" cy="13.5" r="2" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="17.5" cy="13.5" r="2" fill="none" stroke="#fff" stroke-width="1.5"/><path d="M3 13.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0zm11 0a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0zM12 6c-3 0-5.5 1.5-7 3h14c-1.5-1.5-4-3-7-3z" fill="#fff"/></svg>
             </a>
+          </div>
+
+          <div class="contact-trust">
+            <h3>Réserver en toute confiance</h3>
+            <ul>
+              <li><span aria-hidden="true">✓</span><span><strong>Chaque demande est relue par l'équipe.</strong> Rien n'est laissé à un robot côté salle.</span></li>
+              <li><span aria-hidden="true">✓</span><span><strong>Confirmation sous 24h.</strong> Par téléphone ou par email selon votre préférence.</span></li>
+              <li><span aria-hidden="true">✓</span><span><strong>Aucun paiement en ligne.</strong> Vous faites une demande, puis l'équipe vous confirme.</span></li>
+            </ul>
           </div>
         </div>
 
         <form class="contact-form reveal reveal-delay-1" id="reservationForm" data-api="https://quai-ouest.vercel.app/api/reservations/public" method="POST" novalidate>
           <div class="form-header">
             <h3>Demande de réservation</h3>
-            <p>Confirmation sous 24h par téléphone ou email</p>
+            <p>Une vraie confirmation humaine, par téléphone ou email, après lecture de votre demande.</p>
           </div>
           <!-- Honeypot anti-spam (invisible) -->
           <input type="text" name="_gotcha" hidden tabindex="-1" autocomplete="off" aria-label="Ne pas remplir ce champ">
 
           <div class="form-error-banner" id="formErrorBanner" role="alert"></div>
+
+          <div class="contact-process" aria-label="Déroulé de la réservation">
+            <div class="contact-step">
+              <span class="contact-step-number" aria-hidden="true">1</span>
+              <p>Choisissez une date, un service et le nombre de couverts.</p>
+            </div>
+            <div class="contact-step">
+              <span class="contact-step-number" aria-hidden="true">2</span>
+              <p>Votre demande est transmise à l'équipe du Quai Ouest.</p>
+            </div>
+            <div class="contact-step">
+              <span class="contact-step-number" aria-hidden="true">3</span>
+              <p>Vous recevez une confirmation manuelle sous 24h, ou plus vite par téléphone si besoin.</p>
+            </div>
+          </div>
 
           <div class="form-row">
             <div class="form-field">
@@ -2120,6 +2644,7 @@
             <label for="message">Message <span style="text-transform:none;font-weight:400;opacity:0.6;">(optionnel)</span></label>
             <textarea id="message" name="message" placeholder="Allergies, occasion spéciale, terrasse..."></textarea>
           </div>
+          <p class="contact-helper">Besoin d'une réponse rapide ? Appelez-nous au <a href="tel:0298290809">02 98 29 08 09</a>.</p>
           <button type="submit" class="btn-submit" id="btnSubmit">
             <span class="btn-text">Envoyer ma demande</span>
             <span class="btn-spinner" aria-hidden="true"></span>
@@ -2129,6 +2654,7 @@
               <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
             <h4>Demande envoyée !</h4>
+            <p class="success-summary" id="formSuccessSummary">Votre demande a bien été transmise à l'équipe du Quai Ouest.</p>
             <p>Nous vous confirmerons votre réservation par téléphone ou email sous 24h.</p>
             <a href="tel:0298290809" class="success-tel">02 98 29 08 09</a>
           </div>
@@ -2172,6 +2698,12 @@
           10 min par la côte
         </div>
       </div>
+
+      <div class="location-links reveal reveal-delay-1">
+        <a href="https://www.google.com/maps/?cid=17426717769622004663" target="_blank" rel="noopener noreferrer">Ouvrir sur Google Maps</a>
+        <a href="https://www.tripadvisor.fr/Restaurant_Review-g660194-d23568654-Reviews-Quai_Ouest-Saint_Pol_de_Leon_Finistere_Brittany.html" target="_blank" rel="noopener noreferrer">Voir les avis Tripadvisor</a>
+        <a href="https://www.roscoff-tourisme.com/fr/fiche/restauration/quai-ouest-saint-pol-de-leon_TFORESBRE029FS000LK/" target="_blank" rel="noopener noreferrer">Office de tourisme</a>
+      </div>
     </div>
   </section>
 
@@ -2184,13 +2716,13 @@
         <h4>Quai Ouest</h4>
         <p>Bistronomie face à la mer<br>Saint-Pol-de-Léon, Finistère</p>
         <div class="footer-social">
-          <a href="https://instagram.com/quaiouest.stpol" target="_blank" rel="noopener" aria-label="Instagram">
+          <a href="https://www.instagram.com/quaiouest.stpol/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
             <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2"/><circle cx="12" cy="12" r="5" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="rgba(255,255,255,0.7)"/></svg>
           </a>
-          <a href="https://facebook.com/QuaiOuest" target="_blank" rel="noopener" aria-label="Facebook">
+          <a href="https://www.facebook.com/p/Quai-Ouest-100068821471690/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
             <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
           </a>
-          <a href="https://www.tripadvisor.fr/Restaurant_Review-Saint_Pol_de_Leon-Quai_Ouest.html" target="_blank" rel="noopener" aria-label="TripAdvisor">
+          <a href="https://www.tripadvisor.fr/Restaurant_Review-g660194-d23568654-Reviews-Quai_Ouest-Saint_Pol_de_Leon_Finistere_Brittany.html" target="_blank" rel="noopener noreferrer" aria-label="TripAdvisor">
             <svg viewBox="0 0 24 24"><circle cx="6.5" cy="13.5" r="2" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"/><circle cx="17.5" cy="13.5" r="2" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"/><path d="M3 13.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0zm11 0a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0zM12 6c-3 0-5.5 1.5-7 3h14c-1.5-1.5-4-3-7-3z" fill="rgba(255,255,255,0.7)"/></svg>
           </a>
         </div>
@@ -2214,9 +2746,15 @@
       © 2026 Quai Ouest — Tous droits réservés
       · <a href="politique-confidentialite.html" style="color:rgba(255,255,255,0.5);font-size:0.8rem;text-decoration:underline;">Politique de confidentialité</a>
       · <button onclick="document.getElementById('modalMentions').classList.add('open')" style="background:none;border:none;color:rgba(255,255,255,0.5);cursor:pointer;font-size:0.8rem;text-decoration:underline;padding:0;">Mentions légales</button>
-      · <a href="https://quai-ouest.vercel.app/login" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.35);font-size:0.75rem;text-decoration:none;" title="Espace staff">Staff</a>
+      · <a href="https://quai-ouest.vercel.app/login" target="_blank" rel="noopener noreferrer" style="color:rgba(255,255,255,0.35);font-size:0.75rem;text-decoration:none;" title="Espace staff">Staff</a>
     </div>
   </footer>
+
+  <!-- ==================== FLOATING CTA MOBILE ==================== -->
+  <a href="tel:0298290809" class="floating-cta" id="floatingCta" aria-label="Appeler le Quai Ouest pour réserver">
+    <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    Appeler pour réserver · 02 98 29 08 09
+  </a>
 
   <!-- ==================== MODAL MENTIONS LÉGALES ==================== -->
   <div class="modal-overlay" id="modalMentions" role="dialog" aria-modal="true" aria-labelledby="modalMentionsTitle" onclick="if(event.target===this)this.classList.remove('open')">
@@ -2265,7 +2803,7 @@
   <div class="lightbox-overlay" id="lightbox" onclick="if(event.target===this)closeLightbox()" role="dialog" aria-modal="true" aria-label="Galerie photo en plein écran">
     <button class="lightbox-close" onclick="closeLightbox()" aria-label="Fermer">&times;</button>
     <button class="lightbox-nav lightbox-prev" onclick="navLightbox(-1)" aria-label="Photo précédente">&#8249;</button>
-    <img class="lightbox-img" id="lightboxImg" src="" alt="">
+    <img class="lightbox-img" id="lightboxImg" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="">
     <button class="lightbox-nav lightbox-next" onclick="navLightbox(1)" aria-label="Photo suivante">&#8250;</button>
     <div class="lightbox-counter" id="lightboxCounter"></div>
   </div>
@@ -2449,6 +2987,7 @@
         e.preventDefault();
         const btn = document.getElementById('btnSubmit');
         const errorBanner = document.getElementById('formErrorBanner');
+        const successSummary = document.getElementById('formSuccessSummary');
         errorBanner.classList.remove('visible');
 
         // Validate all required fields
@@ -2487,8 +3026,32 @@
             body: JSON.stringify(data)
           });
           if (response.ok) {
+            const serviceLabel = data.service === 'soir'
+              ? 'au service du soir'
+              : data.service === 'midi'
+                ? 'au service du midi'
+                : 'sur le service souhaité';
+            const guestLabel = data.personnes === '1'
+              ? '1 couvert'
+              : data.personnes === '7+'
+                ? 'plus de 6 couverts'
+                : `${data.personnes} couverts`;
+            const formattedDate = data.date
+              ? new Date(`${data.date}T12:00:00`).toLocaleDateString('fr-FR', {
+                  weekday: 'long',
+                  day: 'numeric',
+                  month: 'long'
+                })
+              : 'la date choisie';
+            if (successSummary) {
+              successSummary.textContent = `Votre demande pour ${guestLabel}, ${serviceLabel}, le ${formattedDate}, a bien été transmise à l'équipe du Quai Ouest.`;
+            }
             // Hide form fields, show success
             reservationForm.querySelectorAll('.form-header, .form-row, .form-field, .btn-submit').forEach(el => el.style.display = 'none');
+            const helper = reservationForm.querySelector('.contact-helper');
+            const process = reservationForm.querySelector('.contact-process');
+            if (helper) helper.style.display = 'none';
+            if (process) process.style.display = 'none';
             document.getElementById('formSuccess').classList.add('visible');
           } else {
             const err = await response.json().catch(() => ({}));

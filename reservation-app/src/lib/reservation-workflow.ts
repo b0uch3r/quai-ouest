@@ -12,7 +12,10 @@
  * - En cas d'échec email, une alerte est visible dans le dashboard
  */
 
-import { sendConfirmationEmail, type ReservationEmailData, type EmailResult } from './email'
+import {
+  sendReservationNotifications,
+  type ReservationNotificationSummary,
+} from './reservation-notifications'
 import { type ServiceType } from '@/types'
 
 // ============================================
@@ -149,24 +152,24 @@ async function insertIntoDatabase(
 }
 
 // ============================================
-// Agent 3 : Liaison Client — Envoi email
+// Agent 3 : Liaison Client — Notifications
 // ============================================
 
-async function sendClientEmail(
+async function sendNotifications(
   data: NormalizedData,
   reservationId: string
-): Promise<EmailResult> {
-  const emailData: ReservationEmailData = {
+): Promise<ReservationNotificationSummary> {
+  return sendReservationNotifications({
+    reservationId,
     clientName: data.clientName,
     clientEmail: data.clientEmail,
+    clientPhone: data.clientPhone || undefined,
     reservationDate: data.reservationDate,
-    service: data.serviceType,
+    service: data.serviceType as 'midi' | 'soir',
     guestsCount: data.guestsCount,
-    specialRequests: data.specialRequests,
-    reservationId,
-  }
-
-  return sendConfirmationEmail(emailData)
+    message: data.specialRequests || undefined,
+    createdAt: new Date().toISOString(),
+  })
 }
 
 // ============================================
@@ -232,31 +235,39 @@ export async function executeReservationWorkflow(
     }
   }
 
-  // ── Étape 3 : Envoi email (NON BLOQUANT — ne doit pas empêcher la réservation) ──
+  // ── Étape 3 : Envoi des notifications (NON BLOQUANT — ne doit pas empêcher la réservation) ──
   const emailStartTime = Date.now()
-  const emailResult = await sendClientEmail(normalized, dbResult.reservationId)
+  const notificationResult = await sendNotifications(normalized, dbResult.reservationId)
   const emailDurationMs = Date.now() - emailStartTime
+  const clientStatus = notificationResult.client.status
+  const clientProviderId = notificationResult.client.providerId
+  const clientReason = notificationResult.client.reason
 
   // ── Étape 4 : Log de notification pour le dashboard ──
-  const notifStatus = emailResult.success
-    ? (emailResult.messageId?.startsWith('simulated') ? 'simulated' : 'sent')
-    : 'failed'
+  const notifStatus =
+    clientStatus === 'sent'
+      ? 'sent'
+      : clientStatus === 'skipped'
+        ? 'simulated'
+        : 'failed'
 
   await logNotification(supabase, {
     reservationId: dbResult.reservationId,
     clientEmail: normalized.clientEmail,
     type: 'confirmation_email',
     status: notifStatus as 'sent' | 'failed' | 'simulated',
-    messageId: emailResult.messageId,
-    errorMessage: emailResult.error,
+    messageId: clientProviderId,
+    errorMessage: clientReason,
     durationMs: emailDurationMs,
   })
 
   // ── Log final ──
   const totalDuration = Date.now() - startTime
-  const logMessage = emailResult.success
-    ? `Mail envoyé à [${normalized.clientEmail}] & Dashboard mis à jour pour [${normalized.clientName}] (${totalDuration}ms)`
-    : `[ALERTE] Dashboard mis à jour pour [${normalized.clientName}] mais mail ÉCHOUÉ vers [${normalized.clientEmail}]: ${emailResult.error} (${totalDuration}ms)`
+  const clientDelivered = clientStatus === 'sent' || clientStatus === 'skipped'
+  const staffDelivered = notificationResult.staff.status === 'sent' || notificationResult.staff.status === 'skipped'
+  const logMessage = clientDelivered && staffDelivered
+    ? `Notifications client/staff traitées pour [${normalized.clientName}] (${totalDuration}ms)`
+    : `[ALERTE] Réservation créée pour [${normalized.clientName}] mais notifications incomplètes: client=${clientStatus}${clientReason ? ` (${clientReason})` : ''}, staff=${notificationResult.staff.status}${notificationResult.staff.reason ? ` (${notificationResult.staff.reason})` : ''} (${totalDuration}ms)`
 
   console.log(`[WORKFLOW] ${logMessage}`)
 
@@ -266,9 +277,9 @@ export async function executeReservationWorkflow(
     clientId: dbResult.clientId,
     clientName: normalized.clientName,
     email: {
-      sent: emailResult.success,
-      messageId: emailResult.messageId,
-      error: emailResult.error,
+      sent: clientDelivered,
+      messageId: clientProviderId,
+      error: clientReason,
     },
     log: logMessage,
     durationMs: totalDuration,
