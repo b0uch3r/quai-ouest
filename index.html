@@ -799,23 +799,78 @@
 
     .galerie-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 1rem;
     }
     .galerie-item {
-      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      border-radius: 18px;
       overflow: hidden;
-      aspect-ratio: 1;
-      background: linear-gradient(135deg, var(--bleu-baie), var(--sable));
+      background: rgba(255,255,255,0.96);
+      border: 1px solid rgba(44,95,124,0.1);
+      box-shadow: 0 14px 32px rgba(44,95,124,0.08);
       cursor: pointer;
+      transition: opacity 0.4s, transform 0.4s, box-shadow 0.4s;
+    }
+    .galerie-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 40px rgba(44,95,124,0.12);
+    }
+    .galerie-media {
+      position: relative;
+      aspect-ratio: 1;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(44,95,124,0.18), rgba(232,222,209,0.56));
+    }
+    .galerie-item.featured {
+      grid-row: span 2;
+    }
+    .galerie-item.featured .galerie-media {
+      aspect-ratio: 1 / 1.3;
     }
     .galerie-item img {
       width: 100%; height: 100%;
       object-fit: cover;
       transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+      display: block;
     }
-    .galerie-item:hover img { transform: scale(1.06); }
-    .galerie-item:nth-child(1) { grid-row: span 2; aspect-ratio: auto; }
+    .galerie-item:hover img { transform: scale(1.05); }
+    .galerie-caption {
+      display: grid;
+      gap: 0.5rem;
+      padding: 1rem 1rem 1.15rem;
+    }
+    .galerie-tag {
+      display: inline-flex;
+      align-self: flex-start;
+      padding: 0.32rem 0.72rem;
+      border-radius: 999px;
+      background: rgba(44,95,124,0.08);
+      color: var(--bleu-baie);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .galerie-caption h3 {
+      font-family: var(--font-display);
+      font-size: 1.16rem;
+      line-height: 1.18;
+      color: var(--bleu-baie);
+    }
+    .galerie-caption p {
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: rgba(74,74,74,0.9);
+    }
+    .galerie-note {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(44,95,124,0.62);
+    }
 
     .galerie-insta {
       text-align: center;
@@ -829,9 +884,27 @@
     }
     .galerie-insta a:hover { color: var(--cognac); }
 
+    @media (max-width: 1024px) {
+      .galerie-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .galerie-item.featured {
+        grid-column: span 2;
+        grid-row: span 1;
+      }
+      .galerie-item.featured .galerie-media {
+        aspect-ratio: 16 / 10;
+      }
+    }
+
     @media (max-width: 768px) {
-      .galerie-grid { grid-template-columns: repeat(2, 1fr); }
-      .galerie-item:nth-child(1) { grid-row: span 1; aspect-ratio: 1; }
+      .galerie-grid { grid-template-columns: 1fr; }
+      .galerie-item.featured {
+        grid-column: span 1;
+      }
+      .galerie-item.featured .galerie-media {
+        aspect-ratio: 1;
+      }
     }
 
     /* ========== PREUVES ========== */
@@ -1609,7 +1682,7 @@
       color: #fff;
     }
     .galerie-item {
-      transition: opacity 0.4s, transform 0.4s;
+      will-change: transform, opacity;
     }
     .galerie-item.hidden {
       opacity: 0;
@@ -2193,12 +2266,246 @@
     </div>
   </section>
 
+  <!-- ==================== ASSIETTES SIGNATURE ==================== -->
+  <section id="assiettes-signature" hidden aria-hidden="true">
+    <div class="section-inner">
+      <div class="reveal">
+        <h2 class="section-title">Nos plats phares</h2>
+        <p class="section-subtitle">La choucroute de la mer, de beaux poissons, des viandes bien servies et une cuisine facile à aimer.</p>
+        <div class="wave-divider"></div>
+      </div>
+
+      <div class="signature-feature">
+        <figure class="signature-visual reveal">
+          <picture>
+            <source type="image/webp"
+                    srcset="assets/images/optimized/choucroute-mer-specialite-small.webp 400w,
+                            assets/images/optimized/choucroute-mer-specialite-medium.webp 800w,
+                            assets/images/optimized/choucroute-mer-specialite-large.webp 1200w"
+                    sizes="(max-width: 1024px) 100vw, 52vw">
+            <img src="assets/images/choucroute-mer-specialite.webp"
+                 alt="Choucroute de la mer du Quai Ouest avec poissons, chou, pomme de terre et sauce"
+                 loading="lazy" width="1200" height="900">
+          </picture>
+        </figure>
+
+        <div class="signature-copy reveal reveal-delay-1">
+          <span class="signature-badge">Spécialité de la maison</span>
+          <h3>La choucroute de la mer</h3>
+          <p>Le grand classique du Quai Ouest. Un plat généreux, gourmand et très reconnaissable.</p>
+          <ul class="signature-points">
+            <li><span>01</span><span>La spécialité du restaurant.</span></li>
+            <li><span>02</span><span>Un plat de mer copieux, simple à comprendre et très appétissant.</span></li>
+            <li><span>03</span><span>Un vrai plat maison, réconfortant et marquant.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="signature-grid">
+        <figure class="signature-card reveal">
+          <picture>
+            <source type="image/webp"
+                    srcset="assets/images/optimized/filet-lieu-jaune-cuit-sur-peau-small.webp 400w,
+                            assets/images/optimized/filet-lieu-jaune-cuit-sur-peau-medium.webp 800w,
+                            assets/images/optimized/filet-lieu-jaune-cuit-sur-peau-large.webp 1200w"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw">
+            <img src="assets/images/filet-lieu-jaune-cuit-sur-peau.webp"
+                 alt="Filet de lieu jaune cuit sur peau, sauce et légumes de saison au Quai Ouest"
+                 loading="lazy" width="1200" height="900">
+          </picture>
+          <figcaption>
+            <span class="dish-tag">Poisson</span>
+            <h3>Filet de lieu jaune cuit sur peau</h3>
+            <p>Poisson bien cuit, peau dorée, sauce gourmande et légumes de saison.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="signature-card reveal reveal-delay-1">
+          <picture>
+            <source type="image/webp"
+                    srcset="assets/images/optimized/medaillon-viande-sauce-poivre-small.webp 400w,
+                            assets/images/optimized/medaillon-viande-sauce-poivre-medium.webp 800w,
+                            assets/images/optimized/medaillon-viande-sauce-poivre-large.webp 1200w"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw">
+            <img src="assets/images/medaillon-viande-sauce-poivre.webp"
+                 alt="Médaillon de viande avec sauce poivre, frites maison et légumes du jour au Quai Ouest"
+                 loading="lazy" width="1200" height="900">
+          </picture>
+          <figcaption>
+            <span class="dish-tag">Viande</span>
+            <h3>Médaillon, sauce poivre, frites maison</h3>
+            <p>Une assiette généreuse avec une viande bien saisie, une bonne sauce et des frites maison.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="signature-card reveal reveal-delay-2">
+          <picture>
+            <source type="image/webp"
+                    srcset="assets/images/optimized/viande-boeuf-frites-maison-small.webp 400w,
+                            assets/images/optimized/viande-boeuf-frites-maison-medium.webp 800w,
+                            assets/images/optimized/viande-boeuf-frites-maison-large.webp 1200w"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw">
+            <img src="assets/images/viande-boeuf-frites-maison.webp"
+                 alt="Pièce de boeuf saignante avec frites maison au Quai Ouest"
+                 loading="lazy" width="1200" height="900">
+          </picture>
+          <figcaption>
+            <span class="dish-tag">Boeuf</span>
+            <h3>Boeuf saignant, frites maison</h3>
+            <p>Une belle pièce de boeuf, servie saignante, avec des frites maison. Simple, gourmand et très efficace.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="signature-card reveal">
+          <picture>
+            <source type="image/webp"
+                    srcset="assets/images/optimized/plat-poisson-legumes-saison-small.webp 400w,
+                            assets/images/optimized/plat-poisson-legumes-saison-medium.webp 800w,
+                            assets/images/optimized/plat-poisson-legumes-saison-large.webp 1200w"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw">
+            <img src="assets/images/plat-poisson-legumes-saison.webp"
+                 alt="Poisson du moment et légumes de saison au Quai Ouest"
+                 loading="lazy" width="1200" height="900">
+          </picture>
+          <figcaption>
+            <span class="dish-tag">Poisson</span>
+            <h3>Poisson du moment, légumes de saison</h3>
+            <p>Une assiette fine et colorée qui met bien en valeur le poisson et les légumes.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="signature-card reveal reveal-delay-1">
+          <picture>
+            <source type="image/webp"
+                    srcset="assets/images/optimized/plateau-huitres-maison-small.webp 400w,
+                            assets/images/optimized/plateau-huitres-maison-medium.webp 800w,
+                            assets/images/optimized/plateau-huitres-maison-large.webp 1200w"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw">
+            <img src="assets/images/plateau-huitres-maison.webp"
+                 alt="Plateau d'huîtres avec citron et vinaigre à l'échalote au Quai Ouest"
+                 loading="lazy" width="1200" height="900">
+          </picture>
+          <figcaption>
+            <span class="dish-tag">Huîtres</span>
+            <h3>Plateau d'huîtres</h3>
+            <p>Des huîtres bien ouvertes, servies simplement avec citron et vinaigre à l'échalote.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="signature-card reveal reveal-delay-2">
+          <picture>
+            <source type="image/webp"
+                    srcset="assets/images/optimized/planche-charcuterie-fromages-small.webp 400w,
+                            assets/images/optimized/planche-charcuterie-fromages-medium.webp 800w,
+                            assets/images/optimized/planche-charcuterie-fromages-large.webp 1200w"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw">
+            <img src="assets/images/planche-charcuterie-fromages.webp"
+                 alt="Planche de charcuterie et fromages à partager au Quai Ouest"
+                 loading="lazy" width="1200" height="900">
+          </picture>
+          <figcaption>
+            <span class="dish-tag">À partager</span>
+            <h3>Planche charcuterie & fromages</h3>
+            <p>Une planche généreuse à partager, parfaite pour l'apéritif ou pour prolonger le moment.</p>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== DESSERTS SIGNATURE ==================== -->
+  <section id="douceurs-signature" hidden aria-hidden="true">
+    <div class="section-inner">
+      <div class="reveal">
+        <h2 class="section-title">Desserts maison</h2>
+        <p class="section-subtitle">Des desserts simples, gourmands et bien présentés.</p>
+        <div class="wave-divider"></div>
+      </div>
+
+      <p class="sweet-intro reveal">Des desserts maison, soignés et faciles à lire. De quoi finir le repas sur une bonne note.</p>
+
+      <div class="sweet-grid">
+        <figure class="sweet-card featured reveal">
+          <picture>
+            <source type="image/webp"
+                    srcset="assets/images/optimized/assiette-desserts-maison-small.webp 400w,
+                            assets/images/optimized/assiette-desserts-maison-medium.webp 800w,
+                            assets/images/optimized/assiette-desserts-maison-large.webp 1200w"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 100vw, 50vw">
+            <img src="assets/images/assiette-desserts-maison.webp"
+                 alt="Assiettes de desserts maison au Quai Ouest"
+                 loading="lazy" width="1200" height="900">
+          </picture>
+          <figcaption>
+            <span class="sweet-tag">Maison</span>
+            <h3>Assiette de desserts maison</h3>
+            <p>Plusieurs desserts dressés avec soin. Une belle image du travail de la maison.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="sweet-card reveal reveal-delay-1">
+          <picture>
+            <source type="image/webp"
+                    srcset="assets/images/optimized/dessert-chocolat-gourmand-small.webp 400w,
+                            assets/images/optimized/dessert-chocolat-gourmand-medium.webp 800w,
+                            assets/images/optimized/dessert-chocolat-gourmand-large.webp 1200w"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw">
+            <img src="assets/images/dessert-chocolat-gourmand.webp"
+                 alt="Dessert chocolat gourmand au Quai Ouest"
+                 loading="lazy" width="1200" height="900">
+          </picture>
+          <figcaption>
+            <span class="sweet-tag">Chocolat</span>
+            <h3>Dessert chocolat gourmand</h3>
+            <p>Un dessert chocolaté généreux avec plusieurs textures et une vraie présence dans l'assiette.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="sweet-card reveal reveal-delay-2">
+          <picture>
+            <source type="image/webp"
+                    srcset="assets/images/optimized/dessert-fraise-maison-small.webp 400w,
+                            assets/images/optimized/dessert-fraise-maison-medium.webp 800w,
+                            assets/images/optimized/dessert-fraise-maison-large.webp 1200w"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw">
+            <img src="assets/images/dessert-fraise-maison.webp"
+                 alt="Dessert maison aux fraises et chantilly légère au Quai Ouest"
+                 loading="lazy" width="1200" height="900">
+          </picture>
+          <figcaption>
+            <span class="sweet-tag">Fraise</span>
+            <h3>Dessert fraise maison</h3>
+            <p>Un dessert plus frais et plus léger, très simple à lire.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="sweet-card reveal">
+          <picture>
+            <source type="image/webp"
+                    srcset="assets/images/optimized/crepe-caramel-glace-vanille-small.webp 400w,
+                            assets/images/optimized/crepe-caramel-glace-vanille-medium.webp 800w,
+                            assets/images/optimized/crepe-caramel-glace-vanille-large.webp 1200w"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw">
+            <img src="assets/images/crepe-caramel-glace-vanille.webp"
+                 alt="Crêpe caramel et glace vanille au Quai Ouest"
+                 loading="lazy" width="1200" height="900">
+          </picture>
+          <figcaption>
+            <span class="sweet-tag">Crêpe</span>
+            <h3>Crêpe caramel & glace vanille</h3>
+            <p>Une crêpe gourmande avec caramel et glace vanille. Un dessert classique qui parle à tout le monde.</p>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
   <!-- ==================== GALERIE ==================== -->
   <section id="galerie">
     <div class="section-inner">
       <div class="reveal">
         <h2 class="section-title">Galerie</h2>
-        <p class="section-subtitle">L'expérience Quai Ouest en images</p>
+        <p class="section-subtitle">Les assiettes qui donnent envie de réserver, avec juste quelques vues pour rappeler le cadre face à la baie</p>
         <div class="wave-divider"></div>
       </div>
 
@@ -2207,143 +2514,212 @@
         <button class="galerie-filter-btn active" data-filter="all">Tout</button>
         <button class="galerie-filter-btn" data-filter="plats">Plats</button>
         <button class="galerie-filter-btn" data-filter="lieu">Le Lieu</button>
-        <button class="galerie-filter-btn" data-filter="ambiance">Ambiance</button>
-        <button class="galerie-filter-btn" data-filter="bar">Bar</button>
       </div>
 
       <div class="galerie-grid" style="margin-top: 1rem;">
-        <div class="galerie-item reveal" data-category="plats">
-          <picture>
-            <source type="image/webp"
-                    srcset="assets/images/optimized/galerie-crevettes-guacamole-small.webp 400w,
-                            assets/images/optimized/galerie-crevettes-guacamole-medium.webp 800w"
-                    sizes="(max-width: 768px) 50vw, 33vw">
-            <img src="assets/images/galerie-crevettes-guacamole.jpg"
-                 alt="Amuse-bouches crevettes et guacamole face à la mer au Quai Ouest"
-                 loading="lazy" width="800" height="600">
-          </picture>
-        </div>
-        <div class="galerie-item reveal reveal-delay-1" data-category="bar">
-          <picture>
-            <source type="image/webp"
-                    srcset="assets/images/optimized/galerie-cocktail-mer-small.webp 400w,
-                            assets/images/optimized/galerie-cocktail-mer-medium.webp 800w"
-                    sizes="(max-width: 768px) 50vw, 33vw">
-            <img src="assets/images/galerie-cocktail-mer.jpg"
-                 alt="Cocktail artisanal face à la Baie de Morlaix au Quai Ouest"
-                 loading="lazy" width="800" height="600">
-          </picture>
-        </div>
-        <div class="galerie-item reveal reveal-delay-2" data-category="bar">
-          <picture>
-            <source type="image/webp"
-                    srcset="assets/images/optimized/galerie-bar-small.webp 400w,
-                            assets/images/optimized/galerie-bar-medium.webp 800w"
-                    sizes="(max-width: 768px) 50vw, 33vw">
-            <img src="assets/images/galerie-bar.jpg"
-                 alt="Bar du restaurant Quai Ouest avec éclairage tamisé"
-                 loading="lazy" width="800" height="600">
-          </picture>
-        </div>
-        <div class="galerie-item reveal reveal-delay-1" data-category="lieu">
-          <picture>
-            <source type="image/webp"
-                    srcset="assets/images/optimized/galerie-arc-en-ciel-small.webp 400w,
-                            assets/images/optimized/galerie-arc-en-ciel-medium.webp 800w"
-                    sizes="(max-width: 768px) 50vw, 33vw">
-            <img src="assets/images/galerie-arc-en-ciel.jpg"
-                 alt="Arc-en-ciel sur la plage vu depuis la terrasse du Quai Ouest"
-                 loading="lazy" width="800" height="600">
-          </picture>
-        </div>
-        <div class="galerie-item reveal reveal-delay-2" data-category="ambiance">
-          <picture>
-            <source type="image/webp"
-                    srcset="assets/images/optimized/galerie-lounge-soiree-small.webp 400w,
-                            assets/images/optimized/galerie-lounge-soiree-medium.webp 800w"
-                    sizes="(max-width: 768px) 50vw, 33vw">
-            <img src="assets/images/galerie-lounge-soiree.jpg"
-                 alt="Espace lounge et bar du Quai Ouest en soirée"
-                 loading="lazy" width="800" height="600">
-          </picture>
-        </div>
-        <div class="galerie-item reveal" data-category="plats">
-          <picture>
-            <source type="image/webp"
-                    srcset="assets/images/optimized/galerie-buffet-crevettes-vue-mer-small.webp 400w,
-                            assets/images/optimized/galerie-buffet-crevettes-vue-mer-medium.webp 800w"
-                    sizes="(max-width: 768px) 50vw, 33vw">
-            <img src="assets/images/galerie-buffet-crevettes-vue-mer.jpg"
-                 alt="Buffet de crevettes et guacamole avec vue sur la mer au Quai Ouest"
-                 loading="lazy" width="800" height="600">
-          </picture>
-        </div>
-        <div class="galerie-item reveal reveal-delay-1" data-category="ambiance">
-          <picture>
-            <source type="image/webp"
-                    srcset="assets/images/optimized/galerie-lounge-vue-baie-small.webp 400w,
-                            assets/images/optimized/galerie-lounge-vue-baie-medium.webp 800w"
-                    sizes="(max-width: 768px) 50vw, 33vw">
-            <img src="assets/images/galerie-lounge-vue-baie.jpg"
-                 alt="Espace lounge avec fauteuils cuir et vue sur la Baie de Morlaix au Quai Ouest"
-                 loading="lazy" width="800" height="600">
-          </picture>
-        </div>
-        <div class="galerie-item reveal reveal-delay-2" data-category="lieu">
-          <picture>
-            <source type="image/webp"
-                    srcset="assets/images/optimized/galerie-terrasse-baie-morlaix-small.webp 400w,
-                            assets/images/optimized/galerie-terrasse-baie-morlaix-medium.webp 800w"
-                    sizes="(max-width: 768px) 50vw, 33vw">
-            <img src="assets/images/galerie-terrasse-baie-morlaix.jpg"
-                 alt="Terrasse du Quai Ouest face à la Baie de Morlaix avec ciel nuageux"
-                 loading="lazy" width="800" height="600">
-          </picture>
-        </div>
-        <div class="galerie-item reveal" data-category="bar">
-          <picture>
-            <source type="image/webp"
-                    srcset="assets/images/optimized/galerie-bar-comptoir-small.webp 400w,
-                            assets/images/optimized/galerie-bar-comptoir-medium.webp 800w"
-                    sizes="(max-width: 768px) 50vw, 33vw">
-            <img src="assets/images/galerie-bar-comptoir.jpg"
-                 alt="Comptoir du bar du Quai Ouest avec éclairage tamisé et boiseries"
-                 loading="lazy" width="800" height="600">
-          </picture>
-        </div>
-        <div class="galerie-item reveal reveal-delay-1" data-category="lieu">
-          <picture>
-            <source type="image/webp"
-                    srcset="assets/images/optimized/galerie-plage-soleil-small.webp 400w,
-                            assets/images/optimized/galerie-plage-soleil-medium.webp 800w"
-                    sizes="(max-width: 768px) 50vw, 33vw">
-            <img src="assets/images/galerie-plage-soleil.jpg"
-                 alt="Vue sur la plage Sainte-Anne en plein soleil depuis le Quai Ouest"
-                 loading="lazy" width="800" height="600">
-          </picture>
-        </div>
-        <div class="galerie-item reveal reveal-delay-2" data-category="bar">
-          <picture>
-            <source type="image/webp"
-                    srcset="assets/images/optimized/galerie-bar-verres-small.webp 400w,
-                            assets/images/optimized/galerie-bar-verres-medium.webp 800w"
-                    sizes="(max-width: 768px) 50vw, 33vw">
-            <img src="assets/images/galerie-bar-verres.jpg"
-                 alt="Bar du Quai Ouest avec verres à vin et bouteilles rétro-éclairées"
-                 loading="lazy" width="800" height="600">
-          </picture>
-        </div>
-        <div class="galerie-item reveal" data-category="lieu">
-          <picture>
-            <source type="image/webp"
-                    srcset="assets/images/optimized/galerie-arc-en-ciel-terrasse-small.webp 400w,
-                            assets/images/optimized/galerie-arc-en-ciel-terrasse-medium.webp 800w"
-                    sizes="(max-width: 768px) 50vw, 33vw">
-            <img src="assets/images/galerie-arc-en-ciel-terrasse.jpg"
-                 alt="Arc-en-ciel au-dessus de la plage vu depuis la terrasse du Quai Ouest"
-                 loading="lazy" width="800" height="600">
-          </picture>
-        </div>
+        <figure class="galerie-item featured reveal" data-category="plats">
+          <div class="galerie-media">
+            <picture>
+              <source type="image/webp"
+                      srcset="assets/images/optimized/choucroute-mer-specialite-small.webp 400w,
+                              assets/images/optimized/choucroute-mer-specialite-medium.webp 800w,
+                              assets/images/optimized/choucroute-mer-specialite-large.webp 1200w"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 100vw, 34vw">
+              <img src="assets/images/choucroute-mer-specialite.webp"
+                   alt="Choucroute de la mer du Quai Ouest avec poissons, chou fondant, pomme de terre et sauce iodée"
+                   loading="lazy" width="1200" height="900">
+            </picture>
+          </div>
+          <figcaption class="galerie-caption">
+            <span class="galerie-tag">Spécialité maison</span>
+            <h3>La choucroute de la mer</h3>
+            <p>Le plat signature qui raconte immédiatement la maison: généreux, marin, lisible, et assez fort pour devenir l'image culinaire du restaurant.</p>
+            <span class="galerie-note">À montrer en premier à un prospect</span>
+          </figcaption>
+        </figure>
+
+        <figure class="galerie-item reveal reveal-delay-1" data-category="plats">
+          <div class="galerie-media">
+            <picture>
+              <source type="image/webp"
+                      srcset="assets/images/optimized/viande-boeuf-frites-maison-small.webp 400w,
+                              assets/images/optimized/viande-boeuf-frites-maison-medium.webp 800w,
+                              assets/images/optimized/viande-boeuf-frites-maison-large.webp 1200w"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw">
+              <img src="assets/images/viande-boeuf-frites-maison.webp"
+                   alt="Pièce de boeuf rosée avec frites maison au Quai Ouest"
+                   loading="lazy" width="1200" height="900">
+            </picture>
+          </div>
+          <figcaption class="galerie-caption">
+            <span class="galerie-tag">Cuisson maîtrisée</span>
+            <h3>Boeuf rosé, frites maison</h3>
+            <p>Une viande parfaitement saisie, servie rosée comme il faut, avec une assiette simple et très efficace visuellement.</p>
+            <span class="galerie-note">Le vrai point fort sur les viandes</span>
+          </figcaption>
+        </figure>
+
+        <figure class="galerie-item reveal reveal-delay-2" data-category="plats">
+          <div class="galerie-media">
+            <picture>
+              <source type="image/webp"
+                      srcset="assets/images/optimized/medaillon-viande-sauce-poivre-small.webp 400w,
+                              assets/images/optimized/medaillon-viande-sauce-poivre-medium.webp 800w,
+                              assets/images/optimized/medaillon-viande-sauce-poivre-large.webp 1200w"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw">
+              <img src="assets/images/medaillon-viande-sauce-poivre.webp"
+                   alt="Médaillon de viande avec sauce poivre, frites maison et légumes du jour au Quai Ouest"
+                   loading="lazy" width="1200" height="900">
+            </picture>
+          </div>
+          <figcaption class="galerie-caption">
+            <span class="galerie-tag">Viande</span>
+            <h3>Médaillon sauce poivre</h3>
+            <p>Une assiette rassurante, généreuse et nette, où la cuisson reste juste et régulière jusque dans le détail.</p>
+            <span class="galerie-note">Frites maison et sauce poivre</span>
+          </figcaption>
+        </figure>
+
+        <figure class="galerie-item place reveal" data-category="lieu">
+          <div class="galerie-media">
+            <picture>
+              <source type="image/webp"
+                      srcset="assets/images/optimized/galerie-terrasse-baie-morlaix-small.webp 400w,
+                              assets/images/optimized/galerie-terrasse-baie-morlaix-medium.webp 800w,
+                              assets/images/optimized/galerie-terrasse-baie-morlaix-large.webp 1200w"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw">
+              <img src="assets/images/galerie-terrasse-baie-morlaix.jpg"
+                   alt="Terrasse du Quai Ouest face à la Baie de Morlaix avec ciel nuageux"
+                   loading="lazy" width="1200" height="900">
+            </picture>
+          </div>
+          <figcaption class="galerie-caption">
+            <span class="galerie-tag">Le lieu</span>
+            <h3>Terrasse face à la baie</h3>
+            <p>Le cadre suffit à expliquer pourquoi un déjeuner ici n'a pas le même goût qu'ailleurs.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="galerie-item place reveal reveal-delay-1" data-category="lieu">
+          <div class="galerie-media">
+            <picture>
+              <source type="image/webp"
+                      srcset="assets/images/optimized/galerie-lounge-vue-baie-small.webp 400w,
+                              assets/images/optimized/galerie-lounge-vue-baie-medium.webp 800w,
+                              assets/images/optimized/galerie-lounge-vue-baie-large.webp 1200w"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw">
+              <img src="assets/images/galerie-lounge-vue-baie.jpg"
+                   alt="Espace lounge avec fauteuils cuir et vue sur la Baie de Morlaix au Quai Ouest"
+                   loading="lazy" width="1200" height="900">
+            </picture>
+          </div>
+          <figcaption class="galerie-caption">
+            <span class="galerie-tag">Salle & vue mer</span>
+            <h3>Intérieur tourné vers l'horizon</h3>
+            <p>Une salle lumineuse qui garde la baie dans le champ et renforce l'identité bord de mer.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="galerie-item reveal reveal-delay-2" data-category="plats">
+          <div class="galerie-media">
+            <picture>
+              <source type="image/webp"
+                      srcset="assets/images/optimized/filet-lieu-jaune-cuit-sur-peau-small.webp 400w,
+                              assets/images/optimized/filet-lieu-jaune-cuit-sur-peau-medium.webp 800w,
+                              assets/images/optimized/filet-lieu-jaune-cuit-sur-peau-large.webp 1200w"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw">
+              <img src="assets/images/filet-lieu-jaune-cuit-sur-peau.webp"
+                   alt="Filet de lieu jaune cuit sur peau, sauce crustacés et légumes de saison au Quai Ouest"
+                   loading="lazy" width="1200" height="900">
+            </picture>
+          </div>
+          <figcaption class="galerie-caption">
+            <span class="galerie-tag">Poisson</span>
+            <h3>Lieu jaune cuit sur peau</h3>
+            <p>Une peau bien marquée, une sauce de caractère et un dressage propre qui donne immédiatement confiance.</p>
+            <span class="galerie-note">Cuisine de produit et de précision</span>
+          </figcaption>
+        </figure>
+
+        <figure class="galerie-item reveal" data-category="plats">
+          <div class="galerie-media">
+            <picture>
+              <source type="image/webp"
+                      srcset="assets/images/optimized/plat-poisson-legumes-saison-small.webp 400w,
+                              assets/images/optimized/plat-poisson-legumes-saison-medium.webp 800w,
+                              assets/images/optimized/plat-poisson-legumes-saison-large.webp 1200w"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw">
+              <img src="assets/images/plat-poisson-legumes-saison.webp"
+                   alt="Plat de poisson rôti et légumes de saison dressés avec précision au Quai Ouest"
+                   loading="lazy" width="1200" height="900">
+            </picture>
+          </div>
+          <figcaption class="galerie-caption">
+            <span class="galerie-tag">Retour du marché</span>
+            <h3>Poisson rôti & légumes de saison</h3>
+            <p>Une assiette plus fine et plus graphique, qui montre que la cuisine sait aussi rester élégante.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="galerie-item reveal reveal-delay-1" data-category="plats">
+          <div class="galerie-media">
+            <picture>
+              <source type="image/webp"
+                      srcset="assets/images/optimized/plateau-huitres-maison-small.webp 400w,
+                              assets/images/optimized/plateau-huitres-maison-medium.webp 800w,
+                              assets/images/optimized/plateau-huitres-maison-large.webp 1200w"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw">
+              <img src="assets/images/plateau-huitres-maison.webp"
+                   alt="Plateau d'huîtres ouvertes minute, citron et vinaigre à l'échalote au Quai Ouest"
+                   loading="lazy" width="1200" height="900">
+            </picture>
+          </div>
+          <figcaption class="galerie-caption">
+            <span class="galerie-tag">Fruits de mer</span>
+            <h3>Plateau d'huîtres minute</h3>
+            <p>Le produit brut, bien servi, qui ancre tout de suite le restaurant dans son territoire marin.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="galerie-item place reveal reveal-delay-2" data-category="lieu">
+          <div class="galerie-media">
+            <picture>
+              <source type="image/webp"
+                      srcset="assets/images/optimized/galerie-plage-soleil-small.webp 400w,
+                              assets/images/optimized/galerie-plage-soleil-medium.webp 800w,
+                              assets/images/optimized/galerie-plage-soleil-large.webp 1200w"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw">
+              <img src="assets/images/galerie-plage-soleil.jpg"
+                   alt="Vue sur la plage Sainte-Anne en plein soleil depuis le Quai Ouest"
+                   loading="lazy" width="1200" height="900">
+            </picture>
+          </div>
+          <figcaption class="galerie-caption">
+            <span class="galerie-tag">À deux pas</span>
+            <h3>La plage Sainte-Anne</h3>
+            <p>Le paysage fait partie de l'expérience, sans voler la vedette aux assiettes.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="galerie-item reveal" data-category="plats">
+          <div class="galerie-media">
+            <picture>
+              <source type="image/webp"
+                      srcset="assets/images/optimized/assiette-desserts-maison-small.webp 400w,
+                              assets/images/optimized/assiette-desserts-maison-medium.webp 800w,
+                              assets/images/optimized/assiette-desserts-maison-large.webp 1200w"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw">
+              <img src="assets/images/assiette-desserts-maison.webp"
+                   alt="Assiettes de desserts maison dressées au passe avec crème brûlée et mignardises au Quai Ouest"
+                   loading="lazy" width="1200" height="900">
+            </picture>
+          </div>
+          <figcaption class="galerie-caption">
+            <span class="galerie-tag">Desserts maison</span>
+            <h3>Assiette de douceurs</h3>
+            <p>Une fin de repas soignée, variée et très photogénique, qui complète bien la promesse du lieu.</p>
+          </figcaption>
+        </figure>
       </div>
 
       <div class="galerie-insta reveal" style="margin-top: 2rem;">

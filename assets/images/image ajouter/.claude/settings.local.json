@@ -42,9 +42,7 @@
       "Bash(taskkill //PID 27276 //F)",
       "Read(//c/Users/auror/Documents/GitHub/quai-ouest/reservation-app/**)",
       "Bash(npx next:*)",
-      "Bash(find C:/Users/auror/Documents/GitHub/quai-ouest -name vercel.json -o -name .env* -o -name Dockerfile -o -name .github -type f)",
-      "Bash(ls \"C:/Users/auror/Documents/GitHub/quai-ouest/reservation-app/node_modules/.bin/next\"*)",
-      "Bash(node -e \"console.log\\(require.resolve\\(''next/dist/bin/next''\\)\\)\")"
+      "Bash(find C:/Users/auror/Documents/GitHub/quai-ouest -name vercel.json -o -name .env* -o -name Dockerfile -o -name .github -type f)"
     ]
   }
 }
