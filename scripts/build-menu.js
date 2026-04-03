@@ -80,6 +80,14 @@ function joinParts(parts, separator = ' · ') {
   return parts.filter(Boolean).join(separator);
 }
 
+function sortMenuSections(sections) {
+  return [...sections].sort((left, right) => {
+    const leftOrder = Number.isFinite(left.order) ? left.order : Number.MAX_SAFE_INTEGER;
+    const rightOrder = Number.isFinite(right.order) ? right.order : Number.MAX_SAFE_INTEGER;
+    return leftOrder - rightOrder;
+  });
+}
+
 function replaceGeneratedBlock(source, startMarker, endMarker, replacement) {
   const startIndex = source.indexOf(startMarker);
   const endIndex = source.indexOf(endMarker);
@@ -260,24 +268,40 @@ function renderSectionBlocks(section) {
   ].join('\n');
 }
 
-function renderSection(section) {
+function renderSection(section, index) {
+  const headingId = `carte-heading-${section.id}`;
+  const panelId = `carte-panel-${section.id}`;
+  const toggleId = `carte-toggle-${section.id}`;
+  const isInitiallyExpanded = index === 0 ? 'true' : 'false';
+  const toggleActionLabel = index === 0 ? 'Masquer' : 'Afficher';
+  const toggleText = index === 0 ? 'Masquer' : 'Voir';
+
   return [
-    `      <section class="carte-group reveal" id="carte-${escapeHtml(section.id)}">`,
+    `      <section class="carte-group reveal" id="carte-${escapeHtml(section.id)}" data-collapsible="true">`,
     '        <div class="carte-group-head">',
     section.kicker ? `          <span class="carte-kicker">${escapeHtml(section.kicker)}</span>` : '',
-    `          <h3>${escapeHtml(section.title)}</h3>`,
+    '          <div class="carte-group-title-row">',
+    `            <h3 id="${headingId}">${escapeHtml(section.title)}</h3>`,
+    `            <button class="carte-group-toggle" id="${toggleId}" type="button" aria-expanded="${isInitiallyExpanded}" aria-controls="${panelId}" aria-label="${toggleActionLabel} la section ${escapeHtml(section.title)}">`,
+    `              <span class="carte-group-toggle-text">${toggleText}</span>`,
+    '              <span class="carte-group-toggle-icon" aria-hidden="true"></span>',
+    '            </button>',
+    '          </div>',
     section.description ? `          <p>${escapeHtml(section.description)}</p>` : '',
     '        </div>',
+    `        <div class="carte-group-panel" id="${panelId}" role="region" aria-labelledby="${headingId}">`,
     renderSectionBlocks(section),
+    '        </div>',
     '      </section>'
   ].filter(Boolean).join('\n');
 }
 
 function renderMenuSection(menu) {
-  const navLinks = menu.sections
+  const sortedSections = sortMenuSections(menu.sections);
+  const navLinks = sortedSections
     .map((section) => `        <a href="#carte-${escapeHtml(section.id)}">${escapeHtml(section.navLabel || section.title)}</a>`)
     .join('\n');
-  const sections = menu.sections.map(renderSection).join('\n\n');
+  const sections = sortedSections.map(renderSection).join('\n\n');
 
   return [
     '  <section id="carte">',
@@ -370,7 +394,7 @@ function buildMenuListSchemaItems(block) {
 }
 
 function buildMenuSchemaSections(menu) {
-  return menu.sections.flatMap((section) => section.blocks.map((block) => {
+  return sortMenuSections(menu.sections).flatMap((section) => section.blocks.map((block) => {
     const schemaSection = {
       '@type': 'MenuSection',
       name: block.title

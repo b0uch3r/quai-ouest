@@ -12,6 +12,7 @@
   "sections": [
     {
       "id": "pour-commencer",
+      "order": 1,
       "navLabel": "Partager",
       "kicker": "À l'apéro ou en entrée",
       "title": "Pour commencer",
@@ -87,6 +88,7 @@
     },
     {
       "id": "menus-ete",
+      "order": 2,
       "navLabel": "Menus",
       "kicker": "Carte de saison",
       "title": "Menus d'été",
@@ -312,6 +314,7 @@
     },
     {
       "id": "saveurs-estivales",
+      "order": 4,
       "navLabel": "Pizzas et +",
       "kicker": "Quand l'été s'installe",
       "title": "Suggestions estivales",
@@ -476,6 +479,7 @@
     },
     {
       "id": "douceurs",
+      "order": 3,
       "navLabel": "Douceurs",
       "kicker": "Desserts, crêpes et glaces",
       "title": "Desserts et glaces",
