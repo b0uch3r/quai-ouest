@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "build:menu": "node scripts/build-menu.js"
+  },
   "devDependencies": {
     "sharp": "^0.34.5"
   }

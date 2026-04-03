@@ -1,162 +1,687 @@
 {
   "_meta": {
-    "lastUpdated": "2026-03-19",
-    "version": "1.0",
-    "note": "Carte susceptible d'évoluer selon les arrivages et la saison. Les prix marqués null sont à confirmer avec le restaurateur.",
-    "contact": "quai.ouest29250@gmail.com"
+    "lastUpdated": "2026-04-03",
+    "version": "2.0",
+    "seasonLabel": "Carte d'été 2026",
+    "sectionTitle": "La Carte",
+    "sectionSubtitle": "Menus de saison, suggestions estivales et douceurs maison",
+    "intro": "La carte suit les arrivages, l'été en baie et le rythme du service. On y retrouve les menus de saison, les pizzas, les burgers, les moules, les galettes et les desserts maison servis au Quai Ouest.",
+    "note": "Certaines suggestions évoluent selon les arrivages et la saison. N'hésitez pas à demander les plats du moment à l'équipe.",
+    "schemaDescription": "Carte d'été 2026 avec menus de saison, pizzas, burgers, moules, galettes, desserts, crêpes et glaces artisanales."
   },
-  "midi": {
-    "label": "Le Midi",
-    "ambiance": "Lumineux et décontracté — 60 couverts",
-    "menus": [
-      {
-        "id": "anti-gaspi",
-        "name": "Menu Anti-Gaspi",
-        "tagline": "Entrée + Plat ou Plat + Dessert",
-        "price": 14,
-        "priceFrom": true,
-        "availability": "Du mercredi au vendredi midi",
-        "highlight": true,
-        "badge": "Coup de cœur",
-        "description": "Notre formule engagée pour lutter contre le gaspillage alimentaire. Produits frais, portions généreuses, prix doux."
-      }
-    ],
-    "categories": [
-      {
-        "id": "entrees",
-        "name": "Entrées",
-        "items": [
-          {
-            "id": "saint-jacques-panko",
-            "name": "Noix de Saint-Jacques Panko",
-            "description": "Au miel et clémentine",
-            "price": 16,
-            "tags": ["seafood", "signature"],
-            "allergens": ["gluten", "mollusques"],
-            "photo": "ig-04-plat-saint-jacques.jpg",
-            "available": true
-          },
-          {
-            "id": "foie-gras-maison",
-            "name": "Pressé de Foie Gras Maison",
-            "description": "Glace artisanale à l'oignon",
-            "price": 18,
-            "tags": ["signature"],
-            "allergens": [],
-            "photo": null,
-            "available": true
-          }
-        ]
-      },
-      {
-        "id": "plats-mer",
-        "name": "Plats — Mer",
-        "items": [
-          {
-            "id": "lieu-jaune",
-            "name": "Filet de Lieu jaune cuit sur peau",
-            "description": "Coulis de crustacés, légumes de saison",
-            "price": null,
-            "tags": ["seafood", "local"],
-            "allergens": ["crustacés", "poissons"],
-            "photo": null,
-            "available": true
-          }
-        ]
-      },
-      {
-        "id": "plats-terre",
-        "name": "Plats — Terre",
-        "items": [
-          {
-            "id": "cote-de-boeuf",
-            "name": "Côte de Bœuf",
-            "description": "Frites maison et sauces — pour 2 personnes (à partir de 1,5 kg)",
-            "price": null,
-            "priceFrom": true,
-            "tags": ["signature", "pour-2"],
-            "allergens": [],
-            "photo": "ig-04-2026-01-23-cote-de-boeuf.jpg",
-            "available": true,
-            "badge": "Le retour !"
-          },
-          {
-            "id": "canard-morilles",
-            "name": "Médaillon de canard, farce fine aux morilles",
-            "description": "Pomme Anna",
-            "price": null,
-            "tags": [],
-            "allergens": [],
-            "photo": null,
-            "available": true
-          }
-        ]
-      },
-      {
-        "id": "desserts",
-        "name": "Desserts",
-        "items": [
-          {
-            "id": "fruits-rouges-pistache",
-            "name": "Tentation aux fruits rouges",
-            "description": "Sur biscuit à la pistache",
-            "price": null,
-            "tags": ["vegetarian"],
-            "allergens": ["gluten", "fruits à coque", "oeufs", "lait"],
-            "photo": null,
-            "available": true
-          },
-          {
-            "id": "choux-chocolat",
-            "name": "Choux crème diplomate au chocolat",
-            "description": "Tuile sarrazin, Glace Vanille",
-            "price": null,
-            "tags": ["vegetarian"],
-            "allergens": ["gluten", "oeufs", "lait"],
-            "photo": null,
-            "available": true
-          }
-        ]
-      },
-      {
-        "id": "pizzas",
-        "name": "Pizzas",
-        "note": "Disponibles le midi uniquement",
-        "items": []
-      }
-    ]
-  },
-  "soir": {
-    "label": "Le Soir",
-    "ambiance": "Intime et cosy — 15 à 20 couverts, réservation recommandée",
-    "menus": [],
-    "categories": [
-      {
-        "id": "entrees",
-        "name": "Entrées",
-        "items": []
-      },
-      {
-        "id": "plats",
-        "name": "Plats",
-        "items": []
-      },
-      {
-        "id": "desserts",
-        "name": "Desserts",
-        "items": []
-      }
-    ]
-  },
-  "evenements": [
+  "sections": [
     {
-      "id": "saint-valentin-2026",
-      "name": "Menu Saint-Valentin",
-      "date": "2026-02-14",
-      "price": 60,
-      "description": "Entrée · Plat · Dessert · Mignardises",
-      "photo": "ig-03-2026-01-30-menu-saint-valentin.jpg",
-      "active": false
+      "id": "menus-ete",
+      "navLabel": "Menus",
+      "kicker": "Carte de saison",
+      "title": "Menus d'été",
+      "description": "Trois menus servis à table, un menu enfant et des assiettes pensées pour la saison.",
+      "blocks": [
+        {
+          "type": "fixed-menu",
+          "title": "Menu Callot",
+          "price": "32€",
+          "subtitle": "Entrée • Plat • Dessert",
+          "courses": [
+            {
+              "title": "Entrées",
+              "options": [
+                {
+                  "name": "Velouté glacé de petits pois",
+                  "description": "Menthe fraîche, feta et chips de lard"
+                },
+                {
+                  "name": "6 huîtres de la baie de Morlaix"
+                }
+              ]
+            },
+            {
+              "title": "Plats",
+              "options": [
+                {
+                  "name": "Filet mignon de porc",
+                  "description": "Cuisson basse température, sauce moutarde à l'ancienne, petits légumes et frites maison"
+                },
+                {
+                  "name": "Choucroute aux 3 poissons",
+                  "description": "Beurre blanc citronné"
+                }
+              ]
+            },
+            {
+              "title": "Desserts",
+              "options": [
+                {
+                  "name": "Panna cotta",
+                  "description": "Au choix : fruits rouges ou exotiques"
+                },
+                {
+                  "name": "Tartelette rhubarbe",
+                  "description": "Et sa crème diplomate"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "fixed-menu",
+          "title": "Menu de l'Îlot",
+          "price": "39€",
+          "subtitle": "Entrée • Plat • Dessert",
+          "courses": [
+            {
+              "title": "Entrées",
+              "options": [
+                {
+                  "name": "Gravlax de saumon",
+                  "description": "Baies roses, aneth et crème de raifort"
+                },
+                {
+                  "name": "9 huîtres de la baie de Morlaix"
+                },
+                {
+                  "name": "Terrine de canard au foie gras"
+                }
+              ]
+            },
+            {
+              "title": "Plats",
+              "options": [
+                {
+                  "name": "Filet de canard",
+                  "description": "Sauce fruits rouges, poivre noir, frites maison et légumes de saison"
+                },
+                {
+                  "name": "Filet de cabillaud snacké sur peau",
+                  "description": "Mousseline de carottes au cumin, beurre citronné"
+                },
+                {
+                  "name": "Émincé végétal façon basquaise",
+                  "description": "Légumes de saison"
+                }
+              ]
+            },
+            {
+              "title": "Desserts",
+              "options": [
+                {
+                  "name": "Assiette de fromages"
+                },
+                {
+                  "name": "Soupe de fraises à la menthe",
+                  "description": "Et son sorbet fraise plein fruit"
+                },
+                {
+                  "name": "Tentation fruits exotiques",
+                  "description": "Biscuit breton"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "fixed-menu",
+          "title": "Menu Saint-Anne",
+          "price": "46€",
+          "subtitle": "Entrée • Plat • Dessert",
+          "courses": [
+            {
+              "title": "Entrées",
+              "options": [
+                {
+                  "name": "Tataki de veau",
+                  "description": "Vitello tonnato"
+                },
+                {
+                  "name": "Ceviche de dorade royale",
+                  "description": "Marinade citron-gingembre, brunoise de mangue et coriandre ciselée"
+                },
+                {
+                  "name": "12 huîtres de la baie de Morlaix"
+                }
+              ]
+            },
+            {
+              "title": "Plats",
+              "options": [
+                {
+                  "name": "Souris d'agneau de 7 h",
+                  "description": "Écrasé de pommes de terre à l'huile de noisettes et petits légumes"
+                },
+                {
+                  "name": "Boeuf tigre qui pleure",
+                  "description": "Pommes grenailles"
+                },
+                {
+                  "name": "Filet de lieu jaune cuit sur peau",
+                  "description": "Risotto crémeux aux asperges vertes"
+                }
+              ]
+            },
+            {
+              "title": "Desserts",
+              "options": [
+                {
+                  "name": "Dessert au choix à la carte"
+                }
+              ]
+            }
+          ],
+          "footnotes": [
+            "Café gourmand : +1€",
+            "Champagne gourmand : +4€"
+          ]
+        },
+        {
+          "id": "menu-enfant",
+          "type": "fixed-menu",
+          "title": "Menu Enfant",
+          "price": "12,50€",
+          "subtitle": "-12 ans",
+          "courses": [
+            {
+              "title": "Boisson",
+              "options": [
+                {
+                  "name": "Un verre de jus ou de limonade"
+                },
+                {
+                  "name": "Un sirop à l'eau",
+                  "description": "Fraise, grenadine, menthe, pêche, citron ou banane-kiwi"
+                },
+                {
+                  "name": "Un diabolo",
+                  "description": "+1€"
+                },
+                {
+                  "name": "Un soda",
+                  "description": "+2€"
+                }
+              ]
+            },
+            {
+              "title": "Plat",
+              "options": [
+                {
+                  "name": "Steak haché"
+                },
+                {
+                  "name": "Poisson blanc"
+                },
+                {
+                  "name": "Burger"
+                }
+              ]
+            },
+            {
+              "title": "Dessert",
+              "options": [
+                {
+                  "name": "Une crêpe",
+                  "description": "Nutella, chocolat maison, beurre sucre ou sucre"
+                },
+                {
+                  "name": "Une boule de glace",
+                  "description": "Fraise, framboise, chocolat, vanille, caramel, citron ou passion"
+                }
+              ]
+            }
+          ],
+          "footnotes": [
+            "Frites maison et/ou légumes de saison avec le plat",
+            "2 boules : +1,50€",
+            "3 boules : +3€"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pour-commencer",
+      "navLabel": "Partager",
+      "kicker": "À l'apéro ou en entrée",
+      "title": "Pour commencer",
+      "description": "À partager... ou pas, selon l'envie du moment et la table.",
+      "blocks": [
+        {
+          "type": "menu-list",
+          "title": "À partager ou en entrée",
+          "subtitle": "Suggestions du moment",
+          "items": [
+            {
+              "name": "Duo de tartinables d'Algo Plus",
+              "description": "Artisans de produits locaux et naturels, selon la sélection du moment",
+              "price": "13€"
+            },
+            {
+              "name": "Trio de tartinables d'Algo Plus",
+              "description": "Artisans de produits locaux et naturels, selon la sélection du moment",
+              "price": "16€"
+            },
+            {
+              "name": "Camembert rôti au four",
+              "description": "Petite salade et pickles",
+              "price": "15€"
+            },
+            {
+              "name": "Camembert rôti au four",
+              "description": "Avec oignons frits",
+              "price": "16€"
+            },
+            {
+              "name": "Planche La Toute Fromage",
+              "priceVariants": [
+                {
+                  "label": "Petite",
+                  "price": "13€"
+                },
+                {
+                  "label": "Grande",
+                  "price": "21€"
+                }
+              ]
+            },
+            {
+              "name": "Planche La Tout Charcut'",
+              "priceVariants": [
+                {
+                  "label": "Petite",
+                  "price": "13€"
+                },
+                {
+                  "label": "Grande",
+                  "price": "21€"
+                }
+              ]
+            },
+            {
+              "name": "Planche La Mixte",
+              "priceVariants": [
+                {
+                  "label": "Petite",
+                  "price": "13€"
+                },
+                {
+                  "label": "Grande",
+                  "price": "21€"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "saveurs-estivales",
+      "navLabel": "Pizzas et +",
+      "kicker": "Quand l'été s'installe",
+      "title": "Suggestions estivales",
+      "description": "Pizzas, burgers, moules et galettes à retrouver selon l'heure et l'envie.",
+      "layout": "stacks",
+      "columns": [
+        ["pizzas-maison"],
+        ["burgers", "galettes-ble-noir"],
+        ["moules-locquemeau"]
+      ],
+      "blocks": [
+        {
+          "id": "pizzas-maison",
+          "type": "menu-list",
+          "title": "Pizzas maison",
+          "items": [
+            {
+              "name": "La Marga",
+              "description": "Sauce tomate, emmental, mozzarella",
+              "price": "11€"
+            },
+            {
+              "name": "La Reine",
+              "description": "Sauce tomate, emmental, mozzarella, jambon, champignons et olives",
+              "price": "12€"
+            },
+            {
+              "name": "La Peppe",
+              "description": "Sauce tomate, emmental, mozzarella, pepperoni (chorizo) et olives",
+              "price": "12€"
+            },
+            {
+              "name": "La Calzone",
+              "description": "Sauce tomate, emmental, mozzarella, jambon, champignons, oeuf et olives",
+              "price": "12€"
+            },
+            {
+              "name": "La 4 Fromages",
+              "description": "Sauce tomate, emmental, mozzarella, chèvre et gorgonzola",
+              "price": "15€"
+            },
+            {
+              "name": "La Carbo",
+              "description": "Crème, emmental, mozzarella, bacon, oeuf et copeaux de fromages",
+              "price": "13€"
+            },
+            {
+              "name": "La Chèvre-Miel",
+              "description": "Crème au miel, emmental, mozzarella, chèvre et jambon cru",
+              "price": "14€"
+            },
+            {
+              "name": "La Végé",
+              "description": "Sauce tomate, emmental, mozzarella, poivrons, courgettes, aubergines, oignons, olives et poulet végétal",
+              "price": "14€"
+            },
+            {
+              "name": "La Bouchère",
+              "description": "Sauce tomate, emmental, mozzarella, viande hachée épicée, poivrons et olives",
+              "price": "14€"
+            },
+            {
+              "name": "La BBQ",
+              "description": "Sauce barbecue, emmental, mozzarella, poulet, oignons, cheddar et olives",
+              "price": "14€"
+            },
+            {
+              "name": "La Saumon",
+              "description": "Crème citron, emmental, mozzarella, saumon frais, fondue de poireaux et écorces de citron",
+              "price": "15,50€"
+            },
+            {
+              "name": "La Bambino",
+              "description": "Sauce tomate, emmental, mozzarella et jambon",
+              "price": "8€"
+            }
+          ],
+          "footnotes": [
+            "Supplément légume ou oeuf : 1€",
+            "Supplément viande ou fromage : 2€"
+          ]
+        },
+        {
+          "id": "burgers",
+          "type": "menu-list",
+          "title": "Nos burgers",
+          "items": [
+            {
+              "name": "Le Classic'",
+              "description": "Pain, ketchup, steak haché, cheddar, salade, tomates et oignons frits",
+              "price": "14€"
+            },
+            {
+              "name": "Le Chicken",
+              "description": "Pain, sauce tartare, filet de poulet pané, comté, salade et tomates",
+              "price": "14€"
+            },
+            {
+              "name": "Le Honey",
+              "description": "Pain, mayonnaise au miel, steak haché, jambon cru, chèvre, salade et tomates",
+              "price": "15€"
+            }
+          ],
+          "footnotes": [
+            "Tous les burgers sont accompagnés de frites maison",
+            "Version végétarienne avec steak végétal : +1€",
+            "Supplément bacon crispy : 2€",
+            "Supplément oignons frits : 0,50€"
+          ]
+        },
+        {
+          "id": "moules-locquemeau",
+          "type": "menu-list",
+          "title": "Les moules de Locquémeau",
+          "subtitle": "Servies avec frites maison",
+          "items": [
+            {
+              "name": "Moules marinières",
+              "description": "Vin blanc, oignons et persil",
+              "price": "15€"
+            },
+            {
+              "name": "Moules à la crème",
+              "description": "Vin blanc, oignons, persil et crème",
+              "price": "16€"
+            },
+            {
+              "name": "Moules au curry",
+              "description": "Vin blanc, oignons, persil et crème curry",
+              "price": "17€"
+            },
+            {
+              "name": "Moules au roquefort",
+              "description": "Vin blanc, oignons, persil et crème roquefort",
+              "price": "17€"
+            }
+          ]
+        },
+        {
+          "id": "galettes-ble-noir",
+          "type": "menu-list",
+          "title": "Galettes 100% blé noir",
+          "items": [
+            {
+              "name": "La complète",
+              "description": "Jambon, oeuf et emmental",
+              "price": "9€"
+            },
+            {
+              "name": "La 2 Saveurs",
+              "description": "Deux ingrédients parmi jambon, oeuf et emmental",
+              "price": "8€"
+            },
+            {
+              "name": "La Chèvre-Miel",
+              "description": "Fromage de chèvre, miel, noix et salade verte",
+              "price": "9€"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "douceurs",
+      "navLabel": "Douceurs",
+      "kicker": "Desserts, crêpes et glaces",
+      "title": "Desserts et glaces",
+      "description": "Les fins de repas restent généreuses, entre desserts maison, crêpes et glaces artisanales.",
+      "layout": "stacks",
+      "columns": [
+        ["carte-des-desserts"],
+        ["crepes-maison", "glaces"],
+        ["gourmandes", "coupes-gourmandes"]
+      ],
+      "blocks": [
+        {
+          "id": "carte-des-desserts",
+          "type": "menu-list",
+          "title": "Carte des desserts",
+          "items": [
+            {
+              "name": "Assiette 3 fromages",
+              "description": "Selon la sélection du moment",
+              "price": "9€"
+            },
+            {
+              "name": "Panna cotta fruits rouges ou exotiques",
+              "price": "8€"
+            },
+            {
+              "name": "Tartelette rhubarbe et sa crème diplomate",
+              "price": "9€"
+            },
+            {
+              "name": "Soupe de fraises à la menthe",
+              "description": "Et son sorbet fraise plein fruit",
+              "price": "8€"
+            },
+            {
+              "name": "Tentation fruits exotiques",
+              "description": "Biscuit breton",
+              "price": "9€"
+            },
+            {
+              "name": "Cannelé maison façon profiterole",
+              "description": "Glace au nougat de Montélimar, chocolat chaud maison et amandes effilées",
+              "price": "9€"
+            },
+            {
+              "name": "Café gourmand",
+              "description": "Selon la sélection du chef",
+              "price": "10€"
+            },
+            {
+              "name": "Chocolat chaud, thé ou tisane gourmande",
+              "price": "11€"
+            },
+            {
+              "name": "Champagne gourmand",
+              "price": "15€"
+            },
+            {
+              "name": "Irish coffee ou digestif gourmand",
+              "price": "16€"
+            }
+          ]
+        },
+        {
+          "id": "crepes-maison",
+          "type": "menu-list",
+          "title": "Nos crêpes maisons",
+          "items": [
+            {
+              "name": "Beurre",
+              "price": "4€"
+            },
+            {
+              "name": "Beurre sucre",
+              "price": "4,40€"
+            },
+            {
+              "name": "Miel",
+              "price": "4€"
+            },
+            {
+              "name": "Citron miel ou citron sucre",
+              "price": "4,40€"
+            },
+            {
+              "name": "Confiture de fruits rouges",
+              "price": "4,40€"
+            },
+            {
+              "name": "Caramel au beurre salé maison",
+              "price": "4,80€"
+            },
+            {
+              "name": "Chocolat maison ou Nutella",
+              "price": "4,80€"
+            }
+          ]
+        },
+        {
+          "id": "gourmandes",
+          "type": "menu-list",
+          "title": "Les gourmandes",
+          "items": [
+            {
+              "name": "La Bigoudène",
+              "description": "Pommes, caramel, glace pomme Lambig et flambée au calvados",
+              "price": "9€"
+            },
+            {
+              "name": "La Choc' Amandes",
+              "description": "Chocolat maison, amandes grillées, glace vanille et chantilly",
+              "price": "8,50€"
+            },
+            {
+              "name": "La Car' Amandes",
+              "description": "Caramel maison, amandes grillées, glace vanille et chantilly",
+              "price": "8,50€"
+            },
+            {
+              "name": "La Mont d'Arrée",
+              "description": "Miel, citron, amandes grillées, glace nougat et chantilly",
+              "price": "8,50€"
+            },
+            {
+              "name": "La Flambée",
+              "description": "Rhum, calvados ou Grand Marnier",
+              "price": "8€"
+            }
+          ]
+        },
+        {
+          "id": "glaces",
+          "type": "menu-list",
+          "title": "Les glaces",
+          "subtitle": "Artisan glacier à Cléder, dans le Pays du Léon",
+          "items": [
+            {
+              "name": "1 boule",
+              "price": "2,90€"
+            },
+            {
+              "name": "2 boules",
+              "price": "5,60€"
+            },
+            {
+              "name": "3 boules",
+              "price": "8,10€"
+            },
+            {
+              "name": "Parfums",
+              "description": "Vanille, chocolat noir, café, caramel beurre salé, nougat, citron jaune, citron vert-basilic, fraise, framboise, fruit de la passion et rhum-raisin"
+            },
+            {
+              "name": "Supplément coulis",
+              "description": "Fruits rouges, café ou chocolat",
+              "price": "+1€"
+            },
+            {
+              "name": "Supplément chantilly",
+              "price": "+1€"
+            }
+          ]
+        },
+        {
+          "id": "coupes-gourmandes",
+          "type": "menu-list",
+          "title": "Les coupes gourmandes",
+          "items": [
+            {
+              "name": "Dame Blanche",
+              "description": "Glace vanille, coulis chocolat et chantilly",
+              "price": "9€"
+            },
+            {
+              "name": "Chocolat Liégeois",
+              "description": "Glace vanille, glace chocolat, coulis chocolat et chantilly",
+              "price": "9€"
+            },
+            {
+              "name": "Café Liégeois",
+              "description": "Glace vanille, glace café, coulis café et chantilly",
+              "price": "9€"
+            },
+            {
+              "name": "Caramel Liégeois",
+              "description": "Glace vanille, glace caramel, coulis caramel et chantilly",
+              "price": "9€"
+            },
+            {
+              "name": "L'Irresistible",
+              "description": "Glace fraise, glace framboise, glace citron jaune, coulis fruits rouges et chantilly",
+              "price": "9€"
+            },
+            {
+              "name": "Le Colonel",
+              "description": "Glace citron et vodka",
+              "price": "9€"
+            },
+            {
+              "name": "L'Antillaise",
+              "description": "Glace rhum raisin et rhum ambre",
+              "price": "9€"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
