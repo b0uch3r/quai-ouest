@@ -83,6 +83,7 @@
     "priceRange": "€€",
     "foundingDate": "2018-03-21",
     "award": "Tripadvisor Travellers' Choice 2025",
+    "menu": "https://b0uch3r.github.io/quai-ouest/carte.html",
     "sameAs": [
       "https://www.instagram.com/quaiouest.stpol/",
       "https://www.facebook.com/p/Quai-Ouest-100068821471690/",
@@ -142,6 +143,7 @@
     ],
     "image": "https://b0uch3r.github.io/quai-ouest/assets/images/hero-terrasse-plage.jpg",
     "acceptsReservations": true,
+    "mainEntityOfPage": "https://b0uch3r.github.io/quai-ouest/",
     "hasMenu": {
       "@type": "Menu",
       "name": "La Carte du Quai Ouest",
@@ -1803,6 +1805,125 @@
       font-style: italic;
     }
 
+    .menu-preview-shell {
+      display: grid;
+      gap: 1.35rem;
+      margin-top: 2.2rem;
+    }
+    .menu-preview-spotlight {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) auto;
+      gap: 1.3rem;
+      align-items: end;
+      padding: 1.6rem 1.7rem;
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background:
+        radial-gradient(circle at top left, rgba(212,168,83,0.18), transparent 38%),
+        linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.03));
+      box-shadow: 0 26px 70px rgba(0,0,0,0.2);
+    }
+    .menu-preview-kicker {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.34rem 0.72rem;
+      margin-bottom: 0.85rem;
+      border-radius: 999px;
+      background: rgba(212,168,83,0.16);
+      color: rgba(255,255,255,0.88);
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .menu-preview-copy h3 {
+      font-family: var(--font-display);
+      font-size: clamp(1.7rem, 2.4vw, 2.35rem);
+      line-height: 1.08;
+      color: #fff;
+      max-width: 18ch;
+    }
+    .menu-preview-copy p {
+      max-width: 58ch;
+      margin-top: 0.75rem;
+      color: rgba(255,255,255,0.78);
+    }
+    .menu-preview-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      align-items: center;
+    }
+    .menu-preview-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    .menu-preview-card {
+      padding: 1.25rem;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background:
+        radial-gradient(circle at top left, rgba(212,168,83,0.12), transparent 42%),
+        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.025));
+      box-shadow: 0 16px 44px rgba(0,0,0,0.14);
+    }
+    .menu-preview-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.9rem;
+      margin-bottom: 0.8rem;
+    }
+    .menu-preview-card-kicker {
+      color: rgba(255,255,255,0.68);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .menu-preview-card-price {
+      color: var(--or-chaud);
+      font-size: 0.9rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .menu-preview-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.36rem;
+      line-height: 1.12;
+      color: #fff;
+    }
+    .menu-preview-card p {
+      margin-top: 0.55rem;
+      color: rgba(255,255,255,0.74);
+      font-size: 0.92rem;
+    }
+    .menu-preview-list {
+      display: grid;
+      gap: 0.55rem;
+      list-style: none;
+      margin-top: 1rem;
+    }
+    .menu-preview-list li {
+      position: relative;
+      padding-left: 1rem;
+      color: rgba(255,255,255,0.84);
+      font-size: 0.9rem;
+    }
+    .menu-preview-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.72em;
+      width: 0.38rem;
+      height: 0.38rem;
+      border-radius: 50%;
+      background: rgba(212,168,83,0.75);
+      transform: translateY(-50%);
+    }
+
     @media (max-width: 720px) {
       .carte-intro {
         margin-top: 1.4rem;
@@ -1871,6 +1992,37 @@
         display: grid;
         gap: 0.42rem;
       }
+      .menu-preview-shell {
+        margin-top: 1.7rem;
+      }
+      .menu-preview-spotlight {
+        grid-template-columns: 1fr;
+        padding: 1.2rem;
+        border-radius: 22px;
+      }
+      .menu-preview-copy p {
+        max-width: none;
+      }
+      .menu-preview-actions {
+        justify-content: stretch;
+      }
+      .menu-preview-actions .btn-primary,
+      .menu-preview-actions .btn-secondary {
+        width: 100%;
+        text-align: center;
+      }
+      .menu-preview-grid {
+        grid-template-columns: 1fr;
+      }
+      .menu-preview-card {
+        padding: 1.1rem;
+        border-radius: 18px;
+      }
+      .menu-preview-card-top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.35rem;
+      }
     }
 
     @media (max-width: 1080px) and (min-width: 721px) {
@@ -1884,6 +2036,12 @@
     }
 
     @media (max-width: 980px) and (min-width: 721px) {
+      .menu-preview-spotlight {
+        grid-template-columns: 1fr;
+      }
+      .menu-preview-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
       .menu-card--menu-enfant .menu-formula-courses {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -2972,7 +3130,7 @@
     </a>
     <nav>
       <a href="#restaurant">Le Restaurant</a>
-      <a href="#carte">La Carte</a>
+      <a href="carte.html">La Carte</a>
       <a href="#galerie">Galerie</a>
       <a href="#horaires">Horaires</a>
       <a href="#contact">Contact</a>
@@ -2986,7 +3144,7 @@
   <div class="mobile-overlay" onclick="toggleMobileNav()"></div>
   <div class="mobile-nav">
     <a href="#restaurant" onclick="toggleMobileNav()">Le Restaurant</a>
-    <a href="#carte" onclick="toggleMobileNav()">La Carte</a>
+    <a href="carte.html" onclick="toggleMobileNav()">La Carte</a>
     <a href="#galerie" onclick="toggleMobileNav()">Galerie</a>
     <a href="#horaires" onclick="toggleMobileNav()">Horaires</a>
     <a href="#contact" onclick="toggleMobileNav()">Contact</a>
@@ -3023,7 +3181,7 @@
       <p class="hero-sub">Saint-Pol-de-Léon · Baie de Morlaix</p>
       <div class="hero-buttons">
         <a href="tel:0298290809" class="btn-primary">Réserver une table</a>
-        <a href="#carte" class="btn-secondary">Découvrir la carte</a>
+        <a href="carte.html" class="btn-secondary">Découvrir la carte</a>
       </div>
     </div>
     <div class="scroll-indicator">
@@ -3147,859 +3305,78 @@
     <div class="section-inner">
       <div class="reveal">
         <h2 class="section-title">La Carte</h2>
-        <p class="section-subtitle">Menus de saison, suggestions estivales et douceurs maison</p>
+        <p class="section-subtitle">L&#39;essentiel sur l&#39;accueil, la carte complete sur une page dediee</p>
         <div class="wave-divider"></div>
       </div>
 
-      <div class="carte-intro reveal">
-        <p>La carte suit les arrivages, l'été en baie et le rythme du service. On y retrouve les menus de saison, les pizzas, les burgers, les moules, les galettes et les desserts maison servis au Quai Ouest.</p>
-      </div>
+      <div class="menu-preview-shell">
+        <div class="menu-preview-spotlight reveal">
+          <div class="menu-preview-copy">
+            <span class="menu-preview-kicker">Carte du moment</span>
+            <h3>Voir toute la carte sur une page plus simple a lire</h3>
+            <p>Menus de saison, suggestions a partager, pizzas, burgers, moules, galettes, desserts, crepes et glaces artisanales sont regroupes sur une page dediee, plus confortable a consulter sur telephone.</p>
+          </div>
+          <div class="menu-preview-actions">
+            <a href="carte.html" class="btn-primary">Voir toute la carte</a>
+            <a href="tel:0298290809" class="btn-secondary">Reserver</a>
+          </div>
+        </div>
 
-      <nav class="carte-nav reveal" aria-label="Navigation dans la carte">
-        <a href="#carte-pour-commencer">Partager</a>
-        <a href="#carte-menus-ete">Menus</a>
-        <a href="#carte-douceurs">Douceurs</a>
-        <a href="#carte-saveurs-estivales">Pizzas et +</a>
-      </nav>
-
-      <section class="carte-group reveal" id="carte-pour-commencer">
-        <div class="carte-group-head">
-          <span class="carte-kicker">À l'apéro ou en entrée</span>
+        <div class="menu-preview-grid">
+        <article class="menu-preview-card reveal">
+          <div class="menu-preview-card-top">
+            <span class="menu-preview-card-kicker">À l'apéro ou en entrée</span>
+            <span class="menu-preview-card-price">A partir de 13 EUR</span>
+          </div>
           <h3>Pour commencer</h3>
           <p>À partager... ou pas, selon l'envie du moment et la table.</p>
-        </div>
-        <div class="carte-block-grid">
-      <article class="carte-block menu-list-card">
-        <div class="menu-list-head">
-        <span class="menu-card-badge">Suggestions du moment</span>
-          <h4>À partager ou en entrée</h4>
-        </div>
-        <div class="menu-list-items">
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Duo de tartinables d'Algo Plus</div>
-              <div class="menu-item-desc">Artisans de produits locaux et naturels, selon la sélection du moment</div>
-            </div>
-            <div class="menu-item-price">13€</div>
+          <ul class="menu-preview-list">
+            <li>Duo de tartinables d'Algo Plus</li>
+            <li>Trio de tartinables d'Algo Plus</li>
+            <li>Camembert rôti au four</li>
+          </ul>
+        </article>
+        <article class="menu-preview-card reveal">
+          <div class="menu-preview-card-top">
+            <span class="menu-preview-card-kicker">Carte de saison</span>
+            <span class="menu-preview-card-price">A partir de 12,50 EUR</span>
           </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Trio de tartinables d'Algo Plus</div>
-              <div class="menu-item-desc">Artisans de produits locaux et naturels, selon la sélection du moment</div>
-            </div>
-            <div class="menu-item-price">16€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Camembert rôti au four</div>
-              <div class="menu-item-desc">Petite salade et pickles</div>
-            </div>
-            <div class="menu-item-price">15€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Camembert rôti au four</div>
-              <div class="menu-item-desc">Avec oignons frits</div>
-            </div>
-            <div class="menu-item-price">16€</div>
-          </div>
-          <div class="menu-item menu-item--with-variants">
-            <div>
-              <div class="menu-item-name">Planche La Toute Fromage</div>
-            </div>
-            <div class="menu-item-prices" aria-label="Formats et prix">
-              <div class="menu-price-variant">
-                <span class="menu-price-variant-label">Petite</span>
-                <span class="menu-price-variant-value">13€</span>
-              </div>
-              <div class="menu-price-variant">
-                <span class="menu-price-variant-label">Grande</span>
-                <span class="menu-price-variant-value">21€</span>
-              </div>
-            </div>
-          </div>
-          <div class="menu-item menu-item--with-variants">
-            <div>
-              <div class="menu-item-name">Planche La Tout Charcut'</div>
-            </div>
-            <div class="menu-item-prices" aria-label="Formats et prix">
-              <div class="menu-price-variant">
-                <span class="menu-price-variant-label">Petite</span>
-                <span class="menu-price-variant-value">13€</span>
-              </div>
-              <div class="menu-price-variant">
-                <span class="menu-price-variant-label">Grande</span>
-                <span class="menu-price-variant-value">21€</span>
-              </div>
-            </div>
-          </div>
-          <div class="menu-item menu-item--with-variants">
-            <div>
-              <div class="menu-item-name">Planche La Mixte</div>
-            </div>
-            <div class="menu-item-prices" aria-label="Formats et prix">
-              <div class="menu-price-variant">
-                <span class="menu-price-variant-label">Petite</span>
-                <span class="menu-price-variant-value">13€</span>
-              </div>
-              <div class="menu-price-variant">
-                <span class="menu-price-variant-label">Grande</span>
-                <span class="menu-price-variant-value">21€</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-        </div>
-      </section>
-
-      <section class="carte-group reveal" id="carte-menus-ete">
-        <div class="carte-group-head">
-          <span class="carte-kicker">Carte de saison</span>
           <h3>Menus d'été</h3>
           <p>Trois menus servis à table, un menu enfant et des assiettes pensées pour la saison.</p>
-        </div>
-        <div class="carte-block-grid">
-      <article class="carte-block menu-formula-card">
-        <div class="menu-formula-header">
-          <div>
-            <span class="menu-card-badge">Entrée • Plat • Dessert</span>
-            <h4>Menu Callot</h4>
+          <ul class="menu-preview-list">
+            <li>Menu Callot</li>
+            <li>Menu de l'Îlot</li>
+            <li>Menu Saint-Anne</li>
+          </ul>
+        </article>
+        <article class="menu-preview-card reveal">
+          <div class="menu-preview-card-top">
+            <span class="menu-preview-card-kicker">Desserts, crêpes et glaces</span>
+            <span class="menu-preview-card-price">A partir de 2,90 EUR</span>
           </div>
-          <div class="menu-formula-price">32€</div>
-        </div>
-        <div class="menu-formula-courses">
-        <section class="menu-formula-course">
-          <h5>Entrées</h5>
-          <div class="menu-formula-options">
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">Velouté glacé de petits pois</span>
-                <span class="menu-course-option-desc">Menthe fraîche, feta et chips de lard</span>
-              </div>
-              <div class="menu-course-separator">ou</div>
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">6 huîtres de la baie de Morlaix</span>
-              </div>
-          </div>
-        </section>
-        <section class="menu-formula-course">
-          <h5>Plats</h5>
-          <div class="menu-formula-options">
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">Filet mignon de porc</span>
-                <span class="menu-course-option-desc">Cuisson basse température, sauce moutarde à l'ancienne, petits légumes et frites maison</span>
-              </div>
-              <div class="menu-course-separator">ou</div>
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">Choucroute aux 3 poissons</span>
-                <span class="menu-course-option-desc">Beurre blanc citronné</span>
-              </div>
-          </div>
-        </section>
-        <section class="menu-formula-course">
-          <h5>Desserts</h5>
-          <div class="menu-formula-options">
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">Panna cotta</span>
-                <span class="menu-course-option-desc">Au choix : fruits rouges ou exotiques</span>
-              </div>
-              <div class="menu-course-separator">ou</div>
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">Tartelette rhubarbe</span>
-                <span class="menu-course-option-desc">Et sa crème diplomate</span>
-              </div>
-          </div>
-        </section>
-        </div>
-      </article>
-      <article class="carte-block menu-formula-card">
-        <div class="menu-formula-header">
-          <div>
-            <span class="menu-card-badge">Entrée • Plat • Dessert</span>
-            <h4>Menu de l'Îlot</h4>
-          </div>
-          <div class="menu-formula-price">39€</div>
-        </div>
-        <div class="menu-formula-courses">
-        <section class="menu-formula-course">
-          <h5>Entrées</h5>
-          <div class="menu-formula-options">
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">Gravlax de saumon</span>
-                <span class="menu-course-option-desc">Baies roses, aneth et crème de raifort</span>
-              </div>
-              <div class="menu-course-separator">ou</div>
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">9 huîtres de la baie de Morlaix</span>
-              </div>
-              <div class="menu-course-separator">ou</div>
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">Terrine de canard au foie gras</span>
-              </div>
-          </div>
-        </section>
-        <section class="menu-formula-course">
-          <h5>Plats</h5>
-          <div class="menu-formula-options">
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">Filet de canard</span>
-                <span class="menu-course-option-desc">Sauce fruits rouges, poivre noir, frites maison et légumes de saison</span>
-              </div>
-              <div class="menu-course-separator">ou</div>
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">Filet de cabillaud snacké sur peau</span>
-                <span class="menu-course-option-desc">Mousseline de carottes au cumin, beurre citronné</span>
-              </div>
-              <div class="menu-course-separator">ou</div>
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">Émincé végétal façon basquaise</span>
-                <span class="menu-course-option-desc">Légumes de saison</span>
-              </div>
-          </div>
-        </section>
-        <section class="menu-formula-course">
-          <h5>Desserts</h5>
-          <div class="menu-formula-options">
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">Assiette de fromages</span>
-              </div>
-              <div class="menu-course-separator">ou</div>
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">Soupe de fraises à la menthe</span>
-                <span class="menu-course-option-desc">Et son sorbet fraise plein fruit</span>
-              </div>
-              <div class="menu-course-separator">ou</div>
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">Tentation fruits exotiques</span>
-                <span class="menu-course-option-desc">Biscuit breton</span>
-              </div>
-          </div>
-        </section>
-        </div>
-      </article>
-      <article class="carte-block menu-formula-card">
-        <div class="menu-formula-header">
-          <div>
-            <span class="menu-card-badge">Entrée • Plat • Dessert</span>
-            <h4>Menu Saint-Anne</h4>
-          </div>
-          <div class="menu-formula-price">46€</div>
-        </div>
-        <div class="menu-formula-courses">
-        <section class="menu-formula-course">
-          <h5>Entrées</h5>
-          <div class="menu-formula-options">
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">Tataki de veau</span>
-                <span class="menu-course-option-desc">Vitello tonnato</span>
-              </div>
-              <div class="menu-course-separator">ou</div>
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">Ceviche de dorade royale</span>
-                <span class="menu-course-option-desc">Marinade citron-gingembre, brunoise de mangue et coriandre ciselée</span>
-              </div>
-              <div class="menu-course-separator">ou</div>
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">12 huîtres de la baie de Morlaix</span>
-              </div>
-          </div>
-        </section>
-        <section class="menu-formula-course">
-          <h5>Plats</h5>
-          <div class="menu-formula-options">
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">Souris d'agneau de 7 h</span>
-                <span class="menu-course-option-desc">Écrasé de pommes de terre à l'huile de noisettes et petits légumes</span>
-              </div>
-              <div class="menu-course-separator">ou</div>
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">Boeuf tigre qui pleure</span>
-                <span class="menu-course-option-desc">Pommes grenailles</span>
-              </div>
-              <div class="menu-course-separator">ou</div>
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">Filet de lieu jaune cuit sur peau</span>
-                <span class="menu-course-option-desc">Risotto crémeux aux asperges vertes</span>
-              </div>
-          </div>
-        </section>
-        <section class="menu-formula-course">
-          <h5>Desserts</h5>
-          <div class="menu-formula-options">
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">Dessert au choix à la carte</span>
-              </div>
-          </div>
-        </section>
-        </div>
-      <div class="menu-block-footnotes">
-        <p>Café gourmand : +1€</p>
-        <p>Champagne gourmand : +4€</p>
-      </div>
-      </article>
-      <article class="carte-block menu-formula-card menu-card--menu-enfant">
-        <div class="menu-formula-header">
-          <div>
-            <span class="menu-card-badge">-12 ans</span>
-            <h4>Menu Enfant</h4>
-          </div>
-          <div class="menu-formula-price">12,50€</div>
-        </div>
-        <div class="menu-formula-courses">
-        <section class="menu-formula-course">
-          <h5>Boisson</h5>
-          <div class="menu-formula-options">
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">Un verre de jus ou de limonade</span>
-              </div>
-              <div class="menu-course-separator">ou</div>
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">Un sirop à l'eau</span>
-                <span class="menu-course-option-desc">Fraise, grenadine, menthe, pêche, citron ou banane-kiwi</span>
-              </div>
-              <div class="menu-course-separator">ou</div>
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">Un diabolo</span>
-                <span class="menu-course-option-desc">+1€</span>
-              </div>
-              <div class="menu-course-separator">ou</div>
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">Un soda</span>
-                <span class="menu-course-option-desc">+2€</span>
-              </div>
-          </div>
-        </section>
-        <section class="menu-formula-course">
-          <h5>Plat</h5>
-          <div class="menu-formula-options">
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">Steak haché</span>
-              </div>
-              <div class="menu-course-separator">ou</div>
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">Poisson blanc</span>
-              </div>
-              <div class="menu-course-separator">ou</div>
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">Burger</span>
-              </div>
-          </div>
-        </section>
-        <section class="menu-formula-course">
-          <h5>Dessert</h5>
-          <div class="menu-formula-options">
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">Une crêpe</span>
-                <span class="menu-course-option-desc">Nutella, chocolat maison, beurre sucre ou sucre</span>
-              </div>
-              <div class="menu-course-separator">ou</div>
-              <div class="menu-course-option">
-                <span class="menu-course-option-name">Une boule de glace</span>
-                <span class="menu-course-option-desc">Fraise, framboise, chocolat, vanille, caramel, citron ou passion</span>
-              </div>
-          </div>
-        </section>
-        </div>
-      <div class="menu-block-footnotes">
-        <p>Frites maison et/ou légumes de saison avec le plat</p>
-        <p>2 boules : +1,50€</p>
-        <p>3 boules : +3€</p>
-      </div>
-      </article>
-        </div>
-      </section>
-
-      <section class="carte-group reveal" id="carte-douceurs">
-        <div class="carte-group-head">
-          <span class="carte-kicker">Desserts, crêpes et glaces</span>
           <h3>Desserts et glaces</h3>
           <p>Les fins de repas restent généreuses, entre desserts maison, crêpes et glaces artisanales.</p>
-        </div>
-        <div class="carte-block-grid carte-block-grid--stacks">
-          <div class="carte-stack-column carte-stack-column--1">
-      <article class="carte-block menu-list-card menu-card--carte-des-desserts">
-        <div class="menu-list-head">
-          <h4>Carte des desserts</h4>
-        </div>
-        <div class="menu-list-items">
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Assiette 3 fromages</div>
-              <div class="menu-item-desc">Selon la sélection du moment</div>
-            </div>
-            <div class="menu-item-price">9€</div>
+          <ul class="menu-preview-list">
+            <li>Carte des desserts</li>
+            <li>Nos crêpes maisons</li>
+            <li>Les gourmandes</li>
+          </ul>
+        </article>
+        <article class="menu-preview-card reveal">
+          <div class="menu-preview-card-top">
+            <span class="menu-preview-card-kicker">Quand l'été s'installe</span>
+            <span class="menu-preview-card-price">A partir de 8 EUR</span>
           </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Panna cotta fruits rouges ou exotiques</div>
-            </div>
-            <div class="menu-item-price">8€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Tartelette rhubarbe et sa crème diplomate</div>
-            </div>
-            <div class="menu-item-price">9€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Soupe de fraises à la menthe</div>
-              <div class="menu-item-desc">Et son sorbet fraise plein fruit</div>
-            </div>
-            <div class="menu-item-price">8€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Tentation fruits exotiques</div>
-              <div class="menu-item-desc">Biscuit breton</div>
-            </div>
-            <div class="menu-item-price">9€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Cannelé maison façon profiterole</div>
-              <div class="menu-item-desc">Glace au nougat de Montélimar, chocolat chaud maison et amandes effilées</div>
-            </div>
-            <div class="menu-item-price">9€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Café gourmand</div>
-              <div class="menu-item-desc">Selon la sélection du chef</div>
-            </div>
-            <div class="menu-item-price">10€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Chocolat chaud, thé ou tisane gourmande</div>
-            </div>
-            <div class="menu-item-price">11€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Champagne gourmand</div>
-            </div>
-            <div class="menu-item-price">15€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Irish coffee ou digestif gourmand</div>
-            </div>
-            <div class="menu-item-price">16€</div>
-          </div>
-        </div>
-      </article>
-          </div>
-          <div class="carte-stack-column carte-stack-column--2">
-      <article class="carte-block menu-list-card menu-card--crepes-maison">
-        <div class="menu-list-head">
-          <h4>Nos crêpes maisons</h4>
-        </div>
-        <div class="menu-list-items">
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Beurre</div>
-            </div>
-            <div class="menu-item-price">4€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Beurre sucre</div>
-            </div>
-            <div class="menu-item-price">4,40€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Miel</div>
-            </div>
-            <div class="menu-item-price">4€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Citron miel ou citron sucre</div>
-            </div>
-            <div class="menu-item-price">4,40€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Confiture de fruits rouges</div>
-            </div>
-            <div class="menu-item-price">4,40€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Caramel au beurre salé maison</div>
-            </div>
-            <div class="menu-item-price">4,80€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Chocolat maison ou Nutella</div>
-            </div>
-            <div class="menu-item-price">4,80€</div>
-          </div>
-        </div>
-      </article>
-      <article class="carte-block menu-list-card menu-card--glaces">
-        <div class="menu-list-head">
-        <span class="menu-card-badge">Artisan glacier à Cléder, dans le Pays du Léon</span>
-          <h4>Les glaces</h4>
-        </div>
-        <div class="menu-list-items">
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">1 boule</div>
-            </div>
-            <div class="menu-item-price">2,90€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">2 boules</div>
-            </div>
-            <div class="menu-item-price">5,60€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">3 boules</div>
-            </div>
-            <div class="menu-item-price">8,10€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Parfums</div>
-              <div class="menu-item-desc">Vanille, chocolat noir, café, caramel beurre salé, nougat, citron jaune, citron vert-basilic, fraise, framboise, fruit de la passion et rhum-raisin</div>
-            </div>
-            <div class="menu-item-price menu-item-price-empty">&nbsp;</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Supplément coulis</div>
-              <div class="menu-item-desc">Fruits rouges, café ou chocolat</div>
-            </div>
-            <div class="menu-item-price">+1€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Supplément chantilly</div>
-            </div>
-            <div class="menu-item-price">+1€</div>
-          </div>
-        </div>
-      </article>
-          </div>
-          <div class="carte-stack-column carte-stack-column--3">
-      <article class="carte-block menu-list-card menu-card--gourmandes">
-        <div class="menu-list-head">
-          <h4>Les gourmandes</h4>
-        </div>
-        <div class="menu-list-items">
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">La Bigoudène</div>
-              <div class="menu-item-desc">Pommes, caramel, glace pomme Lambig et flambée au calvados</div>
-            </div>
-            <div class="menu-item-price">9€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">La Choc' Amandes</div>
-              <div class="menu-item-desc">Chocolat maison, amandes grillées, glace vanille et chantilly</div>
-            </div>
-            <div class="menu-item-price">8,50€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">La Car' Amandes</div>
-              <div class="menu-item-desc">Caramel maison, amandes grillées, glace vanille et chantilly</div>
-            </div>
-            <div class="menu-item-price">8,50€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">La Mont d'Arrée</div>
-              <div class="menu-item-desc">Miel, citron, amandes grillées, glace nougat et chantilly</div>
-            </div>
-            <div class="menu-item-price">8,50€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">La Flambée</div>
-              <div class="menu-item-desc">Rhum, calvados ou Grand Marnier</div>
-            </div>
-            <div class="menu-item-price">8€</div>
-          </div>
-        </div>
-      </article>
-      <article class="carte-block menu-list-card menu-card--coupes-gourmandes">
-        <div class="menu-list-head">
-          <h4>Les coupes gourmandes</h4>
-        </div>
-        <div class="menu-list-items">
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Dame Blanche</div>
-              <div class="menu-item-desc">Glace vanille, coulis chocolat et chantilly</div>
-            </div>
-            <div class="menu-item-price">9€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Chocolat Liégeois</div>
-              <div class="menu-item-desc">Glace vanille, glace chocolat, coulis chocolat et chantilly</div>
-            </div>
-            <div class="menu-item-price">9€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Café Liégeois</div>
-              <div class="menu-item-desc">Glace vanille, glace café, coulis café et chantilly</div>
-            </div>
-            <div class="menu-item-price">9€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Caramel Liégeois</div>
-              <div class="menu-item-desc">Glace vanille, glace caramel, coulis caramel et chantilly</div>
-            </div>
-            <div class="menu-item-price">9€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">L'Irresistible</div>
-              <div class="menu-item-desc">Glace fraise, glace framboise, glace citron jaune, coulis fruits rouges et chantilly</div>
-            </div>
-            <div class="menu-item-price">9€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Le Colonel</div>
-              <div class="menu-item-desc">Glace citron et vodka</div>
-            </div>
-            <div class="menu-item-price">9€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">L'Antillaise</div>
-              <div class="menu-item-desc">Glace rhum raisin et rhum ambre</div>
-            </div>
-            <div class="menu-item-price">9€</div>
-          </div>
-        </div>
-      </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="carte-group reveal" id="carte-saveurs-estivales">
-        <div class="carte-group-head">
-          <span class="carte-kicker">Quand l'été s'installe</span>
           <h3>Suggestions estivales</h3>
           <p>Pizzas, burgers, moules et galettes à retrouver selon l'heure et l'envie.</p>
+          <ul class="menu-preview-list">
+            <li>Pizzas maison</li>
+            <li>Nos burgers</li>
+            <li>Les moules de Locquémeau</li>
+          </ul>
+        </article>
         </div>
-        <div class="carte-block-grid carte-block-grid--stacks">
-          <div class="carte-stack-column carte-stack-column--1">
-      <article class="carte-block menu-list-card menu-card--pizzas-maison">
-        <div class="menu-list-head">
-          <h4>Pizzas maison</h4>
-        </div>
-        <div class="menu-list-items">
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">La Marga</div>
-              <div class="menu-item-desc">Sauce tomate, emmental, mozzarella</div>
-            </div>
-            <div class="menu-item-price">11€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">La Reine</div>
-              <div class="menu-item-desc">Sauce tomate, emmental, mozzarella, jambon, champignons et olives</div>
-            </div>
-            <div class="menu-item-price">12€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">La Peppe</div>
-              <div class="menu-item-desc">Sauce tomate, emmental, mozzarella, pepperoni (chorizo) et olives</div>
-            </div>
-            <div class="menu-item-price">12€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">La Calzone</div>
-              <div class="menu-item-desc">Sauce tomate, emmental, mozzarella, jambon, champignons, oeuf et olives</div>
-            </div>
-            <div class="menu-item-price">12€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">La 4 Fromages</div>
-              <div class="menu-item-desc">Sauce tomate, emmental, mozzarella, chèvre et gorgonzola</div>
-            </div>
-            <div class="menu-item-price">15€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">La Carbo</div>
-              <div class="menu-item-desc">Crème, emmental, mozzarella, bacon, oeuf et copeaux de fromages</div>
-            </div>
-            <div class="menu-item-price">13€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">La Chèvre-Miel</div>
-              <div class="menu-item-desc">Crème au miel, emmental, mozzarella, chèvre et jambon cru</div>
-            </div>
-            <div class="menu-item-price">14€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">La Végé</div>
-              <div class="menu-item-desc">Sauce tomate, emmental, mozzarella, poivrons, courgettes, aubergines, oignons, olives et poulet végétal</div>
-            </div>
-            <div class="menu-item-price">14€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">La Bouchère</div>
-              <div class="menu-item-desc">Sauce tomate, emmental, mozzarella, viande hachée épicée, poivrons et olives</div>
-            </div>
-            <div class="menu-item-price">14€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">La BBQ</div>
-              <div class="menu-item-desc">Sauce barbecue, emmental, mozzarella, poulet, oignons, cheddar et olives</div>
-            </div>
-            <div class="menu-item-price">14€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">La Saumon</div>
-              <div class="menu-item-desc">Crème citron, emmental, mozzarella, saumon frais, fondue de poireaux et écorces de citron</div>
-            </div>
-            <div class="menu-item-price">15,50€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">La Bambino</div>
-              <div class="menu-item-desc">Sauce tomate, emmental, mozzarella et jambon</div>
-            </div>
-            <div class="menu-item-price">8€</div>
-          </div>
-        </div>
-        <div class="menu-block-footnotes">
-          <p>Supplément légume ou oeuf : 1€</p>
-          <p>Supplément viande ou fromage : 2€</p>
-        </div>
-      </article>
-          </div>
-          <div class="carte-stack-column carte-stack-column--2">
-      <article class="carte-block menu-list-card menu-card--burgers">
-        <div class="menu-list-head">
-          <h4>Nos burgers</h4>
-        </div>
-        <div class="menu-list-items">
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Le Classic'</div>
-              <div class="menu-item-desc">Pain, ketchup, steak haché, cheddar, salade, tomates et oignons frits</div>
-            </div>
-            <div class="menu-item-price">14€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Le Chicken</div>
-              <div class="menu-item-desc">Pain, sauce tartare, filet de poulet pané, comté, salade et tomates</div>
-            </div>
-            <div class="menu-item-price">14€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Le Honey</div>
-              <div class="menu-item-desc">Pain, mayonnaise au miel, steak haché, jambon cru, chèvre, salade et tomates</div>
-            </div>
-            <div class="menu-item-price">15€</div>
-          </div>
-        </div>
-        <div class="menu-block-footnotes">
-          <p>Tous les burgers sont accompagnés de frites maison</p>
-          <p>Version végétarienne avec steak végétal : +1€</p>
-          <p>Supplément bacon crispy : 2€</p>
-          <p>Supplément oignons frits : 0,50€</p>
-        </div>
-      </article>
-      <article class="carte-block menu-list-card menu-card--galettes-ble-noir">
-        <div class="menu-list-head">
-          <h4>Galettes 100% blé noir</h4>
-        </div>
-        <div class="menu-list-items">
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">La complète</div>
-              <div class="menu-item-desc">Jambon, oeuf et emmental</div>
-            </div>
-            <div class="menu-item-price">9€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">La 2 Saveurs</div>
-              <div class="menu-item-desc">Deux ingrédients parmi jambon, oeuf et emmental</div>
-            </div>
-            <div class="menu-item-price">8€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">La Chèvre-Miel</div>
-              <div class="menu-item-desc">Fromage de chèvre, miel, noix et salade verte</div>
-            </div>
-            <div class="menu-item-price">9€</div>
-          </div>
-        </div>
-      </article>
-          </div>
-          <div class="carte-stack-column carte-stack-column--3">
-      <article class="carte-block menu-list-card menu-card--moules-locquemeau">
-        <div class="menu-list-head">
-        <span class="menu-card-badge">Servies avec frites maison</span>
-          <h4>Les moules de Locquémeau</h4>
-        </div>
-        <div class="menu-list-items">
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Moules marinières</div>
-              <div class="menu-item-desc">Vin blanc, oignons et persil</div>
-            </div>
-            <div class="menu-item-price">15€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Moules à la crème</div>
-              <div class="menu-item-desc">Vin blanc, oignons, persil et crème</div>
-            </div>
-            <div class="menu-item-price">16€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Moules au curry</div>
-              <div class="menu-item-desc">Vin blanc, oignons, persil et crème curry</div>
-            </div>
-            <div class="menu-item-price">17€</div>
-          </div>
-          <div class="menu-item">
-            <div>
-              <div class="menu-item-name">Moules au roquefort</div>
-              <div class="menu-item-desc">Vin blanc, oignons, persil et crème roquefort</div>
-            </div>
-            <div class="menu-item-price">17€</div>
-          </div>
-        </div>
-      </article>
-          </div>
-        </div>
-      </section>
-
-      <p class="carte-note reveal">Certaines suggestions évoluent selon les arrivages et la saison. N'hésitez pas à demander les plats du moment à l'équipe.</p>
+      </div>
     </div>
   </section>
 <!-- GENERATED:MENU_SECTION END -->
@@ -4820,7 +4197,7 @@
       <div class="footer-col">
         <h4>Navigation</h4>
         <a href="#restaurant">Le Restaurant</a>
-        <a href="#carte">La Carte</a>
+        <a href="carte.html">La Carte</a>
         <a href="#galerie">Galerie</a>
         <a href="#horaires">Horaires</a>
         <a href="#contact">Contact</a>

@@ -2,8 +2,11 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
-const INDEX_PATH = path.join(ROOT, 'index.html');
+const HOME_PATH = path.join(ROOT, 'index.html');
+const MENU_PAGE_PATH = path.join(ROOT, 'carte.html');
 const MENU_PATH = path.join(ROOT, 'content', 'menu.json');
+const HOME_URL = 'https://b0uch3r.github.io/quai-ouest/';
+const MENU_PAGE_URL = 'https://b0uch3r.github.io/quai-ouest/carte.html';
 
 const RESTAURANT_SCHEMA_START = '<!-- GENERATED:RESTAURANT_SCHEMA START -->';
 const RESTAURANT_SCHEMA_END = '<!-- GENERATED:RESTAURANT_SCHEMA END -->';
@@ -35,6 +38,7 @@ const RESTAURANT_DATA = {
   priceRange: '€€',
   foundingDate: '2018-03-21',
   award: "Tripadvisor Travellers' Choice 2025",
+  menu: MENU_PAGE_URL,
   sameAs: [
     'https://www.instagram.com/quaiouest.stpol/',
     'https://www.facebook.com/p/Quai-Ouest-100068821471690/',
@@ -86,6 +90,65 @@ function sortMenuSections(sections) {
     const rightOrder = Number.isFinite(right.order) ? right.order : Number.MAX_SAFE_INTEGER;
     return leftOrder - rightOrder;
   });
+}
+
+function formatPriceValue(value) {
+  if (!Number.isFinite(value)) return '';
+  if (Number.isInteger(value)) return `${value} EUR`;
+  return `${value.toFixed(2).replace('.', ',')} EUR`;
+}
+
+function collectBlockPriceValues(block) {
+  const prices = [];
+
+  const blockPrice = parseSimplePrice(block.price);
+  if (blockPrice) prices.push(Number(blockPrice));
+
+  if (Array.isArray(block.items)) {
+    block.items.forEach((item) => {
+      const itemPrice = parseSimplePrice(item.price);
+      if (itemPrice) prices.push(Number(itemPrice));
+
+      if (Array.isArray(item.priceVariants)) {
+        item.priceVariants.forEach((variant) => {
+          const variantPrice = parseSimplePrice(variant.price);
+          if (variantPrice) prices.push(Number(variantPrice));
+        });
+      }
+    });
+  }
+
+  return prices;
+}
+
+function getSectionStartingPrice(section) {
+  const prices = section.blocks.flatMap(collectBlockPriceValues);
+  if (prices.length === 0) return '';
+  return `A partir de ${formatPriceValue(Math.min(...prices))}`;
+}
+
+function collectSectionHighlights(section, limit = 3) {
+  const highlights = [];
+
+  section.blocks.forEach((block) => {
+    if (block.type === 'fixed-menu') {
+      highlights.push(block.title);
+      return;
+    }
+
+    if (block.type !== 'menu-list') return;
+
+    if (section.blocks.length > 1 && block.title) {
+      highlights.push(block.title);
+      return;
+    }
+
+    if (Array.isArray(block.items)) {
+      block.items.forEach((item) => highlights.push(item.name));
+    }
+  });
+
+  return [...new Set(highlights.map(collapseWhitespace))].slice(0, limit);
 }
 
 function replaceGeneratedBlock(source, startMarker, endMarker, replacement) {
@@ -281,6 +344,65 @@ function renderSection(section) {
   ].filter(Boolean).join('\n');
 }
 
+function renderMenuPreviewCard(section) {
+  const highlights = collectSectionHighlights(section);
+  const price = getSectionStartingPrice(section);
+  const listMarkup = highlights.length > 0
+    ? [
+        '          <ul class="menu-preview-list">',
+        ...highlights.map((item) => `            <li>${escapeHtml(item)}</li>`),
+        '          </ul>'
+      ].join('\n')
+    : '';
+
+  return [
+    '        <article class="menu-preview-card reveal">',
+    '          <div class="menu-preview-card-top">',
+    section.kicker ? `            <span class="menu-preview-card-kicker">${escapeHtml(section.kicker)}</span>` : '',
+    price ? `            <span class="menu-preview-card-price">${escapeHtml(price)}</span>` : '',
+    '          </div>',
+    `          <h3>${escapeHtml(section.title)}</h3>`,
+    section.description ? `          <p>${escapeHtml(section.description)}</p>` : '',
+    listMarkup,
+    '        </article>'
+  ].filter(Boolean).join('\n');
+}
+
+function renderMenuPreviewSection(menu) {
+  const sortedSections = sortMenuSections(menu.sections);
+  const previewCards = sortedSections.map(renderMenuPreviewCard).join('\n');
+
+  return [
+    '  <section id="carte">',
+    '    <div class="section-inner">',
+      '      <div class="reveal">',
+    `        <h2 class="section-title">${escapeHtml(menu._meta.sectionTitle)}</h2>`,
+    '        <p class="section-subtitle">L&#39;essentiel sur l&#39;accueil, la carte complete sur une page dediee</p>',
+    '        <div class="wave-divider"></div>',
+    '      </div>',
+    '',
+    '      <div class="menu-preview-shell">',
+    '        <div class="menu-preview-spotlight reveal">',
+    '          <div class="menu-preview-copy">',
+    '            <span class="menu-preview-kicker">Carte du moment</span>',
+    '            <h3>Voir toute la carte sur une page plus simple a lire</h3>',
+    '            <p>Menus de saison, suggestions a partager, pizzas, burgers, moules, galettes, desserts, crepes et glaces artisanales sont regroupes sur une page dediee, plus confortable a consulter sur telephone.</p>',
+    '          </div>',
+    '          <div class="menu-preview-actions">',
+    '            <a href="carte.html" class="btn-primary">Voir toute la carte</a>',
+    '            <a href="tel:0298290809" class="btn-secondary">Reserver</a>',
+    '          </div>',
+    '        </div>',
+    '',
+    '        <div class="menu-preview-grid">',
+    previewCards,
+    '        </div>',
+    '      </div>',
+    '    </div>',
+    '  </section>'
+  ].join('\n');
+}
+
 function renderMenuSection(menu) {
   const sortedSections = sortMenuSections(menu.sections);
   const navLinks = sortedSections
@@ -397,9 +519,10 @@ function buildMenuSchemaSections(menu) {
   }));
 }
 
-function renderRestaurantSchema(menu) {
+function renderRestaurantSchema(menu, pageUrl = HOME_URL) {
   const schema = {
     ...RESTAURANT_DATA,
+    mainEntityOfPage: pageUrl,
     hasMenu: {
       '@type': 'Menu',
       name: `${menu._meta.sectionTitle} du Quai Ouest`,
@@ -418,23 +541,39 @@ function renderRestaurantSchema(menu) {
 
 function main() {
   const menu = JSON.parse(fs.readFileSync(MENU_PATH, 'utf8'));
-  const indexHtml = fs.readFileSync(INDEX_PATH, 'utf8');
+  const homeHtml = fs.readFileSync(HOME_PATH, 'utf8');
+  const menuPageHtml = fs.readFileSync(MENU_PAGE_PATH, 'utf8');
 
-  let nextHtml = replaceGeneratedBlock(
-    indexHtml,
+  let nextHomeHtml = replaceGeneratedBlock(
+    homeHtml,
     RESTAURANT_SCHEMA_START,
     RESTAURANT_SCHEMA_END,
-    renderRestaurantSchema(menu)
+    renderRestaurantSchema(menu, HOME_URL)
   );
 
-  nextHtml = replaceGeneratedBlock(
-    nextHtml,
+  nextHomeHtml = replaceGeneratedBlock(
+    nextHomeHtml,
+    MENU_SECTION_START,
+    MENU_SECTION_END,
+    renderMenuPreviewSection(menu)
+  );
+
+  let nextMenuPageHtml = replaceGeneratedBlock(
+    menuPageHtml,
+    RESTAURANT_SCHEMA_START,
+    RESTAURANT_SCHEMA_END,
+    renderRestaurantSchema(menu, MENU_PAGE_URL)
+  );
+
+  nextMenuPageHtml = replaceGeneratedBlock(
+    nextMenuPageHtml,
     MENU_SECTION_START,
     MENU_SECTION_END,
     renderMenuSection(menu)
   );
 
-  fs.writeFileSync(INDEX_PATH, nextHtml, 'utf8');
+  fs.writeFileSync(HOME_PATH, nextHomeHtml, 'utf8');
+  fs.writeFileSync(MENU_PAGE_PATH, nextMenuPageHtml, 'utf8');
   console.log(`Carte regeneree depuis ${path.relative(ROOT, MENU_PATH)}.`);
 }
 
