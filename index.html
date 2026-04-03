@@ -990,7 +990,7 @@
     /* ========== ANIMATIONS ========== */
     .reveal {
       opacity: 0;
-      transform: translateY(40px);
+      transform: translateY(28px);
       transition: opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
     }
     .reveal.visible {
@@ -1150,6 +1150,15 @@
       .hamburger { display: flex; }
       .mobile-nav { display: flex; }
       .logo-mark { width: clamp(56px, 16vw, 74px); }
+      header.scrolled {
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+      }
+      .hero-media {
+        transform: translate3d(0, 0, 0) scale(1.01);
+        transition: none;
+        will-change: auto;
+      }
     }
 
     /* ========== HERO ========== */
@@ -1165,13 +1174,17 @@
       overflow: hidden;
     }
     .hero-media {
+      --hero-parallax-offset: 0px;
       position: absolute;
       inset: 0;
       display: block;
       background-color: var(--bleu-baie);
-      transform: scale(1.05);
-      transition: transform 0.3s;
+      transform: translate3d(0, var(--hero-parallax-offset), 0) scale(1.03);
+      transform-origin: center top;
+      transition: transform 0.12s linear;
       will-change: transform;
+      backface-visibility: hidden;
+      contain: paint;
       pointer-events: none;
     }
     .hero-media img {
@@ -1185,6 +1198,7 @@
       position: absolute;
       inset: 0;
       background: linear-gradient(180deg, rgba(44,95,124,0.3) 0%, rgba(0,0,0,0.5) 100%);
+      pointer-events: none;
     }
     .hero-content {
       position: relative;
@@ -1242,6 +1256,25 @@
       animation: bounce 2s infinite;
     }
     .scroll-indicator svg { width: 28px; height: 28px; stroke: rgba(255,255,255,0.7); fill: none; stroke-width: 2; }
+
+    .story-grid,
+    .galerie-grid,
+    .proof-grid,
+    .horaires-grid,
+    .contact-grid {
+      contain: layout paint style;
+    }
+
+    @supports (content-visibility: auto) {
+      .story-grid,
+      .galerie-grid,
+      .proof-grid,
+      .horaires-grid,
+      .contact-grid {
+        content-visibility: auto;
+        contain-intrinsic-size: 1px 900px;
+      }
+    }
 
     @keyframes bounce {
       0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
@@ -4295,24 +4328,41 @@
     const header = document.getElementById('header');
     const heroBg = document.getElementById('heroBg');
     const backToTopBtn = document.getElementById('backToTop');
-    const sections = document.querySelectorAll('main section[id]');
-    const navLinks = document.querySelectorAll('nav a[href^="#"], .mobile-nav a[href^="#"]');
+    const sections = Array.from(document.querySelectorAll('main section[id]'));
+    const navLinks = Array.from(document.querySelectorAll('nav a[href^="#"], .mobile-nav a[href^="#"]'));
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const heroParallaxMedia = window.matchMedia('(min-width: 1024px) and (pointer: fine)');
+    let activeSectionId = '';
+    let lastHeroOffset = Number.NaN;
+    let headerIsScrolled = false;
+    let backToTopIsVisible = false;
 
-    function updateActiveNav(scrollY = window.scrollY) {
-      let currentSection = '';
-      sections.forEach(section => {
-        const top = section.offsetTop - 150;
-        if (scrollY >= top) {
-          currentSection = section.getAttribute('id');
-        }
-      });
+    function setActiveNav(sectionId = '') {
+      if (sectionId === activeSectionId) return;
+      activeSectionId = sectionId;
       navLinks.forEach(link => {
-        link.classList.remove('active-section');
-        if (link.getAttribute('href') === '#' + currentSection) {
-          link.classList.add('active-section');
-        }
+        const targetId = link.getAttribute('href').slice(1);
+        link.classList.toggle('active-section', targetId === sectionId);
       });
+    }
+
+    function updateHeroParallax(scrollY = window.scrollY) {
+      if (!heroBg) return;
+
+      if (prefersReducedMotion || !heroParallaxMedia.matches) {
+        if (lastHeroOffset !== 0) {
+          heroBg.style.setProperty('--hero-parallax-offset', '0px');
+          lastHeroOffset = 0;
+        }
+        return;
+      }
+
+      const maxTrackedScroll = Math.min(scrollY, window.innerHeight * 0.65);
+      const nextOffset = Math.round(maxTrackedScroll * 0.14 * 10) / 10;
+      if (nextOffset === lastHeroOffset) return;
+
+      heroBg.style.setProperty('--hero-parallax-offset', `${nextOffset}px`);
+      lastHeroOffset = nextOffset;
     }
 
     let scrollTicking = false;
@@ -4321,20 +4371,61 @@
       scrollTicking = true;
       requestAnimationFrame(() => {
         const scrollY = window.scrollY;
-        header.classList.toggle('scrolled', scrollY > 60);
+
+        const shouldShowScrolledHeader = scrollY > 60;
+        if (shouldShowScrolledHeader !== headerIsScrolled) {
+          header.classList.toggle('scrolled', shouldShowScrolledHeader);
+          headerIsScrolled = shouldShowScrolledHeader;
+        }
+
         if (backToTopBtn) {
-          backToTopBtn.classList.toggle('visible', scrollY > 600);
+          const shouldShowBackToTop = scrollY > 600;
+          if (shouldShowBackToTop !== backToTopIsVisible) {
+            backToTopBtn.classList.toggle('visible', shouldShowBackToTop);
+            backToTopIsVisible = shouldShowBackToTop;
+          }
         }
-        if (!prefersReducedMotion && heroBg && scrollY < window.innerHeight) {
-          heroBg.style.transform = `scale(1.05) translateY(${scrollY * 0.4}px)`;
+
+        if (heroBg && scrollY < window.innerHeight * 0.8) {
+          updateHeroParallax(scrollY);
+        } else {
+          updateHeroParallax(0);
         }
-        updateActiveNav(scrollY);
+
         scrollTicking = false;
       });
     }
 
     window.addEventListener('scroll', handleScrollState, { passive: true });
+    window.addEventListener('resize', handleScrollState, { passive: true });
     handleScrollState();
+
+    if (typeof heroParallaxMedia.addEventListener === 'function') {
+      heroParallaxMedia.addEventListener('change', handleScrollState);
+    } else if (typeof heroParallaxMedia.addListener === 'function') {
+      heroParallaxMedia.addListener(handleScrollState);
+    }
+
+    const activeSectionObserver = new IntersectionObserver((entries) => {
+      const visibleEntries = entries
+        .filter(entry => entry.isIntersecting)
+        .sort((left, right) => {
+          if (right.intersectionRatio !== left.intersectionRatio) {
+            return right.intersectionRatio - left.intersectionRatio;
+          }
+          return left.boundingClientRect.top - right.boundingClientRect.top;
+        });
+
+      if (visibleEntries[0]) {
+        setActiveNav(visibleEntries[0].target.id);
+      }
+    }, {
+      rootMargin: '-20% 0px -55% 0px',
+      threshold: [0.2, 0.4, 0.6]
+    });
+
+    sections.forEach(section => activeSectionObserver.observe(section));
+    setActiveNav(sections[0]?.id || '');
 
     // === MOBILE NAV ===
     function toggleMobileNav() {
