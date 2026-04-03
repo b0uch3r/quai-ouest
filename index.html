@@ -1511,12 +1511,6 @@
       max-width: 48rem;
       margin-bottom: 1.4rem;
     }
-    .carte-group-title-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
     .carte-kicker {
       display: inline-block;
       margin-bottom: 0.65rem;
@@ -1535,48 +1529,6 @@
     .carte-group-head p {
       color: rgba(255,255,255,0.76);
       max-width: 42rem;
-    }
-    .carte-group-panel {
-      display: block;
-    }
-    .carte-group-toggle {
-      display: none;
-      align-items: center;
-      gap: 0.55rem;
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 999px;
-      background: rgba(255,255,255,0.05);
-      color: rgba(255,255,255,0.84);
-      padding: 0.62rem 0.9rem;
-      font-family: var(--font-body);
-      font-size: 0.76rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
-    }
-    .carte-group-toggle:hover,
-    .carte-group-toggle:focus-visible {
-      color: #fff;
-      background: rgba(196,114,58,0.18);
-      border-color: rgba(196,114,58,0.4);
-      transform: translateY(-1px);
-    }
-    .carte-group-toggle:focus-visible {
-      outline: 2px solid rgba(212,168,83,0.6);
-      outline-offset: 2px;
-    }
-    .carte-group-toggle-icon {
-      width: 0.72rem;
-      height: 0.72rem;
-      border-right: 2px solid currentColor;
-      border-bottom: 2px solid currentColor;
-      transform: rotate(45deg) translateY(-1px);
-      transition: transform 0.25s ease;
-    }
-    .carte-group.is-expanded .carte-group-toggle-icon {
-      transform: rotate(-135deg) translateY(-1px);
     }
 
     .carte-block-grid {
@@ -1857,41 +1809,26 @@
         text-align: left;
       }
       .carte-nav {
-        display: none;
+        justify-content: flex-start;
+      }
+      .carte-nav a {
+        font-size: 0.78rem;
+        padding: 0.68rem 0.9rem;
       }
       .carte-group {
-        margin-top: 1rem;
+        margin-top: 2.5rem;
       }
       .carte-group-head {
         max-width: none;
-        margin-bottom: 0;
-        padding: 1rem 1.05rem;
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 18px;
-        background:
-          radial-gradient(circle at top left, rgba(212,168,83,0.12), transparent 40%),
-          linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+        margin-bottom: 1.1rem;
       }
       .carte-group-head p {
         margin-top: 0.45rem;
         max-width: none;
         font-size: 0.88rem;
       }
-      .carte-group-title-row h3 {
+      .carte-group-head h3 {
         font-size: 1.35rem;
-      }
-      .carte-group-toggle {
-        display: inline-flex;
-        flex-shrink: 0;
-      }
-      .carte-group-panel {
-        padding-top: 0.95rem;
-      }
-      .carte-group:not(.is-expanded) .carte-group-head p {
-        display: none;
-      }
-      .carte-group:not(.is-expanded) .carte-group-panel {
-        padding-top: 0;
       }
       .carte-block-grid--stacks {
         grid-template-columns: 1fr;
@@ -3225,19 +3162,12 @@
         <a href="#carte-saveurs-estivales">Pizzas et +</a>
       </nav>
 
-      <section class="carte-group reveal" id="carte-pour-commencer" data-collapsible="true">
+      <section class="carte-group reveal" id="carte-pour-commencer">
         <div class="carte-group-head">
           <span class="carte-kicker">À l'apéro ou en entrée</span>
-          <div class="carte-group-title-row">
-            <h3 id="carte-heading-pour-commencer">Pour commencer</h3>
-            <button class="carte-group-toggle" id="carte-toggle-pour-commencer" type="button" aria-expanded="true" aria-controls="carte-panel-pour-commencer" aria-label="Masquer la section Pour commencer">
-              <span class="carte-group-toggle-text">Masquer</span>
-              <span class="carte-group-toggle-icon" aria-hidden="true"></span>
-            </button>
-          </div>
+          <h3>Pour commencer</h3>
           <p>À partager... ou pas, selon l'envie du moment et la table.</p>
         </div>
-        <div class="carte-group-panel" id="carte-panel-pour-commencer" role="region" aria-labelledby="carte-heading-pour-commencer">
         <div class="carte-block-grid">
       <article class="carte-block menu-list-card">
         <div class="menu-list-head">
@@ -3321,22 +3251,14 @@
         </div>
       </article>
         </div>
-        </div>
       </section>
 
-      <section class="carte-group reveal" id="carte-menus-ete" data-collapsible="true">
+      <section class="carte-group reveal" id="carte-menus-ete">
         <div class="carte-group-head">
           <span class="carte-kicker">Carte de saison</span>
-          <div class="carte-group-title-row">
-            <h3 id="carte-heading-menus-ete">Menus d'été</h3>
-            <button class="carte-group-toggle" id="carte-toggle-menus-ete" type="button" aria-expanded="false" aria-controls="carte-panel-menus-ete" aria-label="Afficher la section Menus d'été">
-              <span class="carte-group-toggle-text">Voir</span>
-              <span class="carte-group-toggle-icon" aria-hidden="true"></span>
-            </button>
-          </div>
+          <h3>Menus d'été</h3>
           <p>Trois menus servis à table, un menu enfant et des assiettes pensées pour la saison.</p>
         </div>
-        <div class="carte-group-panel" id="carte-panel-menus-ete" role="region" aria-labelledby="carte-heading-menus-ete">
         <div class="carte-block-grid">
       <article class="carte-block menu-formula-card">
         <div class="menu-formula-header">
@@ -3585,22 +3507,14 @@
       </div>
       </article>
         </div>
-        </div>
       </section>
 
-      <section class="carte-group reveal" id="carte-douceurs" data-collapsible="true">
+      <section class="carte-group reveal" id="carte-douceurs">
         <div class="carte-group-head">
           <span class="carte-kicker">Desserts, crêpes et glaces</span>
-          <div class="carte-group-title-row">
-            <h3 id="carte-heading-douceurs">Desserts et glaces</h3>
-            <button class="carte-group-toggle" id="carte-toggle-douceurs" type="button" aria-expanded="false" aria-controls="carte-panel-douceurs" aria-label="Afficher la section Desserts et glaces">
-              <span class="carte-group-toggle-text">Voir</span>
-              <span class="carte-group-toggle-icon" aria-hidden="true"></span>
-            </button>
-          </div>
+          <h3>Desserts et glaces</h3>
           <p>Les fins de repas restent généreuses, entre desserts maison, crêpes et glaces artisanales.</p>
         </div>
-        <div class="carte-group-panel" id="carte-panel-douceurs" role="region" aria-labelledby="carte-heading-douceurs">
         <div class="carte-block-grid carte-block-grid--stacks">
           <div class="carte-stack-column carte-stack-column--1">
       <article class="carte-block menu-list-card menu-card--carte-des-desserts">
@@ -3874,22 +3788,14 @@
       </article>
           </div>
         </div>
-        </div>
       </section>
 
-      <section class="carte-group reveal" id="carte-saveurs-estivales" data-collapsible="true">
+      <section class="carte-group reveal" id="carte-saveurs-estivales">
         <div class="carte-group-head">
           <span class="carte-kicker">Quand l'été s'installe</span>
-          <div class="carte-group-title-row">
-            <h3 id="carte-heading-saveurs-estivales">Suggestions estivales</h3>
-            <button class="carte-group-toggle" id="carte-toggle-saveurs-estivales" type="button" aria-expanded="false" aria-controls="carte-panel-saveurs-estivales" aria-label="Afficher la section Suggestions estivales">
-              <span class="carte-group-toggle-text">Voir</span>
-              <span class="carte-group-toggle-icon" aria-hidden="true"></span>
-            </button>
-          </div>
+          <h3>Suggestions estivales</h3>
           <p>Pizzas, burgers, moules et galettes à retrouver selon l'heure et l'envie.</p>
         </div>
-        <div class="carte-group-panel" id="carte-panel-saveurs-estivales" role="region" aria-labelledby="carte-heading-saveurs-estivales">
         <div class="carte-block-grid carte-block-grid--stacks">
           <div class="carte-stack-column carte-stack-column--1">
       <article class="carte-block menu-list-card menu-card--pizzas-maison">
@@ -4090,7 +3996,6 @@
         </div>
       </article>
           </div>
-        </div>
         </div>
       </section>
 
@@ -5095,85 +5000,6 @@
         setTimeout(() => revealSection(target), 100);
       });
     });
-
-    // === CARTE MOBILE — Sections déroulantes ===
-    const carteGroups = Array.from(document.querySelectorAll('#carte .carte-group[data-collapsible="true"]'));
-    const carteAccordionMedia = window.matchMedia('(max-width: 720px)');
-
-    function setCarteGroupState(group, expanded) {
-      const button = group.querySelector('.carte-group-toggle');
-      const panel = group.querySelector('.carte-group-panel');
-      const toggleText = group.querySelector('.carte-group-toggle-text');
-
-      if (!button || !panel || !toggleText) return;
-
-      group.classList.toggle('is-expanded', expanded);
-      button.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-      button.setAttribute(
-        'aria-label',
-        `${expanded ? 'Masquer' : 'Afficher'} la section ${group.querySelector('.carte-group-head h3')?.textContent || ''}`.trim()
-      );
-      toggleText.textContent = expanded ? 'Masquer' : 'Voir';
-      panel.hidden = !expanded;
-
-      if (expanded) {
-        revealSection(group.id);
-      }
-    }
-
-    function syncCarteAccordion(forceOpenId = '') {
-      if (!carteGroups.length) return;
-
-      if (!carteAccordionMedia.matches) {
-        carteGroups.forEach(group => setCarteGroupState(group, true));
-        return;
-      }
-
-      const targetGroup = forceOpenId
-        ? document.getElementById(forceOpenId)
-        : carteGroups.find(group => group.dataset.mobileOpen === 'true') || carteGroups[0];
-
-      carteGroups.forEach(group => {
-        const shouldOpen = group === targetGroup;
-        group.dataset.mobileOpen = shouldOpen ? 'true' : 'false';
-        setCarteGroupState(group, shouldOpen);
-      });
-    }
-
-    carteGroups.forEach(group => {
-      const button = group.querySelector('.carte-group-toggle');
-      if (!button) return;
-
-      button.addEventListener('click', () => {
-        if (!carteAccordionMedia.matches) return;
-
-        const isExpanded = button.getAttribute('aria-expanded') === 'true';
-        if (isExpanded) {
-          group.dataset.mobileOpen = 'false';
-          setCarteGroupState(group, false);
-          return;
-        }
-
-        carteGroups.forEach(otherGroup => {
-          const shouldOpen = otherGroup === group;
-          otherGroup.dataset.mobileOpen = shouldOpen ? 'true' : 'false';
-          setCarteGroupState(otherGroup, shouldOpen);
-        });
-      });
-    });
-
-    const initialCarteHash = window.location.hash.replace('#', '');
-    if (initialCarteHash && carteGroups.some(group => group.id === initialCarteHash)) {
-      syncCarteAccordion(initialCarteHash);
-    } else {
-      syncCarteAccordion();
-    }
-
-    if (typeof carteAccordionMedia.addEventListener === 'function') {
-      carteAccordionMedia.addEventListener('change', () => syncCarteAccordion());
-    } else if (typeof carteAccordionMedia.addListener === 'function') {
-      carteAccordionMedia.addListener(() => syncCarteAccordion());
-    }
 
     // === IMAGE ERROR FALLBACK ===
     document.querySelectorAll('img').forEach(img => {

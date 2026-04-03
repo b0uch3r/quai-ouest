@@ -268,30 +268,15 @@ function renderSectionBlocks(section) {
   ].join('\n');
 }
 
-function renderSection(section, index) {
-  const headingId = `carte-heading-${section.id}`;
-  const panelId = `carte-panel-${section.id}`;
-  const toggleId = `carte-toggle-${section.id}`;
-  const isInitiallyExpanded = index === 0 ? 'true' : 'false';
-  const toggleActionLabel = index === 0 ? 'Masquer' : 'Afficher';
-  const toggleText = index === 0 ? 'Masquer' : 'Voir';
-
+function renderSection(section) {
   return [
-    `      <section class="carte-group reveal" id="carte-${escapeHtml(section.id)}" data-collapsible="true">`,
+    `      <section class="carte-group reveal" id="carte-${escapeHtml(section.id)}">`,
     '        <div class="carte-group-head">',
     section.kicker ? `          <span class="carte-kicker">${escapeHtml(section.kicker)}</span>` : '',
-    '          <div class="carte-group-title-row">',
-    `            <h3 id="${headingId}">${escapeHtml(section.title)}</h3>`,
-    `            <button class="carte-group-toggle" id="${toggleId}" type="button" aria-expanded="${isInitiallyExpanded}" aria-controls="${panelId}" aria-label="${toggleActionLabel} la section ${escapeHtml(section.title)}">`,
-    `              <span class="carte-group-toggle-text">${toggleText}</span>`,
-    '              <span class="carte-group-toggle-icon" aria-hidden="true"></span>',
-    '            </button>',
-    '          </div>',
+    `          <h3>${escapeHtml(section.title)}</h3>`,
     section.description ? `          <p>${escapeHtml(section.description)}</p>` : '',
     '        </div>',
-    `        <div class="carte-group-panel" id="${panelId}" role="region" aria-labelledby="${headingId}">`,
     renderSectionBlocks(section),
-    '        </div>',
     '      </section>'
   ].filter(Boolean).join('\n');
 }
