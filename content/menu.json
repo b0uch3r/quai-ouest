@@ -11,6 +11,81 @@
   },
   "sections": [
     {
+      "id": "pour-commencer",
+      "navLabel": "Partager",
+      "kicker": "À l'apéro ou en entrée",
+      "title": "Pour commencer",
+      "description": "À partager... ou pas, selon l'envie du moment et la table.",
+      "blocks": [
+        {
+          "type": "menu-list",
+          "title": "À partager ou en entrée",
+          "subtitle": "Suggestions du moment",
+          "items": [
+            {
+              "name": "Duo de tartinables d'Algo Plus",
+              "description": "Artisans de produits locaux et naturels, selon la sélection du moment",
+              "price": "13€"
+            },
+            {
+              "name": "Trio de tartinables d'Algo Plus",
+              "description": "Artisans de produits locaux et naturels, selon la sélection du moment",
+              "price": "16€"
+            },
+            {
+              "name": "Camembert rôti au four",
+              "description": "Petite salade et pickles",
+              "price": "15€"
+            },
+            {
+              "name": "Camembert rôti au four",
+              "description": "Avec oignons frits",
+              "price": "16€"
+            },
+            {
+              "name": "Planche La Toute Fromage",
+              "priceVariants": [
+                {
+                  "label": "Petite",
+                  "price": "13€"
+                },
+                {
+                  "label": "Grande",
+                  "price": "21€"
+                }
+              ]
+            },
+            {
+              "name": "Planche La Tout Charcut'",
+              "priceVariants": [
+                {
+                  "label": "Petite",
+                  "price": "13€"
+                },
+                {
+                  "label": "Grande",
+                  "price": "21€"
+                }
+              ]
+            },
+            {
+              "name": "Planche La Mixte",
+              "priceVariants": [
+                {
+                  "label": "Petite",
+                  "price": "13€"
+                },
+                {
+                  "label": "Grande",
+                  "price": "21€"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "menus-ete",
       "navLabel": "Menus",
       "kicker": "Carte de saison",
@@ -231,81 +306,6 @@
             "Frites maison et/ou légumes de saison avec le plat",
             "2 boules : +1,50€",
             "3 boules : +3€"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "pour-commencer",
-      "navLabel": "Partager",
-      "kicker": "À l'apéro ou en entrée",
-      "title": "Pour commencer",
-      "description": "À partager... ou pas, selon l'envie du moment et la table.",
-      "blocks": [
-        {
-          "type": "menu-list",
-          "title": "À partager ou en entrée",
-          "subtitle": "Suggestions du moment",
-          "items": [
-            {
-              "name": "Duo de tartinables d'Algo Plus",
-              "description": "Artisans de produits locaux et naturels, selon la sélection du moment",
-              "price": "13€"
-            },
-            {
-              "name": "Trio de tartinables d'Algo Plus",
-              "description": "Artisans de produits locaux et naturels, selon la sélection du moment",
-              "price": "16€"
-            },
-            {
-              "name": "Camembert rôti au four",
-              "description": "Petite salade et pickles",
-              "price": "15€"
-            },
-            {
-              "name": "Camembert rôti au four",
-              "description": "Avec oignons frits",
-              "price": "16€"
-            },
-            {
-              "name": "Planche La Toute Fromage",
-              "priceVariants": [
-                {
-                  "label": "Petite",
-                  "price": "13€"
-                },
-                {
-                  "label": "Grande",
-                  "price": "21€"
-                }
-              ]
-            },
-            {
-              "name": "Planche La Tout Charcut'",
-              "priceVariants": [
-                {
-                  "label": "Petite",
-                  "price": "13€"
-                },
-                {
-                  "label": "Grande",
-                  "price": "21€"
-                }
-              ]
-            },
-            {
-              "name": "Planche La Mixte",
-              "priceVariants": [
-                {
-                  "label": "Petite",
-                  "price": "13€"
-                },
-                {
-                  "label": "Grande",
-                  "price": "21€"
-                }
-              ]
-            }
           ]
         }
       ]
