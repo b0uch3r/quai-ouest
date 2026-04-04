@@ -36,7 +36,7 @@ const RESTAURANT_DATA = {
   },
   servesCuisine: ['Bistronomique', 'Fruits de mer', 'Bretonne'],
   priceRange: '€€',
-  foundingDate: '2018-03-21',
+  foundingDate: '2021-06-15',
   award: "Tripadvisor Travellers' Choice 2025",
   menu: MENU_PAGE_URL,
   sameAs: [
