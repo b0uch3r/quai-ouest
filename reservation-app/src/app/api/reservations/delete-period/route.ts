@@ -1,45 +1,56 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase-server'
+import { createClient, createServiceClient } from '@/lib/supabase-server'
 
-export async function POST(request: NextRequest) {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
+async function getAuthorizedManager() {
+  const authClient = await createClient()
+  const { data: { user } } = await authClient.auth.getUser()
 
-  // Verify role is owner or manager
-  const { data: profile } = await supabase
+  if (!user) {
+    return { error: NextResponse.json({ error: 'Non autorise' }, { status: 401 }) }
+  }
+
+  const { data: profile } = await authClient
     .from('staff_profiles')
     .select('role')
     .eq('id', user.id)
     .single()
 
   if (!profile || !['owner', 'manager'].includes(profile.role)) {
-    return NextResponse.json({ error: 'Permissions insuffisantes' }, { status: 403 })
+    return { error: NextResponse.json({ error: 'Permissions insuffisantes' }, { status: 403 }) }
   }
+
+  return { authClient }
+}
+
+export async function POST(request: NextRequest) {
+  const authorization = await getAuthorizedManager()
+  if (authorization.error) return authorization.error
 
   const body = await request.json()
-  const { date_from, date_to } = body
+  const { date_from: dateFrom, date_to: dateTo } = body
 
-  if (!date_from || !date_to) {
-    return NextResponse.json({ error: 'Les dates de début et fin sont requises' }, { status: 400 })
+  if (!dateFrom || !dateTo) {
+    return NextResponse.json({ error: 'Les dates de debut et fin sont requises' }, { status: 400 })
   }
 
-  // Validate date format (YYYY-MM-DD)
   const dateRegex = /^\d{4}-\d{2}-\d{2}$/
-  if (!dateRegex.test(date_from) || !dateRegex.test(date_to)) {
+  if (!dateRegex.test(dateFrom) || !dateRegex.test(dateTo)) {
     return NextResponse.json({ error: 'Format de date invalide' }, { status: 400 })
   }
 
-  if (date_from > date_to) {
-    return NextResponse.json({ error: 'La date de début doit être antérieure à la date de fin' }, { status: 400 })
+  if (dateFrom > dateTo) {
+    return NextResponse.json(
+      { error: 'La date de debut doit etre anterieure a la date de fin' },
+      { status: 400 }
+    )
   }
 
-  // First count how many will be deleted
-  const { count, error: countError } = await supabase
+  const authClient = authorization.authClient
+  const { count, error: countError } = await authClient
     .from('reservations')
     .select('id', { count: 'exact', head: true })
-    .gte('reservation_date', date_from)
-    .lte('reservation_date', date_to)
+    .gte('reservation_date', dateFrom)
+    .lte('reservation_date', dateTo)
 
   if (countError) {
     console.error('Count error:', countError.message)
@@ -47,31 +58,33 @@ export async function POST(request: NextRequest) {
   }
 
   if (!count || count === 0) {
-    return NextResponse.json({ error: 'Aucune réservation trouvée pour cette période' }, { status: 404 })
+    return NextResponse.json(
+      { error: 'Aucune reservation trouvee pour cette periode' },
+      { status: 404 }
+    )
   }
 
-  // Get IDs of reservations to delete (for cleaning up notes)
-  const { data: toDelete } = await supabase
+  const { data: toDelete } = await authClient
     .from('reservations')
     .select('id')
-    .gte('reservation_date', date_from)
-    .lte('reservation_date', date_to)
+    .gte('reservation_date', dateFrom)
+    .lte('reservation_date', dateTo)
+
+  const supabase = createServiceClient()
 
   if (toDelete && toDelete.length > 0) {
-    const ids = toDelete.map((r) => r.id)
-    // Delete associated notes
+    const ids = toDelete.map((reservation) => reservation.id)
     await supabase
       .from('reservation_notes')
       .delete()
       .in('reservation_id', ids)
   }
 
-  // Delete reservations in the period
   const { error: deleteError } = await supabase
     .from('reservations')
     .delete()
-    .gte('reservation_date', date_from)
-    .lte('reservation_date', date_to)
+    .gte('reservation_date', dateFrom)
+    .lte('reservation_date', dateTo)
 
   if (deleteError) {
     console.error('Period delete error:', deleteError.message)
@@ -81,11 +94,9 @@ export async function POST(request: NextRequest) {
   return NextResponse.json({ success: true, deleted: count })
 }
 
-// GET: Count reservations in a period (for preview before deletion)
 export async function GET(request: NextRequest) {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
+  const authorization = await getAuthorizedManager()
+  if (authorization.error) return authorization.error
 
   const params = request.nextUrl.searchParams
   const dateFrom = params.get('date_from')
@@ -95,7 +106,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ count: 0 })
   }
 
-  const { count, error } = await supabase
+  const { count, error } = await authorization.authClient
     .from('reservations')
     .select('id', { count: 'exact', head: true })
     .gte('reservation_date', dateFrom)

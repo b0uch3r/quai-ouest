@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { createClient } from '@/lib/supabase-browser'
 import type { Reservation, ReservationFilters, PaginatedResponse, ReservationStatus } from '@/types'
 
 const DEFAULT_FILTERS: ReservationFilters = {
@@ -9,6 +8,28 @@ const DEFAULT_FILTERS: ReservationFilters = {
   limit: 20,
   sort: 'reservation_date',
   order: 'desc',
+}
+
+async function getResponseError(response: Response) {
+  const payload = (await response.json().catch(() => null)) as { error?: string } | null
+  return payload?.error || 'Erreur serveur'
+}
+
+function buildReservationQueryParams(filters: ReservationFilters) {
+  const params = new URLSearchParams({
+    page: String(filters.page),
+    limit: String(filters.limit),
+    sort: filters.sort,
+    order: filters.order,
+  })
+
+  if (filters.status?.length) params.set('status', filters.status.join(','))
+  if (filters.date_from) params.set('date_from', filters.date_from)
+  if (filters.date_to) params.set('date_to', filters.date_to)
+  if (filters.service) params.set('service', filters.service)
+  if (filters.q) params.set('q', filters.q)
+
+  return params
 }
 
 export function useReservations(initialFilters?: Partial<ReservationFilters>) {
@@ -31,57 +52,28 @@ export function useReservations(initialFilters?: Partial<ReservationFilters>) {
     setError(null)
 
     try {
-      const supabase = createClient()
-      let query = supabase
-        .from('reservations')
-        .select('*, client:clients(*)', { count: 'exact' })
+      const params = buildReservationQueryParams(filters)
+      const response = await fetch(`/api/reservations?${params.toString()}`, {
+        cache: 'no-store',
+      })
 
-      // Apply filters
-      if (filters.status?.length) {
-        query = query.in('status', filters.status)
-      }
-      if (filters.date_from) {
-        query = query.gte('reservation_date', filters.date_from)
-      }
-      if (filters.date_to) {
-        query = query.lte('reservation_date', filters.date_to)
-      }
-      if (filters.service) {
-        query = query.eq('service', filters.service)
-      }
-      if (filters.q) {
-        query = query.or(
-          `special_requests.ilike.%${filters.q}%,staff_notes.ilike.%${filters.q}%`
-        )
+      if (!response.ok) {
+        throw new Error(await getResponseError(response))
       }
 
-      // Sort
-      query = query.order(filters.sort, { ascending: filters.order === 'asc' })
+      const payload = (await response.json()) as PaginatedResponse<Reservation>
+      let filteredReservations = payload.data || []
 
-      // Paginate
-      const from = (filters.page - 1) * filters.limit
-      const to = from + filters.limit - 1
-      query = query.range(from, to)
-
-      const { data: rows, count, error: queryError } = await query
-
-      if (queryError) throw queryError
-
-      // Client name filter (post-query because it's a joined field)
-      let filtered = rows || []
       if (filters.client_name) {
         const search = filters.client_name.toLowerCase()
-        filtered = filtered.filter((r: Reservation) =>
-          r.client?.full_name?.toLowerCase().includes(search)
+        filteredReservations = filteredReservations.filter((reservation) =>
+          reservation.client?.full_name?.toLowerCase().includes(search)
         )
       }
 
       setData({
-        data: filtered,
-        total: count || 0,
-        page: filters.page,
-        limit: filters.limit,
-        total_pages: Math.ceil((count || 0) / filters.limit),
+        ...payload,
+        data: filteredReservations,
       })
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erreur de chargement')
@@ -91,7 +83,7 @@ export function useReservations(initialFilters?: Partial<ReservationFilters>) {
   }, [filters])
 
   useEffect(() => {
-    fetchReservations()
+    void fetchReservations()
   }, [fetchReservations])
 
   function updateFilters(partial: Partial<ReservationFilters>) {
@@ -99,92 +91,81 @@ export function useReservations(initialFilters?: Partial<ReservationFilters>) {
   }
 
   const updateStatus = useCallback(async (id: string, status: ReservationStatus) => {
-    const supabase = createClient()
-    const now = new Date().toISOString()
-    const updates: Record<string, unknown> = {
-      status,
-      updated_at: now,
-      cancelled_at: status === 'cancelled' ? now : null,
+    const response = await fetch(`/api/reservations/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ status }),
+    })
+
+    if (!response.ok) {
+      throw new Error(await getResponseError(response))
     }
-    const { error } = await supabase
-      .from('reservations')
-      .update(updates)
-      .eq('id', id)
-    if (error) throw error
+
+    const updatedReservation = (await response.json()) as Reservation
+
     setData((prev) => ({
       ...prev,
-      data: prev.data.map((r) =>
-        r.id === id
-          ? {
-              ...r,
-              status,
-              updated_at: now,
-              cancelled_at: updates.cancelled_at as string | null,
-            }
-          : r
+      data: prev.data.map((reservation) =>
+        reservation.id === id ? { ...reservation, ...updatedReservation } : reservation
       ),
     }))
   }, [])
 
   const deleteReservation = useCallback(async (id: string) => {
-    const supabase = createClient()
-    // Delete associated notes first
-    await supabase
-      .from('reservation_notes')
-      .delete()
-      .eq('reservation_id', id)
-    // Delete the reservation
-    const { error } = await supabase
-      .from('reservations')
-      .delete()
-      .eq('id', id)
-    if (error) throw error
-    // Remove from local state
+    const response = await fetch(`/api/reservations/${id}`, {
+      method: 'DELETE',
+    })
+
+    if (!response.ok) {
+      throw new Error(await getResponseError(response))
+    }
+
     setData((prev) => ({
       ...prev,
-      data: prev.data.filter((r) => r.id !== id),
-      total: prev.total - 1,
+      data: prev.data.filter((reservation) => reservation.id !== id),
+      total: Math.max(prev.total - 1, 0),
     }))
   }, [])
 
   const deleteByPeriod = useCallback(async (dateFrom: string, dateTo: string) => {
-    const supabase = createClient()
-    // Get IDs to delete notes first
-    const { data: toDelete } = await supabase
-      .from('reservations')
-      .select('id')
-      .gte('reservation_date', dateFrom)
-      .lte('reservation_date', dateTo)
+    const response = await fetch('/api/reservations/delete-period', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        date_from: dateFrom,
+        date_to: dateTo,
+      }),
+    })
 
-    if (toDelete && toDelete.length > 0) {
-      const ids = toDelete.map((r) => r.id)
-      await supabase
-        .from('reservation_notes')
-        .delete()
-        .in('reservation_id', ids)
+    if (!response.ok) {
+      throw new Error(await getResponseError(response))
     }
 
-    const { error } = await supabase
-      .from('reservations')
-      .delete()
-      .gte('reservation_date', dateFrom)
-      .lte('reservation_date', dateTo)
-    if (error) throw error
-    const deletedCount = toDelete?.length || 0
-    // Refresh data
+    const payload = (await response.json()) as { deleted?: number }
     await fetchReservations()
-    return deletedCount
+    return payload.deleted || 0
   }, [fetchReservations])
 
   const countByPeriod = useCallback(async (dateFrom: string, dateTo: string) => {
-    const supabase = createClient()
-    const { count, error } = await supabase
-      .from('reservations')
-      .select('id', { count: 'exact', head: true })
-      .gte('reservation_date', dateFrom)
-      .lte('reservation_date', dateTo)
-    if (error) throw error
-    return count || 0
+    const params = new URLSearchParams({
+      date_from: dateFrom,
+      date_to: dateTo,
+    })
+
+    const response = await fetch(`/api/reservations/delete-period?${params.toString()}`, {
+      cache: 'no-store',
+    })
+
+    if (!response.ok) {
+      throw new Error(await getResponseError(response))
+    }
+
+    const payload = (await response.json()) as { count?: number }
+    return payload.count || 0
   }, [])
 
   return {

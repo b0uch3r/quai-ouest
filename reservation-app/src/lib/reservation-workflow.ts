@@ -66,9 +66,28 @@ interface NormalizedData {
   specialRequests: string | null
 }
 
+function normalizeGuestsCount(rawValue: string) {
+  if (rawValue === '7+') {
+    return {
+      guestsCount: 7,
+      guestsLabel: 'Demande pour 7 couverts ou plus',
+    }
+  }
+
+  const parsedGuestsCount = Number.parseInt(rawValue, 10)
+
+  return {
+    guestsCount: Number.isFinite(parsedGuestsCount) && parsedGuestsCount > 0 ? parsedGuestsCount : 2,
+    guestsLabel: null,
+  }
+}
+
 function captureAndNormalize(input: WorkflowInput): NormalizedData {
-  const guestsCount = parseInt(input.personnes) || 2
-  const serviceType: ServiceType = input.service.toLowerCase().startsWith('soir') ? 'soir' : 'midi'
+  const { guestsCount, guestsLabel } = normalizeGuestsCount(input.personnes)
+  const serviceType: ServiceType = input.service === 'soir' ? 'soir' : 'midi'
+  const specialRequests = [guestsLabel, input.message?.trim() || null]
+    .filter(Boolean)
+    .join('\n')
 
   return {
     clientName: input.nom.trim(),
@@ -77,7 +96,7 @@ function captureAndNormalize(input: WorkflowInput): NormalizedData {
     reservationDate: input.date,
     guestsCount,
     serviceType,
-    specialRequests: input.message?.trim() || null,
+    specialRequests: specialRequests || null,
   }
 }
 

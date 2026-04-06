@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase-server'
-import { reservationUpdateSchema, noteSchema } from '@/lib/validations'
+import { noteSchema, reservationUpdateSchema } from '@/lib/validations'
+import { createClient, createServiceClient } from '@/lib/supabase-server'
 
 export async function GET(
   _request: NextRequest,
@@ -9,7 +9,10 @@ export async function GET(
   const { id } = await params
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
+
+  if (!user) {
+    return NextResponse.json({ error: 'Non autorise' }, { status: 401 })
+  }
 
   const { data, error } = await supabase
     .from('reservations')
@@ -17,7 +20,10 @@ export async function GET(
     .eq('id', id)
     .single()
 
-  if (error) return NextResponse.json({ error: 'Réservation introuvable' }, { status: 404 })
+  if (error) {
+    return NextResponse.json({ error: 'Reservation introuvable' }, { status: 404 })
+  }
+
   return NextResponse.json(data)
 }
 
@@ -26,12 +32,16 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
+  const authClient = await createClient()
+  const { data: { user } } = await authClient.auth.getUser()
+
+  if (!user) {
+    return NextResponse.json({ error: 'Non autorise' }, { status: 401 })
+  }
 
   const body = await request.json()
   const parsed = reservationUpdateSchema.safeParse(body)
+
   if (!parsed.success) {
     return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 })
   }
@@ -40,11 +50,12 @@ export async function PATCH(
     ...parsed.data,
     updated_at: new Date().toISOString(),
   }
+
   if (parsed.data.status) {
-    updates.cancelled_at =
-      parsed.data.status === 'cancelled' ? new Date().toISOString() : null
+    updates.cancelled_at = parsed.data.status === 'cancelled' ? new Date().toISOString() : null
   }
 
+  const supabase = createServiceClient()
   const { data, error } = await supabase
     .from('reservations')
     .update(updates)
@@ -56,21 +67,23 @@ export async function PATCH(
     console.error('Reservation update error:', error.message)
     return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })
   }
+
   return NextResponse.json(data)
 }
 
-// DELETE reservation
 export async function DELETE(
   _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
+  const authClient = await createClient()
+  const { data: { user } } = await authClient.auth.getUser()
 
-  // Verify role is owner or manager
-  const { data: profile } = await supabase
+  if (!user) {
+    return NextResponse.json({ error: 'Non autorise' }, { status: 401 })
+  }
+
+  const { data: profile } = await authClient
     .from('staff_profiles')
     .select('role')
     .eq('id', user.id)
@@ -80,7 +93,8 @@ export async function DELETE(
     return NextResponse.json({ error: 'Permissions insuffisantes' }, { status: 403 })
   }
 
-  // Delete associated notes first
+  const supabase = createServiceClient()
+
   await supabase
     .from('reservation_notes')
     .delete()
@@ -99,22 +113,26 @@ export async function DELETE(
   return NextResponse.json({ success: true })
 }
 
-// POST note on reservation
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
+  const authClient = await createClient()
+  const { data: { user } } = await authClient.auth.getUser()
+
+  if (!user) {
+    return NextResponse.json({ error: 'Non autorise' }, { status: 401 })
+  }
 
   const body = await request.json()
   const parsed = noteSchema.safeParse(body)
+
   if (!parsed.success) {
     return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 })
   }
 
+  const supabase = createServiceClient()
   const { data, error } = await supabase
     .from('reservation_notes')
     .insert({
@@ -129,5 +147,6 @@ export async function POST(
     console.error('Note insert error:', error.message)
     return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })
   }
+
   return NextResponse.json(data, { status: 201 })
 }

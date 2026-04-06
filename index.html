@@ -4134,11 +4134,12 @@
           </div>
           <div class="form-field">
             <label for="service">Service</label>
-            <select id="service" name="service">
+            <select id="service" name="service" required>
               <option value="" disabled selected>Midi ou soir ?</option>
               <option value="midi">Midi (mer. → dim.)</option>
               <option value="soir">Soir (jeu. ven. sam.)</option>
             </select>
+            <span class="field-error">Choisissez le service</span>
           </div>
           <div class="form-field">
             <label for="message">Message <span style="text-transform:none;font-weight:400;opacity:0.6;">(optionnel)</span></label>

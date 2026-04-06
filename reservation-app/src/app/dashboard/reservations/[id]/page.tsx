@@ -15,12 +15,16 @@ import {
   Mail,
   Send,
 } from 'lucide-react'
-import { createClient } from '@/lib/supabase-browser'
 import { StatusBadge } from '@/components/ui/StatusBadge'
 import { StatusSelect } from '@/components/ui/StatusSelect'
 import { formatDate, formatDateTime, formatCurrency } from '@/lib/utils'
 import type { Reservation, ReservationNote, ReservationStatus } from '@/types'
 import { SERVICE_LABELS } from '@/types'
+
+async function getResponseError(response: Response) {
+  const payload = (await response.json().catch(() => null)) as { error?: string } | null
+  return payload?.error || 'Erreur serveur'
+}
 
 export default function ReservationDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -33,74 +37,77 @@ export default function ReservationDetailPage() {
 
   useEffect(() => {
     async function load() {
-      const supabase = createClient()
-      const { data } = await supabase
-        .from('reservations')
-        .select('*, client:clients(*)')
-        .eq('id', id)
-        .single()
+      try {
+        const response = await fetch(`/api/reservations/${id}`, { cache: 'no-store' })
+        if (!response.ok) {
+          setReservation(null)
+          setNotes([])
+          return
+        }
 
-      if (data) setReservation(data)
-
-      const { data: notesData } = await supabase
-        .from('reservation_notes')
-        .select('*, author:staff_profiles(full_name)')
-        .eq('reservation_id', id)
-        .order('created_at', { ascending: true })
-
-      if (notesData) setNotes(notesData)
-      setLoading(false)
+        const data = (await response.json()) as Reservation & { notes?: ReservationNote[] }
+        setReservation(data)
+        setNotes([...(data.notes || [])].sort((left, right) => left.created_at.localeCompare(right.created_at)))
+      } finally {
+        setLoading(false)
+      }
     }
-    load()
+    void load()
   }, [id])
 
   async function updateStatus(status: ReservationStatus) {
     setSaving(true)
-    const supabase = createClient()
-    const now = new Date().toISOString()
-    const updates: Record<string, unknown> = {
-      status,
-      updated_at: now,
-      cancelled_at: status === 'cancelled' ? now : null,
-    }
-
-    const { error } = await supabase
-      .from('reservations')
-      .update(updates)
-      .eq('id', id)
-
-    if (!error && reservation) {
-      setReservation({
-        ...reservation,
-        status,
-        updated_at: now,
-        cancelled_at: updates.cancelled_at as string | null,
+    try {
+      const response = await fetch(`/api/reservations/${id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status }),
       })
+
+      if (!response.ok) {
+        throw new Error(await getResponseError(response))
+      }
+
+      const updatedReservation = (await response.json()) as Reservation
+      if (reservation) {
+        setReservation({
+          ...reservation,
+          ...updatedReservation,
+        })
+      }
+    } catch (error) {
+      console.error('Reservation status update failed:', error)
+    } finally {
+      setSaving(false)
     }
-    setSaving(false)
   }
 
   async function addNote() {
     if (!newNote.trim()) return
     setSaving(true)
-    const supabase = createClient()
-    const { data: { user } } = await supabase.auth.getUser()
-
-    const { data, error } = await supabase
-      .from('reservation_notes')
-      .insert({
-        reservation_id: id,
-        author_id: user?.id,
-        content: newNote.trim(),
+    try {
+      const response = await fetch(`/api/reservations/${id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ content: newNote.trim() }),
       })
-      .select('*, author:staff_profiles(full_name)')
-      .single()
 
-    if (!error && data) {
-      setNotes([...notes, data])
+      if (!response.ok) {
+        throw new Error(await getResponseError(response))
+      }
+
+      const note = (await response.json()) as ReservationNote
+      setNotes((prev) => [...prev, note])
       setNewNote('')
+    } catch (error) {
+      console.error('Reservation note creation failed:', error)
+    } finally {
+      setSaving(false)
     }
-    setSaving(false)
   }
 
   if (loading) {
